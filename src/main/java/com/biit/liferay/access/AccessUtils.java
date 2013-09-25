@@ -36,10 +36,11 @@ public class AccessUtils {
 	protected static URL getLiferayUrl(String remoteUser, String password, String serviceName) {
 		try {
 			checkPassword(password);
-			return new URL(LIFERAY_PROTOCOL + URLEncoder.encode(remoteUser, "UTF-8") + ":" + password + "@"
+			URL url = new URL(LIFERAY_PROTOCOL + URLEncoder.encode(remoteUser, "UTF-8") + ":" + password + "@"
 					+ ConfigurationReader.getInstance().getVirtualHost() + ":"
 					+ ConfigurationReader.getInstance().getConnectionPort() + "/"
 					+ ConfigurationReader.getInstance().getWebAppName() + "/" + LIFERAY_AXIS_PATH + serviceName);
+			return url;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return null;
