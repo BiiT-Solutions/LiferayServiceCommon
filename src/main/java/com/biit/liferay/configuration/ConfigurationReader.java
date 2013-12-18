@@ -57,7 +57,7 @@ public class ConfigurationReader {
 			webappName = prop.getProperty(WEBAPP_TAG);
 			connectionport = prop.getProperty(PORT_TAG);
 		} catch (IOException e) {
-			
+
 		} catch (NullPointerException e) {
 
 		}
@@ -99,6 +99,9 @@ public class ConfigurationReader {
 	}
 
 	public String getWebAppName() {
-		return webappName;
+		if (webappName != null && webappName.length() > 0) {
+			return webappName + "/";
+		}
+		return "";
 	}
 }
