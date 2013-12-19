@@ -15,7 +15,7 @@ public class ConfigurationReader {
 	private static final String WEBAPP_TAG = "webapp";
 	private static final String PORT_TAG = "port";
 	// Password algorithm
-	private final String PASSWORD_ALGORITHM_TAG = "passwordEncriptationAlgoritm";
+	private final String PASSWORD_ALGORITHM_TAG = "passwordEncriptationAlgorithm";
 	private final String AXIS_PATH_TAG = "webservices";
 	private final String LIFERAY_PROTOCOL_TAG = "liferayProtocol";
 
