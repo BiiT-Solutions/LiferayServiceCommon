@@ -12,8 +12,6 @@ import com.biit.liferay.configuration.ConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 
 public class AccessUtils {
-	private static final String LIFERAY_PROTOCOL = "http://";
-
 	private static final Integer MIN_PASSWORD_LENGTH = 3;
 	private static final Integer MAX_PASSWORD_LENGTH = 25;
 	private static final String PASSWORD_ALLOWED_CHARS = "a-zA-Z0-9!()*_-";
@@ -35,7 +33,8 @@ public class AccessUtils {
 	protected static URL getLiferayUrl(String remoteUser, String password, String serviceName) {
 		try {
 			checkPassword(password);
-			URL url = new URL(LIFERAY_PROTOCOL + URLEncoder.encode(remoteUser, "UTF-8") + ":" + password + "@"
+			URL url = new URL(ConfigurationReader.getInstance().getLiferayProtocol() + "://"
+					+ URLEncoder.encode(remoteUser, "UTF-8") + ":" + password + "@"
 					+ ConfigurationReader.getInstance().getVirtualHost() + ":"
 					+ ConfigurationReader.getInstance().getConnectionPort() + "/"
 					+ ConfigurationReader.getInstance().getWebAppName()

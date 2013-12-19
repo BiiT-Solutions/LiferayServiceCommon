@@ -17,6 +17,7 @@ public class ConfigurationReader {
 	// Password algorithm
 	private final String PASSWORD_ALGORITHM_TAG = "passwordEncriptationAlgoritm";
 	private final String AXIS_PATH_TAG = "webservices";
+	private final String LIFERAY_PROTOCOL_TAG = "liferayProtocol";
 
 	private final String DEFAULT_USER = "user";
 	private final String DEFAULT_PASSWORD = "pass";
@@ -25,6 +26,7 @@ public class ConfigurationReader {
 	private final String DEFAULT_PORT = "8080";
 	private final String DEFAULT_PASSWORD_ALGORITHM = "SHA";
 	private final String DEFAULT_AXIS_WEBSERVICES_PATH = "api/axis/";
+	private final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
 
 	private String user;
 	private String password;
@@ -33,6 +35,7 @@ public class ConfigurationReader {
 	private String connectionport;
 	private String passwordEncryptationAlgorithm;
 	private String axisWebServicesPath;
+	private String liferayProtocol;
 
 	private static ConfigurationReader instance;
 
@@ -66,6 +69,7 @@ public class ConfigurationReader {
 			connectionport = prop.getProperty(PORT_TAG);
 			passwordEncryptationAlgorithm = prop.getProperty(PASSWORD_ALGORITHM_TAG);
 			axisWebServicesPath = prop.getProperty(AXIS_PATH_TAG);
+			liferayProtocol = prop.getProperty(LIFERAY_PROTOCOL_TAG);
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
@@ -96,8 +100,13 @@ public class ConfigurationReader {
 		if (passwordEncryptationAlgorithm == null) {
 			passwordEncryptationAlgorithm = DEFAULT_PASSWORD_ALGORITHM;
 		}
+
 		if (axisWebServicesPath == null) {
 			axisWebServicesPath = DEFAULT_AXIS_WEBSERVICES_PATH;
+		}
+
+		if (liferayProtocol == null) {
+			liferayProtocol = DEFAULT_LIFERAY_PROTOCOL_PATH;
 		}
 	}
 
@@ -130,5 +139,9 @@ public class ConfigurationReader {
 
 	public String getAxisWebServicesPath() {
 		return axisWebServicesPath;
+	}
+
+	public String getLiferayProtocol() {
+		return liferayProtocol;
 	}
 }
