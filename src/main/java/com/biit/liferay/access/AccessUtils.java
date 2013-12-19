@@ -40,6 +40,7 @@ public class AccessUtils {
 					+ ConfigurationReader.getInstance().getVirtualHost() + ":"
 					+ ConfigurationReader.getInstance().getConnectionPort() + "/"
 					+ ConfigurationReader.getInstance().getWebAppName() + LIFERAY_AXIS_PATH + serviceName);
+			System.out.println(url.toString());
 			return url;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
