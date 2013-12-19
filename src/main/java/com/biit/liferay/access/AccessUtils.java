@@ -13,7 +13,6 @@ import com.biit.liferay.log.LiferayClientLogger;
 
 public class AccessUtils {
 	private static final String LIFERAY_PROTOCOL = "http://";
-	private static final String LIFERAY_AXIS_PATH = "api/axis/";
 
 	private static final Integer MIN_PASSWORD_LENGTH = 3;
 	private static final Integer MAX_PASSWORD_LENGTH = 25;
@@ -39,8 +38,8 @@ public class AccessUtils {
 			URL url = new URL(LIFERAY_PROTOCOL + URLEncoder.encode(remoteUser, "UTF-8") + ":" + password + "@"
 					+ ConfigurationReader.getInstance().getVirtualHost() + ":"
 					+ ConfigurationReader.getInstance().getConnectionPort() + "/"
-					+ ConfigurationReader.getInstance().getWebAppName() + LIFERAY_AXIS_PATH + serviceName);
-			System.out.println(url.toString());
+					+ ConfigurationReader.getInstance().getWebAppName()
+					+ ConfigurationReader.getInstance().getAxisWebServicesPath() + serviceName);
 			return url;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

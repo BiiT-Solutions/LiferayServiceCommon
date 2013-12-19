@@ -15,7 +15,8 @@ public class ConfigurationReader {
 	private static final String WEBAPP_TAG = "webapp";
 	private static final String PORT_TAG = "port";
 	// Password algorithm
-	private final String PASSWORD_ALGORITHM = "passwordEncriptationAlgoritm";
+	private final String PASSWORD_ALGORITHM_TAG = "passwordEncriptationAlgoritm";
+	private final String AXIS_PATH_TAG = "webservices";
 
 	private final String DEFAULT_USER = "user";
 	private final String DEFAULT_PASSWORD = "pass";
@@ -23,6 +24,7 @@ public class ConfigurationReader {
 	private final String DEFAULT_LIFERAY_WEBAPP = "lportal-6.1.1";
 	private final String DEFAULT_PORT = "8080";
 	private final String DEFAULT_PASSWORD_ALGORITHM = "SHA";
+	private final String DEFAULT_AXIS_WEBSERVICES_PATH = "api/axis/";
 
 	private String user;
 	private String password;
@@ -30,6 +32,7 @@ public class ConfigurationReader {
 	private String webappName;
 	private String connectionport;
 	private String passwordEncryptationAlgorithm;
+	private String axisWebServicesPath;
 
 	private static ConfigurationReader instance;
 
@@ -61,7 +64,8 @@ public class ConfigurationReader {
 			virtualhost = prop.getProperty(VIRTUAL_HOST_TAG);
 			webappName = prop.getProperty(WEBAPP_TAG);
 			connectionport = prop.getProperty(PORT_TAG);
-			passwordEncryptationAlgorithm = prop.getProperty(PASSWORD_ALGORITHM);
+			passwordEncryptationAlgorithm = prop.getProperty(PASSWORD_ALGORITHM_TAG);
+			axisWebServicesPath = prop.getProperty(AXIS_PATH_TAG);
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
@@ -84,12 +88,16 @@ public class ConfigurationReader {
 		}
 
 		if (webappName == null) {
-			//Webapp can be null if liferay is installed in ROOT directory of Apache. 
-			webappName="";
-			//webappName = DEFAULT_LIFERAY_WEBAPP;
+			// Webapp can be null if liferay is installed in ROOT directory of
+			// Apache.
+			webappName = "";
+			// webappName = DEFAULT_LIFERAY_WEBAPP;
 		}
 		if (passwordEncryptationAlgorithm == null) {
 			passwordEncryptationAlgorithm = DEFAULT_PASSWORD_ALGORITHM;
+		}
+		if (axisWebServicesPath == null) {
+			axisWebServicesPath = DEFAULT_AXIS_WEBSERVICES_PATH;
 		}
 	}
 
@@ -118,5 +126,9 @@ public class ConfigurationReader {
 
 	public PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithm() {
 		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(passwordEncryptationAlgorithm);
+	}
+
+	public String getAxisWebServicesPath() {
+		return axisWebServicesPath;
 	}
 }

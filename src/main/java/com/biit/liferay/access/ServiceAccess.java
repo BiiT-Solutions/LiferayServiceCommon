@@ -45,7 +45,7 @@ public abstract class ServiceAccess implements LiferayService {
 		String loginUser = ConfigurationReader.getInstance().getUser();
 		String password = ConfigurationReader.getInstance().getPassword();
 		// Locate the Role service.
-		c(loginUser, password);
+		connectToWebService(loginUser, password);
 	}
 
 	@Override
