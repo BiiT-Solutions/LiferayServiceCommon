@@ -38,7 +38,7 @@ public class AccessUtils {
 					+ ConfigurationReader.getInstance().getVirtualHost() + ":"
 					+ ConfigurationReader.getInstance().getConnectionPort() + "/"
 					+ ConfigurationReader.getInstance().getWebAppName()
-					+ ConfigurationReader.getInstance().getAxisWebServicesPath() + serviceName);
+					+ ConfigurationReader.getInstance().getWebServicesPath() + serviceName);
 			return url;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

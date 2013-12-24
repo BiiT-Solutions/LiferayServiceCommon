@@ -137,7 +137,7 @@ public class ConfigurationReader {
 		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(passwordEncryptationAlgorithm);
 	}
 
-	public String getAxisWebServicesPath() {
+	public String getWebServicesPath() {
 		return axisWebServicesPath;
 	}
 
