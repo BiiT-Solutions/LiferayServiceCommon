@@ -1,7 +1,6 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +28,8 @@ import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.configuration.ConfigurationReader;
+import com.biit.liferay.log.LiferayClientLogger;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
@@ -133,6 +132,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 
 	public T decodeFromJson(String json, Class<T> objectClass) throws JsonParseException, JsonMappingException,
 			IOException, NotConnectedToWebServiceException, WebServiceAccessError {
+		LiferayClientLogger.info(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
 		try {
 			T object = new ObjectMapper().readValue(json, objectClass);
 			return object;
@@ -166,6 +166,10 @@ public abstract class ServiceAccess<T> implements LiferayService {
 			result = "{" + result + "}";
 		}
 		return result;
+	}
+
+	protected HttpHost getTargetHost() {
+		return targetHost;
 	}
 
 }
