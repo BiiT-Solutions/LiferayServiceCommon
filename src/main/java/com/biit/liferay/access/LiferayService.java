@@ -42,8 +42,8 @@ public interface LiferayService {
 	 * @param loginUser
 	 * @param password
 	 */
-	void serverConnection(String address, String protocol, int port, String webservicesPath, String loginUser,
-			String password);
+	void serverConnection(String address, String protocol, int port, String webservicesPath,
+			String authenticationToken, String loginUser, String password);
 
 	/**
 	 * Return the previously generated httpClient.

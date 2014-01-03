@@ -1,7 +1,9 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -19,14 +21,19 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
 
+import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.configuration.ConfigurationReader;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 /**
  * Common methods for accessing to a Liferay web service.
@@ -34,7 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public abstract class ServiceAccess<T> implements LiferayService {
 	private CloseableHttpClient httpClient = null;
 	private HttpHost targetHost;
-	private BasicHttpContext httpContext;
+	private BasicHttpContext httpContext = null;
 	private String webservicesPath;
 
 	@Override
@@ -59,15 +66,16 @@ public abstract class ServiceAccess<T> implements LiferayService {
 	}
 
 	@Override
-	public void serverConnection(String address, String protocol, int port, String webservicesPath, String loginUser,
-			String password) {
+	public void serverConnection(String address, String protocol, int port, String webservicesPath,
+			String authenticationToken, String loginUser, String password) {
 		this.webservicesPath = webservicesPath;
 		// Host definition
 		targetHost = new HttpHost(address, port, protocol);
 		// Credentials
 		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-		credentialsProvider.setCredentials(new AuthScope(targetHost), new UsernamePasswordCredentials(loginUser,
-				password));
+		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()),
+				new UsernamePasswordCredentials(loginUser, password));
+
 		// Client
 		httpClient = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
 
@@ -90,9 +98,9 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
 		String address = ConfigurationReader.getInstance().getVirtualHost();
 		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
+		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
 
-		// Locate the Role service.
-		serverConnection(address, protocol, port, webservicesPath, loginUser, password);
+		serverConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
 	}
 
 	@Override
@@ -104,7 +112,10 @@ public abstract class ServiceAccess<T> implements LiferayService {
 	}
 
 	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException,
-			IOException, NotConnectedToWebServiceException {
+			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+		// Set authentication param if defined.
+		setAuthParam(params);
+
 		HttpPost post = new HttpPost("/" + webservicesPath + webService);
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
 		post.setEntity(entity);
@@ -112,14 +123,49 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		if (response.getEntity() != null) {
 			// A Simple JSON Response Read
 			String result = EntityUtils.toString(response.getEntity());
+			if (result.contains("{\"exception\":\"Authenticated access required\"}")) {
+				throw new AuthenticationRequired("Authenticated access required.");
+			}
 			return result;
 		}
 		return null;
 	}
 
-	public T decodeFromJason(String json, Class<T> objectClass) throws JsonParseException, JsonMappingException, IOException {
-		T company = new ObjectMapper().readValue(json, objectClass);
-		return company;
+	public T decodeFromJson(String json, Class<T> objectClass) throws JsonParseException, JsonMappingException,
+			IOException, NotConnectedToWebServiceException, WebServiceAccessError {
+		try {
+			T object = new ObjectMapper().readValue(json, objectClass);
+			return object;
+		} catch (UnrecognizedPropertyException e) {
+			if (e.getMessage().startsWith("Unrecognized field \"exception\"")) {
+				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
+			}
+		}
+		return null;
+	}
+
+	public abstract List<T> decodeListFromJson(String json, Class<T> objectClass) throws JsonParseException,
+			JsonMappingException, IOException;
+
+	public void setAuthParam(List<NameValuePair> params) {
+		String authToken = ConfigurationReader.getInstance().getAuthToken();
+		if (authToken != null && authToken.length() > 0) {
+			params.add(new BasicNameValuePair("p_auth", authToken));
+		}
+	}
+
+	public String convertMapToString(Map<String, String> map) {
+		String result = "";
+		for (String key : map.keySet()) {
+			if (result.length() > 0) {
+				result += ",";
+			}
+			result += key + ":" + map.get(key);
+		}
+		if (result.length() > 0) {
+			result = "{" + result + "}";
+		}
+		return result;
 	}
 
 }

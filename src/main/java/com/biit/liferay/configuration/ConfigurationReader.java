@@ -16,8 +16,9 @@ public class ConfigurationReader {
 	private static final String PORT_TAG = "port";
 	// Password algorithm
 	private final String PASSWORD_ALGORITHM_TAG = "passwordEncriptationAlgorithm";
-	private final String AXIS_PATH_TAG = "webservices";
+	private final String WEBSERVICES_PATH_TAG = "webservices";
 	private final String LIFERAY_PROTOCOL_TAG = "liferayProtocol";
+	private final String AUTH_TOKEN_TAG = "p_auth";
 
 	private final String DEFAULT_USER = "user";
 	private final String DEFAULT_PASSWORD = "pass";
@@ -25,8 +26,9 @@ public class ConfigurationReader {
 	private final String DEFAULT_LIFERAY_WEBAPP = "lportal-6.1.1";
 	private final String DEFAULT_PORT = "8080";
 	private final String DEFAULT_PASSWORD_ALGORITHM = "SHA";
-	private final String DEFAULT_AXIS_WEBSERVICES_PATH = "api/axis/";
+	private final String DEFAULT_WEBSERVICES_PATH = "api/axis/";
 	private final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
+	private final String DEFAULT_AUTH_TOKEN = "";
 
 	private String user;
 	private String password;
@@ -34,8 +36,9 @@ public class ConfigurationReader {
 	private String webappName;
 	private String connectionport;
 	private String passwordEncryptationAlgorithm;
-	private String axisWebServicesPath;
+	private String webServicesPath;
 	private String liferayProtocol;
+	private String authToken;
 
 	private static ConfigurationReader instance;
 
@@ -68,8 +71,9 @@ public class ConfigurationReader {
 			webappName = prop.getProperty(WEBAPP_TAG);
 			connectionport = prop.getProperty(PORT_TAG);
 			passwordEncryptationAlgorithm = prop.getProperty(PASSWORD_ALGORITHM_TAG);
-			axisWebServicesPath = prop.getProperty(AXIS_PATH_TAG);
+			webServicesPath = prop.getProperty(WEBSERVICES_PATH_TAG);
 			liferayProtocol = prop.getProperty(LIFERAY_PROTOCOL_TAG);
+			authToken = prop.getProperty(AUTH_TOKEN_TAG);
 		} catch (IOException e) {
 
 		} catch (NullPointerException e) {
@@ -101,12 +105,16 @@ public class ConfigurationReader {
 			passwordEncryptationAlgorithm = DEFAULT_PASSWORD_ALGORITHM;
 		}
 
-		if (axisWebServicesPath == null) {
-			axisWebServicesPath = DEFAULT_AXIS_WEBSERVICES_PATH;
+		if (webServicesPath == null) {
+			webServicesPath = DEFAULT_WEBSERVICES_PATH;
 		}
 
 		if (liferayProtocol == null) {
 			liferayProtocol = DEFAULT_LIFERAY_PROTOCOL_PATH;
+		}
+		
+		if (authToken == null) {
+			authToken = DEFAULT_AUTH_TOKEN;
 		}
 	}
 
@@ -138,10 +146,14 @@ public class ConfigurationReader {
 	}
 
 	public String getWebServicesPath() {
-		return axisWebServicesPath;
+		return webServicesPath;
 	}
 
 	public String getLiferayProtocol() {
 		return liferayProtocol;
+	}
+
+	public String getAuthToken() {
+		return authToken;
 	}
 }
