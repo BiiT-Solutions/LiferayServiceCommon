@@ -1,6 +1,7 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,14 +13,17 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.config.SocketConfig;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
@@ -38,7 +42,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  * Common methods for accessing to a Liferay web service.
  */
 public abstract class ServiceAccess<T> implements LiferayService {
-	private CloseableHttpClient httpClient = null;
+	private HttpClient httpClient = null;
 	private HttpHost targetHost;
 	private BasicHttpContext httpContext = null;
 	private String webservicesPath;
@@ -50,16 +54,18 @@ public abstract class ServiceAccess<T> implements LiferayService {
 
 	@Override
 	public void disconnect() {
-		try {
-			httpClient.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (httpClient instanceof CloseableHttpClient) {
+			try {
+				((CloseableHttpClient) httpClient).close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		httpClient = null;
 	}
 
 	@Override
-	public CloseableHttpClient getHttpClient() throws NotConnectedToWebServiceException {
+	public HttpClient getHttpClient() throws NotConnectedToWebServiceException {
 		checkConnection();
 		return httpClient;
 	}
@@ -76,7 +82,15 @@ public abstract class ServiceAccess<T> implements LiferayService {
 				new UsernamePasswordCredentials(loginUser, password));
 
 		// Client
-		httpClient = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
+		SocketConfig defaultSocketConfig = SocketConfig.custom().setTcpNoDelay(true).build();
+		SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true)
+				.setSoReuseAddress(true).build();
+
+		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+		connManager.setDefaultSocketConfig(defaultSocketConfig);
+		connManager.setSocketConfig(new HttpHost(address, port), socketConfig);
+		httpClient = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider)
+				.setConnectionManager(connManager).build();
 
 		// Create AuthCache instance
 		AuthCache authCache = new BasicAuthCache();
@@ -113,6 +127,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException,
 			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		// Set authentication param if defined.
+		LiferayClientLogger.info(ServiceAccess.class.getName(), "Accessing to: " + webService);
 		setAuthParam(params);
 
 		HttpPost post = new HttpPost("/" + webservicesPath + webService);

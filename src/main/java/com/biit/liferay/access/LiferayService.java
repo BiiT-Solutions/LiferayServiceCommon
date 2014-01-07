@@ -1,6 +1,6 @@
 package com.biit.liferay.access;
 
-import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.client.HttpClient;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 
@@ -51,6 +51,6 @@ public interface LiferayService {
 	 * @return
 	 * @throws NotConnectedToWebServiceException
 	 */
-	CloseableHttpClient getHttpClient() throws NotConnectedToWebServiceException;
+	HttpClient getHttpClient() throws NotConnectedToWebServiceException;
 
 }
