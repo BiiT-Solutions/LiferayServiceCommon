@@ -1,7 +1,6 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +41,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  * Common methods for accessing to a Liferay web service.
  */
 public abstract class ServiceAccess<T> implements LiferayService {
+	private final static String NOT_AUTHORIZED_ERROR = "{\"exception\":\"Authenticated access required\"}";
+	private final static String UNRECOGNIZED_FIELD_ERROR = "Unrecognized field \"exception\"";
 	private HttpClient httpClient = null;
 	private HttpHost targetHost;
 	private BasicHttpContext httpContext = null;
@@ -137,7 +138,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		if (response.getEntity() != null) {
 			// A Simple JSON Response Read
 			String result = EntityUtils.toString(response.getEntity());
-			if (result.contains("{\"exception\":\"Authenticated access required\"}")) {
+			if (result.contains(NOT_AUTHORIZED_ERROR)) {
 				throw new AuthenticationRequired("Authenticated access required.");
 			}
 			return result;
@@ -152,7 +153,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 			T object = new ObjectMapper().readValue(json, objectClass);
 			return object;
 		} catch (UnrecognizedPropertyException e) {
-			if (e.getMessage().startsWith("Unrecognized field \"exception\"")) {
+			if (e.getMessage().startsWith(UNRECOGNIZED_FIELD_ERROR)) {
 				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
 			}
 		}
