@@ -47,6 +47,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 	private HttpHost targetHost;
 	private BasicHttpContext httpContext = null;
 	private String webservicesPath;
+	private String authenticatedWithUser;
 
 	@Override
 	public boolean isNotConnected() {
@@ -101,6 +102,8 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		// Add AuthCache to the execution context
 		httpContext = new BasicHttpContext();
 		httpContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
+
+		authenticatedWithUser = loginUser;
 	}
 
 	@Override
@@ -186,6 +189,10 @@ public abstract class ServiceAccess<T> implements LiferayService {
 
 	protected HttpHost getTargetHost() {
 		return targetHost;
+	}
+
+	public String getAuthenticatedWithUser() {
+		return authenticatedWithUser;
 	}
 
 }
