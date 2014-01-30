@@ -1,7 +1,5 @@
 package com.biit.liferay.access;
 
-import org.apache.http.client.HttpClient;
-
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 
 public interface LiferayService {
@@ -33,8 +31,7 @@ public interface LiferayService {
 	void disconnect();
 
 	/**
-	 * Starts the secure communication with the server to obtain the JSON
-	 * services.
+	 * Starts the secure communication with the server to obtain the JSON services.
 	 * 
 	 * @param address
 	 * @param port
@@ -42,15 +39,7 @@ public interface LiferayService {
 	 * @param loginUser
 	 * @param password
 	 */
-	void serverConnection(String address, String protocol, int port, String webservicesPath,
+	void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
 			String authenticationToken, String loginUser, String password);
-
-	/**
-	 * Return the previously generated httpClient.
-	 * 
-	 * @return
-	 * @throws NotConnectedToWebServiceException
-	 */
-	HttpClient getHttpClient() throws NotConnectedToWebServiceException;
 
 }
