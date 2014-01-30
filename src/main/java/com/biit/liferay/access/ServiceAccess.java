@@ -131,7 +131,8 @@ public abstract class ServiceAccess<T> implements LiferayService {
 	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException,
 			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		// Set authentication param if defined.
-		LiferayClientLogger.info(ServiceAccess.class.getName(), "Accessing to: " + webService);
+		long startTime = System.currentTimeMillis();
+
 		setAuthParam(params);
 
 		HttpPost post = new HttpPost("/" + webservicesPath + webService);
@@ -143,6 +144,21 @@ public abstract class ServiceAccess<T> implements LiferayService {
 			String result = EntityUtils.toString(response.getEntity());
 			if (result.contains(NOT_AUTHORIZED_ERROR)) {
 				throw new AuthenticationRequired("Authenticated access required.");
+			}
+			
+			//Measure response time. 
+			long stopTime = System.currentTimeMillis();
+			LiferayClientLogger.info(ServiceAccess.class.getName(), "Accessed to '" + webService + "' ("
+					+ (stopTime - startTime) + " ms).");
+			if (LiferayClientLogger.isDebugEnabled()) {
+				String paramsText = "";
+				for (NameValuePair param : params) {
+					if (paramsText.length() > 0) {
+						paramsText = ", ";
+					}
+					paramsText += "(" + param.getName() + ", " + param.getValue() + ")";
+				}
+				LiferayClientLogger.debug(ServiceAccess.class.getName(), "Using parameters: [" + paramsText + "]");
 			}
 			return result;
 		}

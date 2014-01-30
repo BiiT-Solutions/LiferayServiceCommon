@@ -70,4 +70,8 @@ public class LiferayClientLogger {
 		throwable.printStackTrace(printWriter);
 		return writer.toString();
 	}
+
+	public static boolean isDebugEnabled() {
+		return logger.isDebugEnabled();
+	}
 }
