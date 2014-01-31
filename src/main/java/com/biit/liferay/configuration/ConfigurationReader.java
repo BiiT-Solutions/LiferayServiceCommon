@@ -23,10 +23,10 @@ public class ConfigurationReader {
 	private final String DEFAULT_USER = "user";
 	private final String DEFAULT_PASSWORD = "pass";
 	private final String DEFAULT_VIRTUAL_HOST = "localhost";
-	private final String DEFAULT_LIFERAY_WEBAPP = "lportal-6.1.1";
+	private final String DEFAULT_LIFERAY_WEBAPP = "lportal62";
 	private final String DEFAULT_PORT = "8080";
-	private final String DEFAULT_PASSWORD_ALGORITHM = "SHA";
-	private final String DEFAULT_WEBSERVICES_PATH = "api/axis/";
+	private final String DEFAULT_PASSWORD_ALGORITHM = "PBKDF2";
+	private final String DEFAULT_WEBSERVICES_PATH = "api/jsonws/";
 	private final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
 	private final String DEFAULT_AUTH_TOKEN = "";
 

@@ -204,7 +204,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 				String paramsText = "";
 				for (NameValuePair param : authParams) {
 					if (paramsText.length() > 0) {
-						paramsText = ", ";
+						paramsText += ", ";
 					}
 					paramsText += "(" + param.getName() + ", " + param.getValue() + ")";
 				}
