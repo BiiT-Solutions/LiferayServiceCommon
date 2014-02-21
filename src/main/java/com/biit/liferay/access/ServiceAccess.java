@@ -240,9 +240,10 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		} catch (UnrecognizedPropertyException e) {
 			if (e.getMessage().startsWith(UNRECOGNIZED_FIELD_ERROR)) {
 				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
+			} else {
+				throw e;
 			}
 		}
-		return null;
 	}
 
 	public abstract List<T> decodeListFromJson(String json, Class<T> objectClass) throws JsonParseException,
