@@ -255,7 +255,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		}
 	}
 
-	public String convertMapToString(Map<String, String> map) {
+	public String convertMapToJson(Map<String, String> map) {
 		String result = "";
 		for (String key : map.keySet()) {
 			if (result.length() > 0) {
