@@ -17,6 +17,8 @@
 		<org.testng.version>6.8</org.testng.version>
 		<biit-common-utils.version>0.0.1</biit-common-utils.version>
 		<jackson.version>2.3.0</jackson.version>
+		<apache-commons.version>1.9</apache-commons.version>
+		<apache-httpclient.version>4.3.1</apache-httpclient.version>
 	</properties>
 
 	<build>
@@ -47,6 +49,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${apache-commons.version}</version>
+		</dependency>
 		<!-- File access -->
 		<dependency>
 			<groupId>com.biit</groupId>
@@ -57,7 +64,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.1</version>
+			<version>${apache-httpclient.version}</version>
 		</dependency>
 		<!-- JSON translation -->
 		<dependency>
