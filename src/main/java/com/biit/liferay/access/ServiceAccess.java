@@ -27,6 +27,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONValue;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
@@ -255,18 +256,9 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		}
 	}
 
-	public String convertMapToJson(Map<String, String> map) {
-		String result = "";
-		for (String key : map.keySet()) {
-			if (result.length() > 0) {
-				result += ",";
-			}
-			result += key + ":" + map.get(key);
-		}
-		if (result.length() > 0) {
-			result = "{" + result + "}";
-		}
-		return result;
+	@SuppressWarnings("rawtypes")
+	public String encodeMapToJson(Map map) {
+		return JSONValue.toJSONString(map);
 	}
 
 	protected HttpHost getTargetHost() {
