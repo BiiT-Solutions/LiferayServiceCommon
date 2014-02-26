@@ -50,7 +50,8 @@ public abstract class ServiceAccess<T> implements LiferayService {
 	private HttpHost targetHost;
 	private BasicHttpContext httpContext = null;
 	private String webservicesPath;
-	private String authenticatedWithUser;
+	private String connectionUser;
+	private String connectionPassword;
 	private String authToken;
 
 	@Override
@@ -122,7 +123,8 @@ public abstract class ServiceAccess<T> implements LiferayService {
 
 		createAuthCache();
 
-		authenticatedWithUser = loginUser;
+		connectionUser = loginUser;
+		connectionPassword = password;
 
 		authToken = authenticationToken;
 	}
@@ -140,7 +142,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		httpContext = new BasicHttpContext();
 		httpContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
 	}
-	
+
 	@Override
 	public void serverConnection(String user, String password) {
 		// Read user and password.
@@ -277,8 +279,12 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		return targetHost;
 	}
 
-	public String getAuthenticatedWithUser() {
-		return authenticatedWithUser;
+	public String getConnectionUser() {
+		return connectionUser;
+	}
+
+	public String getConnectionPassword() {
+		return connectionPassword;
 	}
 
 }

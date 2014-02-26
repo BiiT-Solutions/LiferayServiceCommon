@@ -19,15 +19,7 @@ import com.liferay.portal.model.ClassName;
 
 public class ClassNameService extends ServiceAccess<ClassName> {
 
-	private final static ClassNameService instance = new ClassNameService();
-	private ClassNamePool classNamePool;
-
-	public static ClassNameService getInstance() {
-		return instance;
-	}
-
-	private ClassNameService() {
-		classNamePool = new ClassNamePool();
+	public ClassNameService() {
 	}
 
 	@Override
@@ -41,7 +33,7 @@ public class ClassNameService extends ServiceAccess<ClassName> {
 
 	public ClassName getClassName(String value) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
-		ClassName className = classNamePool.getClassName(value);
+		ClassName className = ClassNamePool.getInstance().getClassName(value);
 		if (className != null) {
 			return className;
 		}
@@ -55,7 +47,7 @@ public class ClassNameService extends ServiceAccess<ClassName> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			className = decodeFromJson(result, ClassName.class);
-			classNamePool.addClassName(value, className);
+			ClassNamePool.getInstance().addClassName(value, className);
 			return className;
 		}
 		return null;

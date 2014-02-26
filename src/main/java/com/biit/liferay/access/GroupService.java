@@ -19,13 +19,7 @@ import com.liferay.portal.model.Group;
 
 public class GroupService extends ServiceAccess<Group> {
 
-	private final static GroupService instance = new GroupService();
-
-	public static GroupService getInstance() {
-		return instance;
-	}
-
-	private GroupService() {
+	public GroupService() {
 	}
 
 	@Override

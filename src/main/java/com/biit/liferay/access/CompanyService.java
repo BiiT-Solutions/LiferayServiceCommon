@@ -21,15 +21,8 @@ import com.liferay.portal.model.Company;
  * This class allows to obtain a liferay portal instance.
  */
 public class CompanyService extends ServiceAccess<Company> {
-	private final static CompanyService instance = new CompanyService();
-	private CompanyPool companyPool;
 
-	public static CompanyService getInstance() {
-		return instance;
-	}
-
-	private CompanyService() {
-		companyPool = new CompanyPool();
+	public CompanyService() {
 	}
 
 	@Override
@@ -56,7 +49,7 @@ public class CompanyService extends ServiceAccess<Company> {
 	public Company getCompanyById(long companyId) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
 
-		Company company = companyPool.getCompanyById(companyId);
+		Company company = CompanyPool.getInstance().getCompanyById(companyId);
 		if (company != null) {
 			return company;
 		}
@@ -70,7 +63,7 @@ public class CompanyService extends ServiceAccess<Company> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
-			companyPool.addCompany(company);
+			CompanyPool.getInstance().addCompany(company);
 			return company;
 		}
 
@@ -94,7 +87,7 @@ public class CompanyService extends ServiceAccess<Company> {
 	public Company getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException,
 			JsonParseException, JsonMappingException, IOException, AuthenticationRequired, WebServiceAccessError {
 
-		Company company = companyPool.getCompanyByVirtualHostId(virtualHost);
+		Company company = CompanyPool.getInstance().getCompanyByVirtualHostId(virtualHost);
 		if (company != null) {
 			return company;
 		}
@@ -108,7 +101,7 @@ public class CompanyService extends ServiceAccess<Company> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
-			companyPool.addCompany(company, virtualHost);
+			CompanyPool.getInstance().addCompany(company, virtualHost);
 			return company;
 		}
 
@@ -130,7 +123,7 @@ public class CompanyService extends ServiceAccess<Company> {
 	public Company getCompanyByWebId(String webId) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
 
-		Company company = companyPool.getCompanyByWebId(webId);
+		Company company = CompanyPool.getInstance().getCompanyByWebId(webId);
 		if (company != null) {
 			return company;
 		}
@@ -144,7 +137,7 @@ public class CompanyService extends ServiceAccess<Company> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
-			companyPool.addCompany(company);
+			CompanyPool.getInstance().addCompany(company);
 			return company;
 		}
 
