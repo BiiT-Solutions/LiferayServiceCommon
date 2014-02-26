@@ -42,4 +42,12 @@ public interface LiferayService {
 	void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
 			String authenticationToken, String loginUser, String password);
 
+	/**
+	 * Starts the secure communication with the server to obtain the JSON services.
+	 * 
+	 * @param user
+	 * @param password
+	 */
+	void serverConnection(String user, String password);
+
 }

@@ -140,6 +140,18 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		httpContext = new BasicHttpContext();
 		httpContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
 	}
+	
+	@Override
+	public void serverConnection(String user, String password) {
+		// Read user and password.
+		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
+		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
+		String address = ConfigurationReader.getInstance().getVirtualHost();
+		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
+		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
+
+		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, user, password);
+	}
 
 	@Override
 	public void serverConnection() {
