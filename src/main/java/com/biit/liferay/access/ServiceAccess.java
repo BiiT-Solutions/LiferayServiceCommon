@@ -65,7 +65,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 			try {
 				((CloseableHttpClient) httpClientWithCredentials).close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		httpClientWithCredentials = null;
@@ -73,7 +73,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 			try {
 				((CloseableHttpClient) httpClientWithoutCredentials).close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		httpClientWithoutCredentials = null;
