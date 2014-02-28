@@ -213,7 +213,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 			}
 
 			// Measure response time.
-			LiferayClientLogger.info(ServiceAccess.class.getName(),
+			LiferayClientLogger.debug(ServiceAccess.class.getName(),
 					"Accessed to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			if (LiferayClientLogger.isDebugEnabled()) {
 				String paramsText = "";
@@ -248,7 +248,7 @@ public abstract class ServiceAccess<T> implements LiferayService {
 
 	public T decodeFromJson(String json, Class<T> objectClass) throws JsonParseException, JsonMappingException,
 			IOException, NotConnectedToWebServiceException, WebServiceAccessError {
-		LiferayClientLogger.info(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
+		LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
 		try {
 			T object = new ObjectMapper().readValue(json, objectClass);
 			return object;
