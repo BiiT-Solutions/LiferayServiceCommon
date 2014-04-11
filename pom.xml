@@ -3,11 +3,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.biit.liferay</groupId>
-	<artifactId>liferay-common</artifactId>
+	<artifactId>liferay-service-common</artifactId>
 	<packaging>jar</packaging>
 	<version>0.4.0</version>
 	<name>Liferay Client Common Utils</name>
-	<description>Basic functionality for any liferay client</description>
+	<description>Basic functionality for any Liferay client</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
