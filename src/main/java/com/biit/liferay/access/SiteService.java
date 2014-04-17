@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Site;
 
 /**
@@ -34,6 +35,14 @@ public class SiteService extends ServiceAccess<Site> {
 		});
 
 		return myObjects;
+	}
+
+	public Site getSite(Company company, String siteName) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+		if (company != null) {
+			return getSite(company.getCompanyId(), siteName);
+		}
+		return null;
 	}
 
 	public Site getSite(Long companyId, String siteName) throws NotConnectedToWebServiceException,
@@ -57,6 +66,14 @@ public class SiteService extends ServiceAccess<Site> {
 				site = decodeFromJson(result, Site.class);
 				return site;
 			}
+		}
+		return null;
+	}
+
+	public Site getSiteByFriendlyUrl(Company company, String friendlyUrl) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+		if (company != null) {
+			return getSiteByFriendlyUrl(company.getCompanyId(), friendlyUrl);
 		}
 		return null;
 	}

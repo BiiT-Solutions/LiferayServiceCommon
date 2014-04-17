@@ -19,11 +19,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.Site;
 import com.liferay.portal.model.User;
 
 /**
- * Manage all Organization Services. As some organization's properties are
- * defined as a group, also manage some group services.
+ * Manage all Organization Services. As some organization's properties are defined as a group, also manage some group
+ * services.
  * 
  */
 public class OrganizationService extends ServiceAccess<Organization> {
@@ -186,8 +187,63 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	}
 
 	/**
-	 * Obtains the default status from the database using a webservice. Requires
-	 * the use of ListTypeService.
+	 * Gets the organizations of a user in a site.
+	 * 
+	 * @param site
+	 * @param user
+	 * @return
+	 * @throws NotConnectedToWebServiceException
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws AuthenticationRequired
+	 */
+	public List<Organization> getOrganizations(Site site, User user) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired {
+		List<Organization> organizations = new ArrayList<Organization>();
+
+		if (site != null && user != null) {
+			organizations = OrganizationPool.getInstance().getOrganizationBySiteAndUser(site, user);
+			if (organizations != null) {
+				return organizations;
+			}
+
+			// Look up user in the liferay.
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("siteId", site.getSiteId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUserId() + ""));
+
+			String result = getHttpResponse("liferay-service-common-portlet.site/get-organizations", params);
+			if (result != null) {
+				// A Simple JSON Response Read
+				organizations = decodeListFromJson(result, Organization.class);
+				OrganizationPool.getInstance().addOrganizationsBySiteAndUser(site, user, organizations);
+			}
+		}
+		return organizations;
+	}
+
+	public boolean addOrganization(Site site, User user, Organization organization)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
+		if (site != null && user != null && organization != null) {
+			// Look up user in the liferay.
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("siteId", site.getSiteId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUserId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getOrganizationId() + ""));
+
+			String result = getHttpResponse("liferay-service-common-portlet.site/add-organization", params);
+
+			return Boolean.parseBoolean(result);
+		}
+		return false;
+	}
+
+	/**
+	 * Obtains the default status from the database using a webservice. Requires the use of ListTypeService.
 	 * 
 	 * @return
 	 * @throws ClientProtocolException
@@ -241,8 +297,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	}
 
 	/**
-	 * Gets all organizations where the user pertains to. Needs the inner
-	 * service CompanyService.
+	 * Gets all organizations where the user pertains to. Needs the inner service CompanyService.
 	 * 
 	 * @param user
 	 * @return
