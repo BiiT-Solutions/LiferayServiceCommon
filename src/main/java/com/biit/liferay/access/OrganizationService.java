@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.PortletNotInstalledException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -23,8 +24,8 @@ import com.liferay.portal.model.Site;
 import com.liferay.portal.model.User;
 
 /**
- * Manage all Organization Services. As some organization's properties are defined as a group, also manage some group
- * services.
+ * Manage all Organization Services. As some organization's properties are
+ * defined as a group, also manage some group services.
  * 
  */
 public class OrganizationService extends ServiceAccess<Organization> {
@@ -198,7 +199,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	 * @throws AuthenticationRequired
 	 */
 	public List<Organization> getOrganizations(Site site, User user) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired {
+			ClientProtocolException, IOException, AuthenticationRequired, PortletNotInstalledException {
 		List<Organization> organizations = new ArrayList<Organization>();
 
 		if (site != null && user != null) {
@@ -216,6 +217,11 @@ public class OrganizationService extends ServiceAccess<Organization> {
 
 			String result = getHttpResponse("liferay-service-common-portlet.site/get-organizations", params);
 			if (result != null) {
+				// Check if Portlet not installed
+				if (result.contains("and method POST for")) {
+					throw new PortletNotInstalledException(
+							"Portlet 'form-reader-portlet' is not installed on Liferay. Please, install it.");
+				}
 				// A Simple JSON Response Read
 				organizations = decodeListFromJson(result, Organization.class);
 				OrganizationPool.getInstance().addOrganizationsBySiteAndUser(site, user, organizations);
@@ -243,7 +249,8 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	}
 
 	/**
-	 * Obtains the default status from the database using a webservice. Requires the use of ListTypeService.
+	 * Obtains the default status from the database using a webservice. Requires
+	 * the use of ListTypeService.
 	 * 
 	 * @return
 	 * @throws ClientProtocolException
@@ -297,7 +304,8 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	}
 
 	/**
-	 * Gets all organizations where the user pertains to. Needs the inner service CompanyService.
+	 * Gets all organizations where the user pertains to. Needs the inner
+	 * service CompanyService.
 	 * 
 	 * @param user
 	 * @return
