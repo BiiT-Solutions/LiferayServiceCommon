@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
@@ -24,8 +25,8 @@ import com.liferay.portal.model.Site;
 import com.liferay.portal.model.User;
 
 /**
- * Manage all Organization Services. As some organization's properties are
- * defined as a group, also manage some group services.
+ * Manage all Organization Services. As some organization's properties are defined as a group, also manage some group
+ * services.
  * 
  */
 public class OrganizationService extends ServiceAccess<Organization> {
@@ -132,20 +133,27 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 * @throws AuthenticationRequired
+	 * @throws OrganizationNotDeletedException
 	 */
 	public void deleteOrganization(Company company, Organization organization)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			OrganizationNotDeletedException {
 		if (organization != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("organizationId", organization.getOrganizationId() + ""));
 
-			getHttpResponse("organization/delete-organization", params);
+			String result = getHttpResponse("organization/delete-organization", params);
 
-			OrganizationPool.getInstance().removeOrganization(company, organization);
-			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getName()
-					+ "' deleted.");
+			if (result == null || result.length() < 3) {
+				OrganizationPool.getInstance().removeOrganization(company, organization);
+				LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getName()
+						+ "' deleted.");
+			} else {
+				throw new OrganizationNotDeletedException("Organization '" + organization.getName() + "' (id:"
+						+ organization.getOrganizationId() + ") not deleted correctly. ");
+			}
 		}
 	}
 
@@ -249,8 +257,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	}
 
 	/**
-	 * Obtains the default status from the database using a webservice. Requires
-	 * the use of ListTypeService.
+	 * Obtains the default status from the database using a webservice. Requires the use of ListTypeService.
 	 * 
 	 * @return
 	 * @throws ClientProtocolException
@@ -304,8 +311,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	}
 
 	/**
-	 * Gets all organizations where the user pertains to. Needs the inner
-	 * service CompanyService.
+	 * Gets all organizations where the user pertains to. Needs the inner service CompanyService.
 	 * 
 	 * @param user
 	 * @return
@@ -491,7 +497,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 
 			// Reset the pool of groups to calculate again the user's
 			// organization groups.
-			OrganizationPool.getInstance().removeOrganizationGroups(user);
+			OrganizationPool.getInstance().removeUserFromOrganizations(user, organization);
 		}
 	}
 

@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
 import com.biit.liferay.access.exceptions.UserDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -348,7 +349,7 @@ public class AccessTest {
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "organizationAccess", "pool" }, dependsOnMethods = { "unsetUsersFromOrganization" })
 	public void organizationDelete() throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired {
+			AuthenticationRequired, OrganizationNotDeletedException {
 		// Check previous organization.
 		int previousOrganizations = organizationService.getOrganizations(company).size();
 		organizationService.deleteOrganization(company, organization1);

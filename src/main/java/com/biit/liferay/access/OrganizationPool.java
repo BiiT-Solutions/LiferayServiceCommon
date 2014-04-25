@@ -196,6 +196,23 @@ public class OrganizationPool {
 		}
 	}
 
+	public void removeUserFromOrganizations(User user, Organization organization) {
+		if (user != null && organization != null) {
+			removeUserFromOrganizations(user.getUserId(), organization.getOrganizationId());
+		}
+	}
+
+	public void removeUserFromOrganizations(Long userId, Long organizationId) {
+		if (userId != null && organizationId != null) {
+			List<User> tempUsers = new ArrayList<User>(organizationUsers.get(organizationId));
+			for (User user : tempUsers) {
+				if (user.getUserId() == userId) {
+					organizationUsers.get(organizationId).remove(user);
+				}
+			}
+		}
+	}
+
 	public void removeOrganizationGroups(User user) {
 		if (user != null) {
 			removeOrganizationGroupsOfUser(user.getUserId());
