@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.PortletNotInstalledException;
 import com.biit.liferay.access.exceptions.UserDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -312,7 +313,7 @@ public class AccessTest {
 
 	@Test(groups = { "pool" }, dependsOnMethods = { "setOrganizationsBySiteAndUser" })
 	public void getOrganizationsBySiteAndUserPool() throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired {
+			IOException, AuthenticationRequired, PortletNotInstalledException {
 		// Make a connection for populating the pool.
 		List<Organization> organizations = organizationService.getOrganizations(site, user);
 		Assert.assertNotNull(organizations);
