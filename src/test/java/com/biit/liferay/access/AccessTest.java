@@ -329,15 +329,6 @@ public class AccessTest {
 		connectToOrganizationWebService();
 	}
 
-	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "organizationAccess", "pool" }, dependsOnMethods = {
-			"addOrganization", "checkOrganizationsOfUser" })
-	public void unsetUsersFromOrganization() throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired {
-		// Check previous organization.
-		organizationService.removeUserFromOrganization(user, organization1);
-		organizationService.removeUserFromOrganization(user, organization2);
-	}
-
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "groupAccess", "userAccess", "pool" }, dependsOnMethods = { "groupAdd" })
 	public void groupDelete() throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired {
@@ -347,14 +338,25 @@ public class AccessTest {
 		Assert.assertEquals(userGroupService.getUserUserGroups(user).size(), prevGroups - 1);
 	}
 
-	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "organizationAccess", "pool" }, dependsOnMethods = { "unsetUsersFromOrganization" })
+	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "groupAccess", "userAccess" }, dependsOnMethods = {
+			"addOrganization" })
+	public void unsetUserFromOrganization() throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired {
+		int usersInOrg1 = organizationService.getOrganizationUsers(organization1).size();
+		int usersInOrg2 = organizationService.getOrganizationUsers(organization2).size();
+		organizationService.removeUserFromOrganization(user, organization1);
+		organizationService.removeUserFromOrganization(user, organization2);
+		Assert.assertEquals(usersInOrg1 - 1, organizationService.getOrganizationUsers(organization1).size());
+		Assert.assertEquals(usersInOrg2 - 1, organizationService.getOrganizationUsers(organization2).size());
+	}
+
+	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnMethods = { "unsetUserFromOrganization" })
 	public void organizationDelete() throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, OrganizationNotDeletedException {
-		// Check previous organization.
-		int previousOrganizations = organizationService.getOrganizations(company).size();
+		int prevOrgs = organizationService.getOrganizations(company).size();
 		organizationService.deleteOrganization(company, organization1);
 		organizationService.deleteOrganization(company, organization2);
-		Assert.assertEquals(organizationService.getOrganizations(company).size(), previousOrganizations - 2);
+		Assert.assertEquals(prevOrgs - 2, organizationService.getOrganizations(company).size());
 	}
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "userAccess", "groupAccess", "contactAccess",
