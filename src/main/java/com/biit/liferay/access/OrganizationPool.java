@@ -19,6 +19,10 @@ public class OrganizationPool {
 	// Company id -> Organizations.
 	private Hashtable<Long, List<Organization>> organizationsByCompany;
 
+	// Organizations by id;
+	private Hashtable<Long, Long> organizationTime; // user id -> time.
+	private Hashtable<Long, Organization> organizationsById;
+
 	private Hashtable<Long, Long> userTime; // user id -> time.
 	// Group by user.
 	private Hashtable<Long, List<Group>> organizationsGroupByUser;
@@ -45,14 +49,8 @@ public class OrganizationPool {
 		organizationUsers = new Hashtable<Long, List<User>>();
 		organizationSiteAndUsersTime = new Hashtable<Long, Hashtable<Long, Long>>();
 		organizationSiteAndUsers = new Hashtable<Long, Hashtable<Long, List<Organization>>>();
-	}
-
-	public void addOrganizationUsers(Long organizationId, List<User> users) {
-		if (organizationId != null && users != null) {
-			organizationUsersTime.put(organizationId, System.currentTimeMillis());
-			List<User> tempUsers = new ArrayList<User>(users);
-			organizationUsers.put(organizationId, tempUsers);
-		}
+		organizationsById = new Hashtable<Long, Organization>();
+		organizationTime = new Hashtable<Long, Long>();
 	}
 
 	public void addOrganization(Company company, Organization organization) {
@@ -60,6 +58,14 @@ public class OrganizationPool {
 			List<Organization> organizations = new ArrayList<Organization>();
 			organizations.add(organization);
 			addOrganizations(company, organizations);
+		}
+	}
+
+	public void addOrganizationGroup(User user, Group group) {
+		if (user != null && group != null) {
+			List<Group> groups = new ArrayList<Group>();
+			groups.add(group);
+			addOrganizationGroups(user, groups);
 		}
 	}
 
@@ -77,14 +83,6 @@ public class OrganizationPool {
 					organizationGroups.add(group);
 				}
 			}
-		}
-	}
-
-	public void addOrganizationGroup(User user, Group group) {
-		if (user != null && group != null) {
-			List<Group> groups = new ArrayList<Group>();
-			groups.add(group);
-			addOrganizationGroups(user, groups);
 		}
 	}
 
@@ -106,28 +104,136 @@ public class OrganizationPool {
 			for (Organization organization : organizationsToAdd) {
 				if (!organizationsOfCompany.contains(organization)) {
 					organizationsOfCompany.add(organization);
+					// Update Ids pool also
+					addOrganization(organization);
 				}
 			}
 		}
 	}
 
-	public List<User> getOrganizationUsers(long organizationId) {
+	/**
+	 * Adds organizations for a user in a site to the pool.
+	 * 
+	 * @param siteId
+	 * @param userId
+	 * @param organizations
+	 */
+	public void addOrganizationsBySiteAndUser(long siteId, long userId, List<Organization> organizations) {
+		// Update data
+		Hashtable<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
+		if (organizationsByUser == null) {
+			organizationSiteAndUsers.put(siteId, new Hashtable<Long, List<Organization>>());
+		}
+		organizationSiteAndUsers.get(siteId).put(userId, organizations);
+
+		// Update time.
+		if (organizationSiteAndUsersTime.get(siteId) == null) {
+			organizationSiteAndUsersTime.put(siteId, new Hashtable<Long, Long>());
+		}
+		organizationSiteAndUsersTime.get(siteId).put(userId, System.currentTimeMillis());
+
+		// Update Ids pool also
+		for (Organization organization : organizations) {
+			addOrganization(organization);
+		}
+	}
+
+	/**
+	 * Adds organizations for a user in a site to the pool.
+	 * 
+	 * @param site
+	 * @param user
+	 * @param organizations
+	 */
+	public void addOrganizationsBySiteAndUser(Site site, User user, List<Organization> organizations) {
+		if (site != null && user != null) {
+			addOrganizationsBySiteAndUser(site.getSiteId(), user.getUserId(), organizations);
+		}
+	}
+
+	public void addOrganizationUsers(Long organizationId, List<User> users) {
+		if (organizationId != null && users != null) {
+			organizationUsersTime.put(organizationId, System.currentTimeMillis());
+			List<User> tempUsers = new ArrayList<User>(users);
+			organizationUsers.put(organizationId, tempUsers);
+		}
+	}
+
+	public void addOrganization(Organization organization) {
+		organizationTime.put(organization.getOrganizationId(), System.currentTimeMillis());
+		organizationsById.put(organization.getOrganizationId(), organization);
+	}
+
+	/**
+	 * Gets all previously stored organizations of a user in a site.
+	 * 
+	 * @param siteId
+	 * @param userId
+	 * @return
+	 */
+	public Organization getOrganizationById(long organizationId) {
 		long now = System.currentTimeMillis();
-		Long nextOrganizationId = null;
-		if (organizationUsersTime.size() > 0) {
-			Enumeration<Long> e = organizationUsersTime.keys();
-			while (e.hasMoreElements()) {
-				nextOrganizationId = e.nextElement();
-				if ((now - organizationUsersTime.get(nextOrganizationId)) > EXPIRATION_TIME) {
-					// Object has expired.
-					removeOrganizationUsers(nextOrganizationId);
-					nextOrganizationId = null;
+		Long storedObjectId = null;
+		if (organizationTime.size() > 0) {
+			Enumeration<Long> organizationsIds = organizationTime.keys();
+			while (organizationsIds.hasMoreElements()) {
+				storedObjectId = organizationsIds.nextElement();
+				if ((now - organizationTime.get(storedObjectId)) > EXPIRATION_TIME) {
+					// object has expired
+					removeOrganizationsById(organizationId);
+					storedObjectId = null;
 				} else {
-					if (organizationId == nextOrganizationId) {
-						return organizationUsers.get(nextOrganizationId);
+					if (organizationsById.get(storedObjectId) != null && storedObjectId == organizationId) {
+						return organizationsById.get(storedObjectId);
 					}
 				}
 			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets all previously stored organizations of a user in a site.
+	 * 
+	 * @param siteId
+	 * @param userId
+	 * @return
+	 */
+	public List<Organization> getOrganizationBySiteAndUser(long siteId, long userId) {
+		long now = System.currentTimeMillis();
+		Long nextSiteId = null;
+		Long nextUserId = null;
+		if (organizationSiteAndUsersTime.size() > 0) {
+			Enumeration<Long> siteEnum = organizationSiteAndUsersTime.keys();
+			while (siteEnum.hasMoreElements()) {
+				nextSiteId = siteEnum.nextElement();
+				Enumeration<Long> userEnum = organizationSiteAndUsersTime.get(nextSiteId).keys();
+				while (userEnum.hasMoreElements()) {
+					nextUserId = userEnum.nextElement();
+					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > EXPIRATION_TIME) {
+						// object has expired
+						removeOrganizations(nextSiteId, nextUserId);
+					} else {
+						if ((nextSiteId == siteId) && (nextUserId == userId)) {
+							return organizationSiteAndUsers.get(siteId).get(userId);
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets all previously stored organizations of a user in a site.
+	 * 
+	 * @param siteId
+	 * @param userId
+	 * @return
+	 */
+	public List<Organization> getOrganizationBySiteAndUser(Site site, User user) {
+		if (site != null && user != null) {
+			return getOrganizationBySiteAndUser(site.getSiteId(), user.getUserId());
 		}
 		return null;
 	}
@@ -181,33 +287,37 @@ public class OrganizationPool {
 		return null;
 	}
 
-	public void removeOrganizationUsers(Long organizationId) {
-		organizationUsersTime.remove(organizationId);
-		organizationUsers.remove(organizationId);
+	public List<User> getOrganizationUsers(long organizationId) {
+		long now = System.currentTimeMillis();
+		Long nextOrganizationId = null;
+		if (organizationUsersTime.size() > 0) {
+			Enumeration<Long> e = organizationUsersTime.keys();
+			while (e.hasMoreElements()) {
+				nextOrganizationId = e.nextElement();
+				if ((now - organizationUsersTime.get(nextOrganizationId)) > EXPIRATION_TIME) {
+					// Object has expired.
+					removeOrganizationUsers(nextOrganizationId);
+					nextOrganizationId = null;
+				} else {
+					if (organizationId == nextOrganizationId) {
+						return organizationUsers.get(nextOrganizationId);
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	public void removeOrganization(Company company, Organization organization) {
 		List<Organization> organizationsOfCompany = new ArrayList<Organization>(organizationsByCompany.get(company
 				.getCompanyId()));
-		for (Organization organizationOfCompany : organizationsOfCompany) {
-			if (organizationOfCompany.getOrganizationId() == organization.getOrganizationId()) {
-				organizationsByCompany.get(company.getCompanyId()).remove(organizationOfCompany);
-			}
-		}
-	}
+		if (organization != null) {
+			for (Organization organizationOfCompany : organizationsOfCompany) {
+				if (organizationOfCompany.getOrganizationId() == organization.getOrganizationId()) {
+					organizationsByCompany.get(company.getCompanyId()).remove(organizationOfCompany);
 
-	public void removeUserFromOrganizations(User user, Organization organization) {
-		if (user != null && organization != null) {
-			removeUserFromOrganizations(user.getUserId(), organization.getOrganizationId());
-		}
-	}
-
-	public void removeUserFromOrganizations(Long userId, Long organizationId) {
-		if (userId != null && organizationId != null) {
-			List<User> tempUsers = new ArrayList<User>(organizationUsers.get(organizationId));
-			for (User user : tempUsers) {
-				if (user.getUserId() == userId) {
-					organizationUsers.get(organizationId).remove(user);
+					// Also remove Ids pool.
+					removeOrganizationsById(organization.getOrganizationId());
 				}
 			}
 		}
@@ -230,91 +340,19 @@ public class OrganizationPool {
 		}
 	}
 
-	public void removeOrganizationsOfCompany(Long companyId) {
-		time.remove(companyId);
-		organizationsByCompany.remove(companyId);
-	}
-
 	/**
-	 * Gets all previously stored organizations of a user in a site.
-	 * 
-	 * @param siteId
-	 * @param userId
-	 * @return
-	 */
-	public List<Organization> getOrganizationBySiteAndUser(Site site, User user) {
-		if (site != null && user != null) {
-			return getOrganizationBySiteAndUser(site.getSiteId(), user.getUserId());
-		}
-		return null;
-	}
-
-	/**
-	 * Gets all previously stored organizations of a user in a site.
-	 * 
-	 * @param siteId
-	 * @param userId
-	 * @return
-	 */
-	public List<Organization> getOrganizationBySiteAndUser(long siteId, long userId) {
-		long now = System.currentTimeMillis();
-		Long nextSiteId = null;
-		Long nextUserId = null;
-		if (organizationSiteAndUsersTime.size() > 0) {
-			Enumeration<Long> siteEnum = organizationSiteAndUsersTime.keys();
-			while (siteEnum.hasMoreElements()) {
-				nextSiteId = siteEnum.nextElement();
-				Enumeration<Long> userEnum = organizationSiteAndUsersTime.get(nextSiteId).keys();
-				while (userEnum.hasMoreElements()) {
-					nextUserId = userEnum.nextElement();
-					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > EXPIRATION_TIME) {
-						// object has expired
-						removeOrganizations(nextSiteId, nextUserId);
-					} else {
-						if ((nextSiteId == siteId) && (nextUserId == userId)) {
-							return organizationSiteAndUsers.get(siteId).get(userId);
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Adds organizations for a user in a site to the pool.
+	 * Remove organizations for a user in a site from the pool.
 	 * 
 	 * @param site
 	 * @param user
-	 * @param organizations
 	 */
-	public void addOrganizationsBySiteAndUser(Site site, User user, List<Organization> organizations) {
-		if (site != null && user != null) {
-			addOrganizationsBySiteAndUser(site.getSiteId(), user.getUserId(), organizations);
-		}
-	}
-
-	/**
-	 * Adds organizations for a user in a site to the pool.
-	 * 
-	 * @param siteId
-	 * @param userId
-	 * @param organizations
-	 */
-	public void addOrganizationsBySiteAndUser(long siteId, long userId, List<Organization> organizations) {
-		// Update data
+	public void removeOrganizations(long siteId, long userId) {
 		Hashtable<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
-		if (organizationsByUser == null) {
-			organizationSiteAndUsers.put(siteId, new Hashtable<Long, List<Organization>>());
+		if (organizationsByUser != null) {
+			organizationsByUser.remove(userId);
+			// Remove time mark.
+			organizationSiteAndUsersTime.get(siteId).remove(userId);
 		}
-		organizationSiteAndUsers.get(siteId).put(userId, organizations);
-
-		// Update time.
-		if (organizationSiteAndUsersTime.get(siteId) == null) {
-			organizationSiteAndUsersTime.put(siteId, new Hashtable<Long, Long>());
-		}
-		organizationSiteAndUsersTime.get(siteId).put(userId, System.currentTimeMillis());
-
 	}
 
 	/**
@@ -329,18 +367,35 @@ public class OrganizationPool {
 		}
 	}
 
-	/**
-	 * Remove organizations for a user in a site from the pool.
-	 * 
-	 * @param site
-	 * @param user
-	 */
-	public void removeOrganizations(long siteId, long userId) {
-		Hashtable<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
-		if (organizationsByUser != null) {
-			organizationsByUser.remove(userId);
-			// Remove time mark.
-			organizationSiteAndUsersTime.get(siteId).remove(userId);
+	public void removeOrganizationsOfCompany(Long companyId) {
+		time.remove(companyId);
+		organizationsByCompany.remove(companyId);
+	}
+
+	public void removeOrganizationUsers(Long organizationId) {
+		organizationUsersTime.remove(organizationId);
+		organizationUsers.remove(organizationId);
+	}
+
+	public void removeOrganizationsById(Long organizationId) {
+		organizationTime.remove(organizationId);
+		organizationsById.remove(organizationId);
+	}
+
+	public void removeUserFromOrganizations(Long userId, Long organizationId) {
+		if (userId != null && organizationId != null) {
+			List<User> tempUsers = new ArrayList<User>(organizationUsers.get(organizationId));
+			for (User user : tempUsers) {
+				if (user.getUserId() == userId) {
+					organizationUsers.get(organizationId).remove(user);
+				}
+			}
+		}
+	}
+
+	public void removeUserFromOrganizations(User user, Organization organization) {
+		if (user != null && organization != null) {
+			removeUserFromOrganizations(user.getUserId(), organization.getOrganizationId());
 		}
 	}
 }

@@ -9,7 +9,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
+import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.PortletNotInstalledException;
 import com.biit.liferay.access.exceptions.UserGroupDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
@@ -41,9 +43,11 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws DuplicatedLiferayElement
 	 */
 	public UserGroup addUserGroup(String name, String description) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
+			DuplicatedLiferayElement {
 		if (name != null && name.length() > 0) {
 			checkConnection();
 
@@ -54,6 +58,10 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 			String result = getHttpResponse("usergroup/add-user-group", params);
 			UserGroup userGroup = null;
 			if (result != null) {
+				// Check some errors
+				if (result.contains("DuplicateUserGroupException")) {
+					throw new DuplicatedLiferayElement("Already exists a group with this name");
+				}
 				// A Simple JSON Response Read
 				userGroup = decodeFromJson(result, UserGroup.class);
 				UserGroupPool.getInstance().addGroup(userGroup);

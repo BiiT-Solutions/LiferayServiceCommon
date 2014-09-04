@@ -9,6 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
+import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
@@ -61,11 +62,12 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	 * @throws IOException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws DuplicatedLiferayElement
 	 */
 	public Organization addOrganization(Company company, Long parentOrganizationId, String name, String type,
 			Long regionId, Long countryId, int statusId, String comments, boolean site)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+			WebServiceAccessError, DuplicatedLiferayElement {
 		// Look up user in the liferay.
 		checkConnection();
 
@@ -82,6 +84,10 @@ public class OrganizationService extends ServiceAccess<Organization> {
 		String result = getHttpResponse("organization/add-organization", params);
 		Organization organization = null;
 		if (result != null) {
+			// Check some errors
+			if (result.contains("There is another organization named")) {
+				throw new DuplicatedLiferayElement("Already exists an organization with this name");
+			}
 			// A Simple JSON Response Read
 			organization = decodeFromJson(result, Organization.class);
 			OrganizationPool.getInstance().addOrganization(company, organization);
@@ -102,9 +108,10 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws DuplicatedLiferayElement
 	 */
 	public Organization addOrganization(Company company, String name) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError {
+			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		return addOrganization(company, DEFAULT_PARENT_ORGANIZATION_ID, name, DEFAULT_TYPE, DEFAULT_REGION_ID,
 				DEFAULT_COUNTRY_ID, getOrganizationStatus(), "", DEFAULT_CREATE_SITE);
 	}
@@ -277,6 +284,45 @@ public class OrganizationService extends ServiceAccess<Organization> {
 			}
 		}
 		return organizationStatus;
+	}
+
+	/**
+	 * Gets an organization by its ID.
+	 * 
+	 * @param organizationId
+	 * @return
+	 * @throws WebServiceAccessError
+	 * @throws NotConnectedToWebServiceException
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
+	 * @throws AuthenticationRequired
+	 */
+	public Organization getOrganization(long organizationId) throws JsonParseException, JsonMappingException,
+			IOException, NotConnectedToWebServiceException, WebServiceAccessError, AuthenticationRequired {
+		if (organizationId >= 0) {
+			// Look up user in the pool.
+			Organization organization = OrganizationPool.getInstance().getOrganizationById(organizationId);
+			if (organization != null) {
+				return organization;
+			}
+
+			// Read from Liferay.
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("organizationId", Long.toString(organizationId)));
+
+			String result = getHttpResponse("organization/get-organization", params);
+			if (result != null) {
+				// A Simple JSON Response Read
+				organization = decodeFromJson(result, Organization.class);
+				OrganizationPool.getInstance().addOrganization(organization);
+				return organization;
+			}
+		}
+		return null;
+
 	}
 
 	/**
