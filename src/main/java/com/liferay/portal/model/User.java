@@ -9,6 +9,7 @@ package com.liferay.portal.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class User implements java.io.Serializable {
 
@@ -961,6 +962,10 @@ public class User implements java.io.Serializable {
 			age--;
 		}
 		return age;
+	}
+
+	public Locale getLocale() {
+		return Locale.forLanguageTag(getLanguageId().replace("_", "-"));
 	}
 
 }
