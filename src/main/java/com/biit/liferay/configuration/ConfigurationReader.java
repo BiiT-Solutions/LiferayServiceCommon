@@ -23,7 +23,6 @@ public class ConfigurationReader {
 	private final String DEFAULT_USER = "user";
 	private final String DEFAULT_PASSWORD = "pass";
 	private final String DEFAULT_VIRTUAL_HOST = "localhost";
-	private final String DEFAULT_LIFERAY_WEBAPP = "lportal62";
 	private final String DEFAULT_PORT = "8080";
 	private final String DEFAULT_PASSWORD_ALGORITHM = "PBKDF2";
 	private final String DEFAULT_WEBSERVICES_PATH = "api/jsonws/";
@@ -58,8 +57,7 @@ public class ConfigurationReader {
 	}
 
 	/**
-	 * Read database config from resource and update default connection
-	 * parameters.
+	 * Read database config from resource and update default connection parameters.
 	 */
 	private void readConfig() {
 		Properties prop = new Properties();
@@ -112,7 +110,7 @@ public class ConfigurationReader {
 		if (liferayProtocol == null) {
 			liferayProtocol = DEFAULT_LIFERAY_PROTOCOL_PATH;
 		}
-		
+
 		if (authToken == null) {
 			authToken = DEFAULT_AUTH_TOKEN;
 		}
