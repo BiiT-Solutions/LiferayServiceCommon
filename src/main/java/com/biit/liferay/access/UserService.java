@@ -77,7 +77,7 @@ public class UserService extends ServiceAccess<User> {
 	 */
 	public User addUser(Company company, String password, String screenName, String emailAddress, long facebookId,
 			String openId, String locale, String firstName, String middleName, String lastName, int prefixId,
-			int sufixId, boolean male, int birthdayDay, int birthdayMonth, int birthdayYear, String jobTitle,
+			int suffixId, boolean male, int birthdayDay, int birthdayMonth, int birthdayYear, String jobTitle,
 			long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
@@ -106,7 +106,7 @@ public class UserService extends ServiceAccess<User> {
 		params.add(new BasicNameValuePair("middleName", middleName));
 		params.add(new BasicNameValuePair("lastName", lastName));
 		params.add(new BasicNameValuePair("prefixId", Integer.toString(prefixId)));
-		params.add(new BasicNameValuePair("sufixId", Integer.toString(sufixId)));
+		params.add(new BasicNameValuePair("suffixId", Integer.toString(suffixId)));
 		params.add(new BasicNameValuePair("male", Boolean.toString(male)));
 		params.add(new BasicNameValuePair("birthdayMonth", Integer.toString(birthdayMonth)));
 		params.add(new BasicNameValuePair("birthdayDay", Integer.toString(birthdayDay)));
@@ -117,7 +117,7 @@ public class UserService extends ServiceAccess<User> {
 		params.add(new BasicNameValuePair("roleIds", Arrays.toString(roleIds)));
 		params.add(new BasicNameValuePair("userGroupIds", Arrays.toString(userGroupIds)));
 		params.add(new BasicNameValuePair("sendEmail", Boolean.toString(sendEmail)));
-		params.add(new BasicNameValuePair("-serviceContext", null));
+		
 
 		String result = getHttpResponse("user/add-user", params);
 		User user = null;

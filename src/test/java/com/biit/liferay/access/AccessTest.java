@@ -1,6 +1,7 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
@@ -35,8 +36,12 @@ public class AccessTest {
 	private final String AUTHENTICATION_TOKEN = "11111111";
 	private final String COMPANY_VIRTUALHOST = "localhost";
 
-	private final static String TEST_USER = "testUser";
+	private final static String TEST_USER = "newTestUser";
 	private final static String TEST_USER_MAIL = TEST_USER + "@dummyemail.com";
+	private final static String TEST_USER_PASSWORD = "asd123";
+	private final static int TEST_USER_BIRTHDAY_DAY = 10;
+	private final static int TEST_USER_BIRTHDAY_MONTH = 10;
+	private final static int TEST_USER_BIRTHDAY_YEAR = 1975;
 
 	private final static String SITE_NAME = "testSite";
 	private final static String SITE_DESCRIPTION = "This site is created with the automated Shap testing.";
@@ -126,8 +131,8 @@ public class AccessTest {
 	@Test(groups = { "userAccess" }, dependsOnGroups = { "companyAccess" }, expectedExceptions = NotConnectedToWebServiceException.class)
 	public void notConnectedToUserWebService() throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
-		userService.addUser(null, "", "", TEST_USER, 0, "", "", "", "", "", 0, 0, true, 1, 1, 1900, "Miner", null,
-				null, null, null, false);
+		userService.addUser(null, "", TEST_USER, TEST_USER, 0, "", "", "", "", "", 0, 0, true, 1, 1, 1900, "Miner",
+				new long[0], new long[0], new long[0], new long[0], false);
 	}
 
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "notConnectedToUserWebService" })
@@ -142,11 +147,9 @@ public class AccessTest {
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "connectToUserWebService" })
 	public void userAdd() throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError {
-		// userService.addUser(company, TEST_USER_PASSWORD,
-		// TEST_USER, TEST_USER_MAIL, 0, "", "es_ES", TEST_USER,
-		// TEST_USER, TEST_USER, 0, 0, true, TEST_USER_BIRTHDAY_DAY, TEST_USER_BIRTHDAY_MONTH, TEST_USER_BIRTHDAY_YEAR,
-		// "Miner", null, null,
-		// null, null, false);
+		userService.addUser(company, TEST_USER_PASSWORD, TEST_USER, TEST_USER_MAIL, 0l, "", "es_ES", TEST_USER,
+				TEST_USER, TEST_USER, 0, 0, true, TEST_USER_BIRTHDAY_DAY, TEST_USER_BIRTHDAY_MONTH,
+				TEST_USER_BIRTHDAY_YEAR, "Miner", new long[0], new long[0], new long[0], new long[0], false);
 	}
 
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAdd" }, dependsOnGroups = { "companyAccess" })
@@ -175,11 +178,9 @@ public class AccessTest {
 			AuthenticationRequired, WebServiceAccessError {
 		Contact contact = contactService.getContact(user);
 		Assert.assertNotNull(contact);
-		// Fails because this user is not being added
-		// Assert.assertEquals(TEST_USER_BIRTHDAY_YEAR, contact.getBirthdayYear());
-		// Assert.assertEquals(TEST_USER_BIRTHDAY_MONTH, contact.getBirthdayMonth() + 1);
-		// Assert.assertEquals(TEST_USER_BIRTHDAY_DAY, contact.getBirthdayDay());
-		// Assert.assertEquals(user.getBirthday(), contact.getBirthday());
+		Assert.assertEquals(TEST_USER_BIRTHDAY_YEAR, contact.getBirthdayYear());
+		Assert.assertEquals(TEST_USER_BIRTHDAY_MONTH, contact.getBirthdayMonth());
+		Assert.assertEquals(TEST_USER_BIRTHDAY_DAY, contact.getBirthdayDay());
 	}
 
 	@Test(groups = { "groupAccess" })
@@ -382,11 +383,11 @@ public class AccessTest {
 	}
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "userAccess", "groupAccess", "contactAccess",
-			"pool" }, dependsOnMethods = { "userAccess", "groupDelete" })
+			"pool" }, dependsOnMethods = { "userAccess", "groupDelete" }, expectedExceptions = WebServiceAccessError.class)
 	public void userDelete() throws NotConnectedToWebServiceException, UserDoesNotExistException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
-		// userService.deleteUser(user);
-		// Assert.assertNotNull(userService.getUserById(user.getUserId()));
+		userService.deleteUser(user);
+		userService.getUserById(user.getUserId());
 	}
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "userAccess", "groupAccess", "contactAccess",
