@@ -968,4 +968,9 @@ public class User implements java.io.Serializable {
 		return Locale.forLanguageTag(getLanguageId().replace("_", "-"));
 	}
 
+	@Override
+	public String toString() {
+		return screenName;
+	}
+
 }

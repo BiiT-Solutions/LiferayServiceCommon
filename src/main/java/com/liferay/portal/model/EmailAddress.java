@@ -288,4 +288,9 @@ public class EmailAddress implements java.io.Serializable {
 	public void setUuid(java.lang.String uuid) {
 		this.uuid = uuid;
 	}
+
+	@Override
+	public String toString() {
+		return address;
+	}
 }

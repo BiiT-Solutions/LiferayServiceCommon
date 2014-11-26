@@ -8,6 +8,7 @@
 package com.liferay.portal.model;
 
 public class UserGroup implements java.io.Serializable {
+
 	private boolean addedByLDAPImport;
 
 	private long companyId;
@@ -267,6 +268,11 @@ public class UserGroup implements java.io.Serializable {
 	 */
 	public void setUuid(java.lang.String uuid) {
 		this.uuid = uuid;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }
