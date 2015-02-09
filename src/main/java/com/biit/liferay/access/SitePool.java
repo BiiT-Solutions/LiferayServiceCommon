@@ -18,6 +18,10 @@ public class SitePool {
 	}
 
 	private SitePool() {
+		reset();
+	}
+	
+	public void reset(){
 		time = new Hashtable<Long, Long>();
 		sites = new Hashtable<Long, Site>();
 	}

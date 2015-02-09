@@ -28,6 +28,11 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 
 	public UserGroupService() {
 	}
+	
+	public void reset(){
+		UserGroupPool.getInstance().reset();
+		UserGroupsPool.getInstance().reset();
+	}
 
 	/**
 	 * Creates a new group on Liferay. For testing use only.

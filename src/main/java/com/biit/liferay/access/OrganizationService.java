@@ -44,6 +44,10 @@ public class OrganizationService extends ServiceAccess<Organization> {
 
 	public OrganizationService() {
 	}
+	
+	public void reset(){
+		OrganizationPool.getInstance().reset();
+	}
 
 	/**
 	 * Creates a new organization.

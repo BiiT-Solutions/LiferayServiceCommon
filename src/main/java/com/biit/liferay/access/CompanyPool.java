@@ -25,6 +25,10 @@ public class CompanyPool {
 	}
 
 	private CompanyPool() {
+		reset();
+	}
+	
+	public void reset(){
 		byIdTime = new Hashtable<Long, Long>();
 		companyPoolById = new Hashtable<Long, Company>();
 		byVirtualHostTime = new Hashtable<String, Long>();

@@ -41,6 +41,10 @@ public class OrganizationPool {
 	}
 
 	private OrganizationPool() {
+		reset();
+	}
+	
+	public void reset(){
 		time = new Hashtable<Long, Long>();
 		organizationsByCompany = new Hashtable<Long, List<Organization>>();
 		userTime = new Hashtable<Long, Long>();

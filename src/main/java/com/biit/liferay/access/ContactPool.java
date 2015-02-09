@@ -18,6 +18,10 @@ public class ContactPool {
 	}
 
 	private ContactPool() {
+		reset();
+	}
+	
+	public void reset(){
 		time = new Hashtable<Long, Long>();
 		contacts = new Hashtable<Long, Contact>();
 	}

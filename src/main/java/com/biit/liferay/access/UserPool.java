@@ -19,6 +19,10 @@ public class UserPool {
 	}
 
 	private UserPool() {
+		reset();
+	}
+	
+	public void reset(){
 		time = new Hashtable<Long, Long>();
 		users = new Hashtable<Long, User>();
 	}

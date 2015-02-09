@@ -22,6 +22,10 @@ public class UserGroupsPool {
 	}
 
 	private UserGroupsPool() {
+		reset();
+	}
+	
+	public void reset(){
 		userTime = new Hashtable<Long, Long>();
 		groupsByUser = new Hashtable<Long, List<UserGroup>>();
 	}
