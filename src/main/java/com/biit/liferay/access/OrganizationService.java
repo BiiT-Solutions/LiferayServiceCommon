@@ -44,8 +44,8 @@ public class OrganizationService extends ServiceAccess<Organization> {
 
 	public OrganizationService() {
 	}
-	
-	public void reset(){
+
+	public void reset() {
 		OrganizationPool.getInstance().reset();
 	}
 
@@ -373,6 +373,9 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	 */
 	public List<Organization> getUserOrganizations(User user) throws ClientProtocolException,
 			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
+		if (user == null) {
+			return new ArrayList<Organization>();
+		}
 		Company companyOfUser = companyService.getCompanyById(user.getCompanyId());
 
 		return getUserOrganizations(companyOfUser, user);
