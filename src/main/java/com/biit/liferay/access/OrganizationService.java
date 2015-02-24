@@ -72,6 +72,10 @@ public class OrganizationService extends ServiceAccess<Organization> {
 			Long regionId, Long countryId, int statusId, String comments, boolean site)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError, DuplicatedLiferayElement {
+		if (company == null || parentOrganizationId == null || name == null || type == null || regionId == null
+				|| countryId == null || comments == null) {
+			return null;
+		}
 		// Look up user in the liferay.
 		checkConnection();
 
@@ -149,7 +153,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	public void deleteOrganization(Company company, Organization organization)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			OrganizationNotDeletedException {
-		if (organization != null) {
+		if (company != null && organization != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
