@@ -87,7 +87,7 @@ public class CompanyPool {
 					removeCompanyByWebId(nextCompanyWebId);
 					nextCompanyWebId = null;
 				} else {
-					if (webId == nextCompanyWebId) {
+					if (webId.equals(nextCompanyWebId)) {
 						return companyPoolByWebId.get(nextCompanyWebId);
 					}
 				}
@@ -123,7 +123,7 @@ public class CompanyPool {
 					removeCompanyByVirtualHost(nextCompanyVirtualHost);
 					nextCompanyVirtualHost = null;
 				} else {
-					if (virtualHost == nextCompanyVirtualHost) {
+					if (virtualHost.equals(nextCompanyVirtualHost)) {
 						return companyPoolByVirtualHost.get(nextCompanyVirtualHost);
 					}
 				}
