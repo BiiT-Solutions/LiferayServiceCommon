@@ -25,15 +25,15 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 
 public class AccessTest {
-	private final static String LOGIN_USER = "test@liferay.com";
-	private final static String LOGIN_PASSWORD = "test";
-	private final static String HOST = "127.0.0.1";
+	private final static String LOGIN_USER = "support@biit-solutions.com";
+	private final static String LOGIN_PASSWORD = "^KOEySk!fRJ4";
+	private final static String HOST = "liferay.biit-solutions.com";
 
-	private final String LIFERAY_PROTOCOL = "http";
-	private final int PORT = 8180;
-	private final String WEBSERVICES_PATH = "api/jsonws/";
-	private final String AUTHENTICATION_TOKEN = "11111111";
-	private final String COMPANY_VIRTUALHOST = "localhost";
+	private final static String LIFERAY_PROTOCOL = "https";
+	private final static int PORT = 9443;
+	private final static String WEBSERVICES_PATH = "api/jsonws/";
+	private final static String AUTHENTICATION_TOKEN = "11111111";
+	private final static String COMPANY_VIRTUALHOST = "liferay.biit-solutions.com";
 
 	private final static String TEST_USER = "newTestUser";
 	private final static String TEST_USER_MAIL = TEST_USER + "@dummyemail.com";
