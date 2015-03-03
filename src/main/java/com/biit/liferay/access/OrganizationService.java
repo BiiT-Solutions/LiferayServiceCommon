@@ -345,44 +345,32 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public List<Organization> getUserOrganizations(Company companyOfUser, User user) throws ClientProtocolException,
-			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
-		List<Organization> organizationsOfUser = new ArrayList<Organization>();
-
-		List<Group> usergroups = getUserOrganizationGroups(user.getUserId());
-
-		List<Organization> allOrganizations = getOrganizations(companyOfUser);
-
-		for (Group group : usergroups) {
-			// classPK key of group references the Id of the organization.
-			for (Organization organization : allOrganizations) {
-				if (group.getClassPK() == organization.getOrganizationId()) {
-					organizationsOfUser.add(organization);
-				}
-			}
-		}
-		return organizationsOfUser;
-	}
-
-	/**
-	 * Gets all organizations where the user pertains to. Needs the inner service CompanyService.
-	 * 
-	 * @param user
-	 * @return
-	 * @throws ClientProtocolException
-	 * @throws NotConnectedToWebServiceException
-	 * @throws IOException
-	 * @throws AuthenticationRequired
-	 * @throws WebServiceAccessError
-	 */
 	public List<Organization> getUserOrganizations(User user) throws ClientProtocolException,
 			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
-		if (user == null) {
-			return new ArrayList<Organization>();
-		}
-		Company companyOfUser = companyService.getCompanyById(user.getCompanyId());
+		List<Organization> organizations = new ArrayList<Organization>();
+		if (user != null) {
 
-		return getUserOrganizations(companyOfUser, user);
+			// Look up group in the pool.
+			organizations = OrganizationPool.getInstance().getOrganizations(user.getUserId());
+			if (organizations != null) {
+				return organizations;
+			}
+
+			// Look up user in the liferay.
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("userId", user.getUserId() + ""));
+			String result = getHttpResponse("organization/get-user-organizations", params);
+			if (result != null) {
+				// A Simple JSON Response Read
+				organizations = decodeListFromJson(result, Organization.class);
+				OrganizationPool.getInstance().addOrganizations(user.getUserId(), organizations);
+				return organizations;
+			}
+		}
+
+		return organizations;
 	}
 
 	/**
@@ -527,6 +515,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 			// organization groups.
 			for (User user : users) {
 				OrganizationPool.getInstance().removeOrganizationGroups(user);
+				OrganizationPool.getInstance().removeOrganizationByUsers(user.getUserId());
 			}
 
 			LiferayClientLogger.info(this.getClass().getName(), "Users " + usersIds + " added to organization '"
@@ -555,6 +544,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 			// Reset the pool of groups to calculate again the user's
 			// organization groups.
 			OrganizationPool.getInstance().removeUserFromOrganizations(user, organization);
+			OrganizationPool.getInstance().removeOrganizationByUsers(user.getUserId());
 		}
 	}
 
@@ -598,6 +588,7 @@ public class OrganizationService extends ServiceAccess<Organization> {
 			// organization groups.
 			for (User user : users) {
 				OrganizationPool.getInstance().removeOrganizationGroups(user);
+				OrganizationPool.getInstance().removeOrganizationByUsers(user.getUserId());
 			}
 
 			LiferayClientLogger.info(this.getClass().getName(), "Users " + usersIds + " removed from organization '"

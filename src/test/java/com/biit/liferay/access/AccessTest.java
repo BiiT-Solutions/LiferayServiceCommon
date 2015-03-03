@@ -26,14 +26,14 @@ import com.liferay.portal.model.UserGroup;
 
 public class AccessTest {
 	private final static String LOGIN_USER = "test@liferay.com";
-	private final static String LOGIN_PASSWORD = "test";
-	private final static String HOST = "127.0.0.1";
+	private final static String LOGIN_PASSWORD = "extintor";
+	private final static String HOST = "liferay.biit-solutions.com";
 
-	private final String LIFERAY_PROTOCOL = "http";
-	private final int PORT = 8180;
+	private final String LIFERAY_PROTOCOL = "https";
+	private final int PORT = 9443;
 	private final String WEBSERVICES_PATH = "api/jsonws/";
 	private final String AUTHENTICATION_TOKEN = "11111111";
-	private final String COMPANY_VIRTUALHOST = "localhost";
+	private final String COMPANY_VIRTUALHOST = "liferay.biit-solutions.com";
 
 	private final static String TEST_USER = "newTestUser";
 	private final static String TEST_USER_MAIL = TEST_USER + "@dummyemail.com";
@@ -251,8 +251,10 @@ public class AccessTest {
 			IOException, AuthenticationRequired, WebServiceAccessError {
 		organizationService.addUserToOrganization(user, organization1);
 		Assert.assertEquals(1, organizationService.getUserOrganizationGroups(user.getUserId()).size());
+		Assert.assertEquals(1, organizationService.getUserOrganizations(user).size());
 		organizationService.addUserToOrganization(user, organization2);
 		Assert.assertEquals(2, organizationService.getUserOrganizationGroups(user.getUserId()).size());
+		Assert.assertEquals(2, organizationService.getUserOrganizations(user).size());
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "addOrganization", "userAccess" })
