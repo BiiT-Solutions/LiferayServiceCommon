@@ -1,50 +1,57 @@
 package com.biit.liferay.configuration;
 
-import java.io.IOException;
-import java.util.Properties;
-
+import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.liferay.security.PasswordEncryptationAlgorithmType;
-import com.biit.utils.file.PropertiesFile;
+import com.biit.utils.configuration.PropertiesSourceFile;
+import com.biit.utils.configuration.SystemVariablePropertiesSourceFile;
+import com.biit.utils.configuration.exception.PropertyNotFoundException;
 
-public class ConfigurationReader {
-	private final String LIFERAY_CONFIG_FILE = "liferay.conf";
+public class ConfigurationReader extends com.biit.utils.configuration.ConfigurationReader{
+	
+	private static final String DATABASE_CONFIG_FILE = "liferay.conf";
+	private static final String LIFERAY_SYSTEM_VARIABLE_CONFIG = "LIFERAY_CONFIG";
 
-	private static final String USER_TAG = "user";
-	private static final String PASSWORD_TAG = "password";
-	private static final String VIRTUAL_HOST_TAG = "virtualhost";
-	private static final String WEBAPP_TAG = "webapp";
-	private static final String PORT_TAG = "port";
-	// Password algorithm
-	private final String PASSWORD_ALGORITHM_TAG = "passwordEncriptationAlgorithm";
-	private final String WEBSERVICES_PATH_TAG = "webservices";
-	private final String LIFERAY_PROTOCOL_TAG = "liferayProtocol";
-	private final String AUTH_TOKEN_TAG = "p_auth";
+	private static final String ID_USER = "user";
+	private static final String ID_PASSWORD = "password";
+	private static final String ID_VIRTUAL_HOST = "virtualhost";
+	private static final String ID_WEBAPP = "webapp";
+	private static final String ID_PORT = "port";
+	private static final String ID_PASSWORD_ALGORITHM = "passwordEncriptationAlgorithm";
+	private static final String ID_WEBSERVICES_PATH = "webservices";
+	private static final String ID_LIFERAY_PROTOCOL = "liferayProtocol";
+	private static final String ID_AUTH_TOKEN = "p_auth";
 
-	private final String DEFAULT_USER = "user";
-	private final String DEFAULT_PASSWORD = "pass";
-	private final String DEFAULT_VIRTUAL_HOST = "localhost";
-	private final String DEFAULT_PORT = "8080";
-	private final String DEFAULT_PASSWORD_ALGORITHM = "PBKDF2";
-	private final String DEFAULT_WEBSERVICES_PATH = "api/jsonws/";
-	private final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
-	private final String DEFAULT_AUTH_TOKEN = "";
-
-	private String user;
-	private String password;
-	private String virtualhost;
-	private String webappName;
-	private String connectionport;
-	private String passwordEncryptationAlgorithm;
-	private String webServicesPath;
-	private String liferayProtocol;
-	private String authToken;
-
+	private static final String DEFAULT_USER = "user";
+	private static final String DEFAULT_PASSWORD = "pass";
+	private static final String DEFAULT_VIRTUAL_HOST = "localhost";
+	private static final String DEFAULT_WEBAPP = "";
+	private static final String DEFAULT_PORT = "8080";
+	private static final String DEFAULT_PASSWORD_ALGORITHM = "PBKDF2";
+	private static final String DEFAULT_WEBSERVICES_PATH = "api/jsonws/";
+	private static final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
+	private static final String DEFAULT_AUTH_TOKEN = "";
+	
 	private static ConfigurationReader instance;
-
+	
 	private ConfigurationReader() {
-		readConfig();
-	}
+		super();
 
+		addProperty(ID_USER, DEFAULT_USER);
+		addProperty(ID_PASSWORD, DEFAULT_PASSWORD);
+		addProperty(ID_VIRTUAL_HOST, DEFAULT_VIRTUAL_HOST);
+		addProperty(ID_WEBAPP, DEFAULT_WEBAPP);
+		addProperty(ID_PORT, DEFAULT_PORT);
+		addProperty(ID_PASSWORD_ALGORITHM, DEFAULT_PASSWORD_ALGORITHM);
+		addProperty(ID_WEBSERVICES_PATH, DEFAULT_WEBSERVICES_PATH);
+		addProperty(ID_LIFERAY_PROTOCOL, DEFAULT_LIFERAY_PROTOCOL_PATH);
+		addProperty(ID_AUTH_TOKEN, DEFAULT_AUTH_TOKEN);
+
+		addPropertiesSource(new PropertiesSourceFile(DATABASE_CONFIG_FILE));
+		addPropertiesSource(new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, DATABASE_CONFIG_FILE));
+
+		readConfigurations();
+	}
+	
 	public static ConfigurationReader getInstance() {
 		if (instance == null) {
 			synchronized (ConfigurationReader.class) {
@@ -56,83 +63,33 @@ public class ConfigurationReader {
 		return instance;
 	}
 
-	/**
-	 * Read database config from resource and update default connection parameters.
-	 */
-	private void readConfig() {
-		Properties prop = new Properties();
+	private String getPropertyLogException(String propertyId) {
 		try {
-			prop = PropertiesFile.load(LIFERAY_CONFIG_FILE);
-			user = prop.getProperty(USER_TAG);
-			password = prop.getProperty(PASSWORD_TAG);
-			virtualhost = prop.getProperty(VIRTUAL_HOST_TAG);
-			webappName = prop.getProperty(WEBAPP_TAG);
-			connectionport = prop.getProperty(PORT_TAG);
-			passwordEncryptationAlgorithm = prop.getProperty(PASSWORD_ALGORITHM_TAG);
-			webServicesPath = prop.getProperty(WEBSERVICES_PATH_TAG);
-			liferayProtocol = prop.getProperty(LIFERAY_PROTOCOL_TAG);
-			authToken = prop.getProperty(AUTH_TOKEN_TAG);
-		} catch (IOException e) {
-
-		} catch (NullPointerException e) {
-
-		}
-
-		if (user == null) {
-			user = DEFAULT_USER;
-		}
-		if (password == null) {
-			password = DEFAULT_PASSWORD;
-		}
-
-		if (virtualhost == null) {
-			virtualhost = DEFAULT_VIRTUAL_HOST;
-		}
-
-		if (connectionport == null) {
-			connectionport = DEFAULT_PORT;
-		}
-
-		if (webappName == null) {
-			// Webapp can be null if liferay is installed in ROOT directory of
-			// Apache.
-			webappName = "";
-			// webappName = DEFAULT_LIFERAY_WEBAPP;
-		}
-		if (passwordEncryptationAlgorithm == null) {
-			passwordEncryptationAlgorithm = DEFAULT_PASSWORD_ALGORITHM;
-		}
-
-		if (webServicesPath == null) {
-			webServicesPath = DEFAULT_WEBSERVICES_PATH;
-		}
-
-		if (liferayProtocol == null) {
-			liferayProtocol = DEFAULT_LIFERAY_PROTOCOL_PATH;
-		}
-
-		if (authToken == null) {
-			authToken = DEFAULT_AUTH_TOKEN;
+			return getProperty(propertyId);
+		} catch (PropertyNotFoundException e) {
+			LiferayClientLogger.errorMessage(this.getClass().getName(), e);
+			return null;
 		}
 	}
-
+	
 	public String getUser() {
-		return user;
+		return getPropertyLogException(ID_USER);
 	}
 
 	public String getPassword() {
-		return password;
+		return getPropertyLogException(ID_PASSWORD);
 	}
 
 	public String getVirtualHost() {
-		return virtualhost;
+		return getPropertyLogException(ID_VIRTUAL_HOST);
 	}
 
 	public String getConnectionPort() {
-		return connectionport;
+		return getPropertyLogException(ID_PORT);
 	}
 
 	public String getWebAppName() {
+		String webappName = getPropertyLogException(ID_WEBAPP);
 		if (webappName != null && webappName.length() > 0) {
 			return webappName + "/";
 		}
@@ -140,18 +97,18 @@ public class ConfigurationReader {
 	}
 
 	public PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithm() {
-		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(passwordEncryptationAlgorithm);
+		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
 	}
 
 	public String getWebServicesPath() {
-		return webServicesPath;
+		return getPropertyLogException(ID_WEBSERVICES_PATH);
 	}
 
 	public String getLiferayProtocol() {
-		return liferayProtocol;
+		return getPropertyLogException(ID_LIFERAY_PROTOCOL);
 	}
 
 	public String getAuthToken() {
-		return authToken;
+		return getPropertyLogException(ID_AUTH_TOKEN);
 	}
 }
