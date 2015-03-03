@@ -414,7 +414,7 @@ public class OrganizationPool {
 		}
 	}
 
-	public List<Organization> getOrganizations(Long userId) {
+	public List<Organization> getOrganizations(long userId) {
 		long now = System.currentTimeMillis();
 		Long nextUserId = null;
 		if (organizationsByUserTime.size() > 0) {
@@ -426,7 +426,7 @@ public class OrganizationPool {
 					removeOrganizationByUsers(nextUserId);
 					nextUserId = null;
 				} else {
-					if (userId.equals(nextUserId)) {
+					if (userId == nextUserId) {
 						return organizationsByUser.get(userId);
 					}
 				}
