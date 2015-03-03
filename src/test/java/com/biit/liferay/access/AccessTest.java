@@ -130,8 +130,8 @@ public class AccessTest {
 	@Test(groups = { "userAccess" }, dependsOnGroups = { "companyAccess" }, expectedExceptions = NotConnectedToWebServiceException.class)
 	public void notConnectedToUserWebService() throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
-		userService.addUser(new Company(), "", TEST_USER, TEST_USER, 0, "", "", "", "", "", 0, 0, true, 1, 1, 1900, "Miner",
-				new long[0], new long[0], new long[0], new long[0], false);
+		userService.addUser(new Company(), "", TEST_USER, TEST_USER, 0, "", "", "", "", "", 0, 0, true, 1, 1, 1900,
+				"Miner", new long[0], new long[0], new long[0], new long[0], false);
 	}
 
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "notConnectedToUserWebService" })
@@ -335,6 +335,23 @@ public class AccessTest {
 		// Make a connection for populating the pool.
 		Assert.assertTrue(organizationService.addOrganization(site, user, organization1));
 		Assert.assertTrue(organizationService.addOrganization(site, user, organization2));
+	}
+
+	@Test(groups = { "pool" }, dependsOnMethods = { "setOrganizationsBySiteAndUser" })
+	public void getOrganizationsByUserPool() throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, PortletNotInstalledException, WebServiceAccessError {
+		// Make a connection for populating the pool.
+		List<Organization> organizations = organizationService.getUserOrganizations(user);
+		Assert.assertNotNull(organizations);
+		Assert.assertFalse(organizations.isEmpty());
+		// Checks the use of the pool. Disconnect the web service.
+		organizationService.disconnect();
+		// I can still get the organization (is stored previously in the pool)
+		organizations = organizationService.getUserOrganizations(user);
+		Assert.assertNotNull(organizations);
+		Assert.assertFalse(organizations.isEmpty());
+		// Connect again.
+		connectToOrganizationWebService();
 	}
 
 	@Test(groups = { "pool" }, dependsOnMethods = { "setOrganizationsBySiteAndUser" })

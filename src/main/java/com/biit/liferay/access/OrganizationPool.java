@@ -416,17 +416,17 @@ public class OrganizationPool {
 
 	public List<Organization> getOrganizations(Long userId) {
 		long now = System.currentTimeMillis();
-		Long nextOrganizationId = null;
+		Long nextUserId = null;
 		if (organizationsByUserTime.size() > 0) {
 			Enumeration<Long> e = organizationsByUserTime.keys();
 			while (e.hasMoreElements()) {
-				nextOrganizationId = e.nextElement();
-				if ((now - organizationsByUserTime.get(nextOrganizationId)) > EXPIRATION_TIME) {
+				nextUserId = e.nextElement();
+				if ((now - organizationsByUserTime.get(nextUserId)) > EXPIRATION_TIME) {
 					// Object has expired.
-					removeOrganizationByUsers(nextOrganizationId);
-					nextOrganizationId = null;
+					removeOrganizationByUsers(nextUserId);
+					nextUserId = null;
 				} else {
-					if (userId == nextOrganizationId) {
+					if (userId.equals(nextUserId)) {
 						return organizationsByUser.get(userId);
 					}
 				}
