@@ -8,6 +8,8 @@
 package com.liferay.portal.model;
 
 public class Address implements java.io.Serializable {
+	private static final long serialVersionUID = 8641196722234880238L;
+
 	private long addressId;
 
 	private java.lang.String city;

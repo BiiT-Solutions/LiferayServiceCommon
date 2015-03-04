@@ -8,6 +8,8 @@
 package com.liferay.portal.model;
 
 public class UserGroupRole implements java.io.Serializable {
+	private static final long serialVersionUID = 7587586600127968854L;
+
 	private long groupId;
 
 	private long roleId;

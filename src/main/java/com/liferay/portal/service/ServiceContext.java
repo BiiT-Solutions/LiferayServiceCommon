@@ -7,13 +7,13 @@
 
 package com.liferay.portal.service;
 
-import java.util.Calendar;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.PortletPreferencesIds;
 
 public class ServiceContext implements java.io.Serializable {
+	private static final long serialVersionUID = 2934307495444535739L;
+
 	private boolean addCommunityPermissions;
 
 	private boolean addGroupPermissions;
@@ -961,11 +961,11 @@ public class ServiceContext implements java.io.Serializable {
 	private java.lang.Object __equalsCalc = null;
 
 	public synchronized boolean equals(java.lang.Object obj) {
+		if (obj == null)
+			return false;
 		if (!(obj instanceof ServiceContext))
 			return false;
 		ServiceContext other = (ServiceContext) obj;
-		if (obj == null)
-			return false;
 		if (this == obj)
 			return true;
 		if (__equalsCalc != null) {

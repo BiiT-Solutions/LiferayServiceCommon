@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class User implements java.io.Serializable {
+	private static final long serialVersionUID = -6134421097495636111L;
 
 	private boolean agreedToTermsOfUse;
 

@@ -8,6 +8,8 @@
 package com.liferay.portal.model;
 
 public class EmailAddress implements java.io.Serializable {
+	private static final long serialVersionUID = -2734153079494119731L;
+
 	private java.lang.String address;
 
 	private long classNameId;

@@ -124,10 +124,9 @@ public class PortletPreferencesIds implements java.io.Serializable {
 	private java.lang.Object __equalsCalc = null;
 
 	public synchronized boolean equals(java.lang.Object obj) {
-		if (!(obj instanceof PortletPreferencesIds))
-			return false;
-		PortletPreferencesIds other = (PortletPreferencesIds) obj;
 		if (obj == null)
+			return false;
+		if (!(obj instanceof PortletPreferencesIds))
 			return false;
 		if (this == obj)
 			return true;
@@ -136,6 +135,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 		}
 		__equalsCalc = obj;
 		boolean _equals;
+		PortletPreferencesIds other = (PortletPreferencesIds) obj;
 		_equals = true
 				&& this.companyId == other.getCompanyId()
 				&& this.ownerId == other.getOwnerId()
