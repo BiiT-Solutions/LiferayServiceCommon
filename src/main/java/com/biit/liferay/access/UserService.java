@@ -288,7 +288,7 @@ public class UserService extends ServiceAccess<User> {
 	/**
 	 * Get user information using the user's primary key.
 	 * 
-	 * @param companySoap
+	 * @param company
 	 *            liferay portal where look up for.
 	 * @param screenName
 	 *            is a unique token that identifies a liferay user from another, so two users cannot use the same
@@ -300,7 +300,7 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public User getUserByScreenName(Company companySoap, String screenName) throws NotConnectedToWebServiceException,
+	public User getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		screenName = screenName.toLowerCase();
 
@@ -314,7 +314,7 @@ public class UserService extends ServiceAccess<User> {
 		checkConnection();
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("companyId", companySoap.getCompanyId() + ""));
+		params.add(new BasicNameValuePair("companyId", company.getCompanyId() + ""));
 		params.add(new BasicNameValuePair("screenName", screenName));
 
 		String result = getHttpResponse("user/get-user-by-screen-name", params);
