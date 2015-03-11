@@ -2,6 +2,7 @@ package com.biit.liferay.access;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.liferay.portal.model.User;
 
@@ -12,6 +13,9 @@ public class UserPool {
 	private Hashtable<Long, Long> time; // User id -> time.
 	private Hashtable<Long, User> users; // User id -> User.
 
+	private Hashtable<Long, List<User>> usersOfRole;
+	private Hashtable<Long, Long> usersOfRoleTime; // User id -> time.
+
 	private static UserPool instance = new UserPool();
 
 	public static UserPool getInstance() {
@@ -21,10 +25,12 @@ public class UserPool {
 	private UserPool() {
 		reset();
 	}
-	
-	public void reset(){
+
+	public void reset() {
 		time = new Hashtable<Long, Long>();
 		users = new Hashtable<Long, User>();
+		usersOfRole = new Hashtable<Long, List<User>>();
+		usersOfRoleTime = new Hashtable<Long, Long>();
 	}
 
 	public void addUser(User user) {
@@ -106,5 +112,38 @@ public class UserPool {
 		if (user != null) {
 			removeUser(user.getUserId());
 		}
+	}
+
+	public List<User> getUsersOfRole(Long roleId) {
+		long now = System.currentTimeMillis();
+		Long storedObject = null;
+		if (usersOfRoleTime.size() > 0) {
+			Enumeration<Long> e = usersOfRoleTime.keys();
+			while (e.hasMoreElements()) {
+				storedObject = e.nextElement();
+				if ((now - usersOfRoleTime.get(storedObject)) > EXPIRATION_TIME) {
+					// object has expired
+					removeUser(storedObject);
+					storedObject = null;
+				} else {
+					if (storedObject.equals(roleId)) {
+						return usersOfRole.get(storedObject);
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public void addUsersOfRole(long roleId, List<User> usersOfRoles) {
+		if (usersOfRoles != null) {
+			usersOfRole.put(roleId, usersOfRoles);
+			usersOfRoleTime.put(roleId, System.currentTimeMillis());
+		}
+	}
+
+	public void removeUsersOfRole(long roleId) {
+		usersOfRole.remove(roleId);
+		usersOfRoleTime.remove(roleId);
 	}
 }

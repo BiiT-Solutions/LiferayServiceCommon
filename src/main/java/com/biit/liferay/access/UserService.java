@@ -27,6 +27,7 @@ import com.liferay.portal.model.User;
  */
 public class UserService extends ServiceAccess<User> {
 	private ContactService contactService;
+	private OrganizationService organizationService;
 
 	public UserService() {
 	}
@@ -40,6 +41,7 @@ public class UserService extends ServiceAccess<User> {
 		// Disconnect previous connections.
 		try {
 			contactService.disconnect();
+			organizationService.disconnect();
 		} catch (Exception e) {
 
 		}
@@ -47,12 +49,17 @@ public class UserService extends ServiceAccess<User> {
 		contactService = new ContactService();
 		contactService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken,
 				loginUser, password);
+		// A service is a mix of the organization service and the user service.
+		organizationService = new OrganizationService();
+		organizationService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken,
+				loginUser, password);
 	}
 
 	@Override
 	public void disconnect() {
 		super.disconnect();
 		contactService.disconnect();
+		organizationService.disconnect();
 	}
 
 	/**
@@ -117,7 +124,6 @@ public class UserService extends ServiceAccess<User> {
 		params.add(new BasicNameValuePair("roleIds", Arrays.toString(roleIds)));
 		params.add(new BasicNameValuePair("userGroupIds", Arrays.toString(userGroupIds)));
 		params.add(new BasicNameValuePair("sendEmail", Boolean.toString(sendEmail)));
-		
 
 		String result = getHttpResponse("user/add-user", params);
 		User user = null;
@@ -159,6 +165,14 @@ public class UserService extends ServiceAccess<User> {
 	public List<User> decodeListFromJson(String json, Class<User> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
 		List<User> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<User>>() {
+		});
+
+		return myObjects;
+	}
+
+	public List<Long> decodeLongListFromJson(String json, Class<Long> objectClass) throws JsonParseException,
+			JsonMappingException, IOException {
+		List<Long> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<Long>>() {
 		});
 
 		return myObjects;
@@ -313,6 +327,69 @@ public class UserService extends ServiceAccess<User> {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Gets all users that have a specific role.
+	 * 
+	 * @param roleId
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws NotConnectedToWebServiceException
+	 * @throws AuthenticationRequired
+	 * @throws WebServiceAccessError
+	 */
+	public List<User> getUsers(long roleId) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError {
+		List<User> users = new ArrayList<User>();
+		List<User> usersOfRoles = UserPool.getInstance().getUsersOfRole(roleId);
+		if (usersOfRoles != null) {
+			return usersOfRoles;
+		}
+		checkConnection();
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("roleId", roleId + ""));
+		String result = getHttpResponse("user/get-role-user-ids", params);
+		if (result != null) {
+			// A Simple JSON Response Read
+			List<Long> usersIds = decodeLongListFromJson(result, Long.class);
+			usersOfRoles = new ArrayList<User>();
+
+			for (Long id : usersIds) {
+				try {
+					usersOfRoles.add(getUserById(id));
+				} catch (UserDoesNotExistException e) {
+					// Impossible. Comes from Liferay.
+					LiferayClientLogger.errorMessage(this.getClass().getName(), e);
+				}
+			}
+
+			UserPool.getInstance().addUsersOfRole(roleId, usersOfRoles);
+			return usersOfRoles;
+		}
+		return users;
+	}
+
+	/**
+	 * Gets all users that have a specific role in an organization.
+	 * 
+	 * @throws WebServiceAccessError
+	 * @throws AuthenticationRequired
+	 * @throws NotConnectedToWebServiceException
+	 * @throws IOException
+	 * @throws ClientProtocolException
+	 */
+	public List<User> getUsers(long roleId, long organizationId) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError {
+		List<User> usersOfRole = getUsers(roleId);
+		List<User> usersOfOrganization = organizationService.getOrganizationUsers(organizationId);
+
+		// Intersection of lists.
+		usersOfOrganization.retainAll(usersOfRole);
+
+		return usersOfOrganization;
 	}
 
 	/**

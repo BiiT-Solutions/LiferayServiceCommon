@@ -433,27 +433,32 @@ public class OrganizationService extends ServiceAccess<Organization> {
 	public List<User> getOrganizationUsers(Organization organization) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired {
 		if (organization != null) {
+			return getOrganizationUsers(organization.getOrganizationId());
+		}
+		return null;
+	}
 
-			List<User> users = new ArrayList<User>();
-			// Look up users in the pool.
-			users = OrganizationPool.getInstance().getOrganizationUsers(organization.getOrganizationId());
-			if (users != null) {
-				return users;
-			}
+	public List<User> getOrganizationUsers(long organizationId) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired {
+		List<User> users = new ArrayList<User>();
+		// Look up users in the pool.
+		users = OrganizationPool.getInstance().getOrganizationUsers(organizationId);
+		if (users != null) {
+			return users;
+		}
 
-			// Look up user in the liferay.
-			checkConnection();
+		// Look up user in the liferay.
+		checkConnection();
 
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("organizationId", organization.getOrganizationId() + ""));
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("organizationId", organizationId + ""));
 
-			String result = getHttpResponse("/user/get-organization-users", params);
-			if (result != null) {
-				// A Simple JSON Response Read
-				users = (new UserService()).decodeListFromJson(result, User.class);
-				OrganizationPool.getInstance().addOrganizationUsers(organization.getOrganizationId(), users);
-				return users;
-			}
+		String result = getHttpResponse("/user/get-organization-users", params);
+		if (result != null) {
+			// A Simple JSON Response Read
+			users = (new UserService()).decodeListFromJson(result, User.class);
+			OrganizationPool.getInstance().addOrganizationUsers(organizationId, users);
+			return users;
 		}
 		return null;
 	}
