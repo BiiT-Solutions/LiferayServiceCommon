@@ -8,6 +8,7 @@
 package com.liferay.portal.model;
 
 public class UserGroup implements java.io.Serializable {
+	private static final long serialVersionUID = 3795199179122398623L;
 
 	private boolean addedByLDAPImport;
 

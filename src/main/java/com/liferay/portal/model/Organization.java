@@ -8,6 +8,7 @@
 package com.liferay.portal.model;
 
 public class Organization implements java.io.Serializable {
+	private static final long serialVersionUID = 1788863138408637398L;
 
 	private java.lang.String comments;
 

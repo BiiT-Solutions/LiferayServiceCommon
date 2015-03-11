@@ -8,6 +8,8 @@
 package com.liferay.portal.model;
 
 public class Phone implements java.io.Serializable {
+	private static final long serialVersionUID = -951704976467568624L;
+
 	private long classNameId;
 
 	private long classPK;

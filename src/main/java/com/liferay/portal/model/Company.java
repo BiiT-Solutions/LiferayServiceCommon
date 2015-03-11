@@ -8,6 +8,8 @@
 package com.liferay.portal.model;
 
 public class Company implements java.io.Serializable {
+	private static final long serialVersionUID = -5076489772058450143L;
+
 	private long accountId;
 
 	private boolean active;
