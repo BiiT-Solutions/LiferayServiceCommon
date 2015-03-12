@@ -330,7 +330,7 @@ public class UserService extends ServiceAccess<User> {
 	}
 
 	/**
-	 * Gets all users that have a specific role.
+	 * Gets all users that have a specific standard role. Not valid for organization roles.
 	 * 
 	 * @param roleId
 	 * @return
@@ -370,26 +370,6 @@ public class UserService extends ServiceAccess<User> {
 			return usersOfRoles;
 		}
 		return users;
-	}
-
-	/**
-	 * Gets all users that have a specific role in an organization.
-	 * 
-	 * @throws WebServiceAccessError
-	 * @throws AuthenticationRequired
-	 * @throws NotConnectedToWebServiceException
-	 * @throws IOException
-	 * @throws ClientProtocolException
-	 */
-	public List<User> getUsers(long roleId, long organizationId) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError {
-		List<User> usersOfRole = getUsers(roleId);
-		List<User> usersOfOrganization = organizationService.getOrganizationUsers(organizationId);
-
-		// Intersection of lists.
-		usersOfOrganization.retainAll(usersOfRole);
-
-		return usersOfOrganization;
 	}
 
 	/**

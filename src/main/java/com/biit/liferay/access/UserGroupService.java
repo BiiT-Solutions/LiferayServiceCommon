@@ -295,7 +295,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	}
 
 	/**
-	 * Get a list of groups where the UserSoap belongs to.
+	 * Get a list of groups where the User belongs to.
 	 * 
 	 * @param user
 	 * @return group information
