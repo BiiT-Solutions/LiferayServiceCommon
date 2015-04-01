@@ -144,4 +144,8 @@ public class CompanyService extends ServiceAccess<Company> {
 		return null;
 	}
 
+	public void reset() {
+		CompanyPool.getInstance().reset();
+	}
+
 }

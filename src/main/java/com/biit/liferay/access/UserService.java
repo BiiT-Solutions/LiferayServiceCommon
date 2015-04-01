@@ -388,4 +388,26 @@ public class UserService extends ServiceAccess<User> {
 		user.setBirthday(contact.getBirthday());
 		user.setMale(contact.isMale());
 	}
+
+	public List<User> getCompanyUsers(long companyId) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired {
+		List<User> users = new ArrayList<User>();
+		checkConnection();
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("companyId", companyId + ""));
+		params.add(new BasicNameValuePair("start", 0 + ""));
+		params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
+		String result = getHttpResponse("user/get-company-users", params);
+		if (result != null) {
+			// A Simple JSON Response Read
+			users = decodeListFromJson(result, User.class);
+			return users;
+		}
+		return users;
+	}
+
+	public void reset() {
+		UserPool.getInstance().reset();
+	}
 }
