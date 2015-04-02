@@ -16,6 +16,9 @@ public class UserPool {
 	private Hashtable<Long, List<User>> usersOfRole;
 	private Hashtable<Long, Long> usersOfRoleTime; // User id -> time.
 
+	private Hashtable<Long, List<User>> usersOfCompany;
+	private Hashtable<Long, Long> usersOfCompanyTime; // User id -> time.
+
 	private static UserPool instance = new UserPool();
 
 	public static UserPool getInstance() {
@@ -31,6 +34,8 @@ public class UserPool {
 		users = new Hashtable<Long, User>();
 		usersOfRole = new Hashtable<Long, List<User>>();
 		usersOfRoleTime = new Hashtable<Long, Long>();
+		usersOfCompany = new Hashtable<Long, List<User>>();
+		usersOfCompanyTime = new Hashtable<Long, Long>();
 	}
 
 	public void addUser(User user) {
@@ -123,7 +128,7 @@ public class UserPool {
 				storedObject = e.nextElement();
 				if ((now - usersOfRoleTime.get(storedObject)) > EXPIRATION_TIME) {
 					// object has expired
-					removeUser(storedObject);
+					removeUsersOfRole(storedObject);
 					storedObject = null;
 				} else {
 					if (storedObject.equals(roleId)) {
@@ -145,5 +150,38 @@ public class UserPool {
 	public void removeUsersOfRole(long roleId) {
 		usersOfRole.remove(roleId);
 		usersOfRoleTime.remove(roleId);
+	}
+
+	public List<User> getUsersOfCompany(Long companyId) {
+		long now = System.currentTimeMillis();
+		Long storedObject = null;
+		if (usersOfCompanyTime.size() > 0) {
+			Enumeration<Long> e = usersOfCompanyTime.keys();
+			while (e.hasMoreElements()) {
+				storedObject = e.nextElement();
+				if ((now - usersOfCompanyTime.get(storedObject)) > EXPIRATION_TIME) {
+					// object has expired
+					removeUsersOfCompany(storedObject);
+					storedObject = null;
+				} else {
+					if (storedObject.equals(companyId)) {
+						return usersOfCompany.get(storedObject);
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public void addUsersOfCompany(long companyId, List<User> users) {
+		if (users != null) {
+			usersOfCompany.put(companyId, users);
+			usersOfCompanyTime.put(companyId, System.currentTimeMillis());
+		}
+	}
+
+	public void removeUsersOfCompany(long companyId) {
+		usersOfCompany.remove(companyId);
+		usersOfCompanyTime.remove(companyId);
 	}
 }

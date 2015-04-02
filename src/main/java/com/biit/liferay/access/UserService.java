@@ -392,6 +392,12 @@ public class UserService extends ServiceAccess<User> {
 	public List<User> getCompanyUsers(long companyId) throws ClientProtocolException, IOException,
 			NotConnectedToWebServiceException, AuthenticationRequired {
 		List<User> users = new ArrayList<User>();
+
+		List<User> usersOfCompany = UserPool.getInstance().getUsersOfCompany(companyId);
+		if (usersOfCompany != null) {
+			return usersOfCompany;
+		}
+
 		checkConnection();
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -402,6 +408,7 @@ public class UserService extends ServiceAccess<User> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			users = decodeListFromJson(result, User.class);
+			UserPool.getInstance().addUsersOfCompany(companyId, users);
 			return users;
 		}
 		return users;
