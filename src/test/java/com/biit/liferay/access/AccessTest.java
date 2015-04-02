@@ -380,7 +380,8 @@ public class AccessTest {
 		Assert.assertEquals(userGroupService.getUserUserGroups(user).size(), prevGroups - 1);
 	}
 
-	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "groupAccess", "userAccess" }, dependsOnMethods = { "addOrganization" })
+	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "groupAccess", "userAccess" }, dependsOnMethods = {
+			"userAdd", "addOrganization" })
 	public void unsetUserFromOrganization() throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired {
 		int usersInOrg1 = organizationService.getOrganizationUsers(organization1).size();
@@ -401,7 +402,7 @@ public class AccessTest {
 	}
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "userAccess", "groupAccess", "contactAccess",
-			"pool" }, dependsOnMethods = { "userAccess", "groupDelete" }, expectedExceptions = WebServiceAccessError.class)
+			"pool" }, dependsOnMethods = { "userAdd", "userAccess", "groupDelete" }, expectedExceptions = WebServiceAccessError.class)
 	public void userDelete() throws NotConnectedToWebServiceException, UserDoesNotExistException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		userService.deleteUser(user);
