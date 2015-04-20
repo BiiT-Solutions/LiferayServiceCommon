@@ -1,8 +1,9 @@
 package com.biit.liferay.access;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.liferay.portal.model.User;
 
@@ -10,14 +11,14 @@ public class UserPool {
 
 	private final static long EXPIRATION_TIME = 300000;// 5 minutes
 
-	private Hashtable<Long, Long> time; // User id -> time.
-	private Hashtable<Long, User> users; // User id -> User.
+	private Map<Long, Long> time; // User id -> time.
+	private Map<Long, User> users; // User id -> User.
 
-	private Hashtable<Long, List<User>> usersOfRole;
-	private Hashtable<Long, Long> usersOfRoleTime; // User id -> time.
+	private Map<Long, List<User>> usersOfRole;
+	private Map<Long, Long> usersOfRoleTime; // User id -> time.
 
-	private Hashtable<Long, List<User>> usersOfCompany;
-	private Hashtable<Long, Long> usersOfCompanyTime; // User id -> time.
+	private Map<Long, List<User>> usersOfCompany;
+	private Map<Long, Long> usersOfCompanyTime; // User id -> time.
 
 	private static UserPool instance = new UserPool();
 
@@ -30,12 +31,12 @@ public class UserPool {
 	}
 
 	public void reset() {
-		time = new Hashtable<Long, Long>();
-		users = new Hashtable<Long, User>();
-		usersOfRole = new Hashtable<Long, List<User>>();
-		usersOfRoleTime = new Hashtable<Long, Long>();
-		usersOfCompany = new Hashtable<Long, List<User>>();
-		usersOfCompanyTime = new Hashtable<Long, Long>();
+		time = new HashMap<Long, Long>();
+		users = new HashMap<Long, User>();
+		usersOfRole = new HashMap<Long, List<User>>();
+		usersOfRoleTime = new HashMap<Long, Long>();
+		usersOfCompany = new HashMap<Long, List<User>>();
+		usersOfCompanyTime = new HashMap<Long, Long>();
 	}
 
 	public void addUser(User user) {
@@ -49,9 +50,9 @@ public class UserPool {
 		long now = System.currentTimeMillis();
 		Long userId = null;
 		if (time.size() > 0) {
-			Enumeration<Long> e = time.keys();
-			while (e.hasMoreElements()) {
-				userId = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
+			while (e.hasNext()) {
+				userId = e.next();
 				if ((now - time.get(userId)) > EXPIRATION_TIME) {
 					// object has expired
 					removeUser(userId);
@@ -70,9 +71,9 @@ public class UserPool {
 		long now = System.currentTimeMillis();
 		Long storedObject = null;
 		if (time.size() > 0) {
-			Enumeration<Long> e = time.keys();
-			while (e.hasMoreElements()) {
-				storedObject = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
+			while (e.hasNext()) {
+				storedObject = e.next();
 				if ((now - time.get(storedObject)) > EXPIRATION_TIME) {
 					// object has expired
 					removeUser(storedObject);
@@ -91,9 +92,9 @@ public class UserPool {
 		long now = System.currentTimeMillis();
 		Long userId = null;
 		if (time.size() > 0) {
-			Enumeration<Long> e = time.keys();
-			while (e.hasMoreElements()) {
-				userId = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
+			while (e.hasNext()) {
+				userId = e.next();
 				if ((now - time.get(userId)) > EXPIRATION_TIME) {
 					// object has expired
 					removeUser(userId);
@@ -123,9 +124,9 @@ public class UserPool {
 		long now = System.currentTimeMillis();
 		Long storedObject = null;
 		if (usersOfRoleTime.size() > 0) {
-			Enumeration<Long> e = usersOfRoleTime.keys();
-			while (e.hasMoreElements()) {
-				storedObject = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(usersOfRoleTime).keySet().iterator();
+			while (e.hasNext()) {
+				storedObject = e.next();
 				if ((now - usersOfRoleTime.get(storedObject)) > EXPIRATION_TIME) {
 					// object has expired
 					removeUsersOfRole(storedObject);
@@ -156,9 +157,9 @@ public class UserPool {
 		long now = System.currentTimeMillis();
 		Long storedObject = null;
 		if (usersOfCompanyTime.size() > 0) {
-			Enumeration<Long> e = usersOfCompanyTime.keys();
-			while (e.hasMoreElements()) {
-				storedObject = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(usersOfCompanyTime).keySet().iterator();
+			while (e.hasNext()) {
+				storedObject = e.next();
 				if ((now - usersOfCompanyTime.get(storedObject)) > EXPIRATION_TIME) {
 					// object has expired
 					removeUsersOfCompany(storedObject);

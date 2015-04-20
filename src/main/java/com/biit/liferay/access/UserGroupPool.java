@@ -1,7 +1,8 @@
 package com.biit.liferay.access;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.liferay.portal.model.UserGroup;
 
@@ -9,8 +10,8 @@ public class UserGroupPool {
 
 	private final static long EXPIRATION_TIME = 300000;// 5 minutes
 
-	private Hashtable<Long, Long> time; // group id -> time.
-	private Hashtable<Long, UserGroup> groups; // groupid -> UserGroup.
+	private Map<Long, Long> time; // group id -> time.
+	private Map<Long, UserGroup> groups; // groupid -> UserGroup.
 
 	private static UserGroupPool instance = new UserGroupPool();
 
@@ -21,10 +22,10 @@ public class UserGroupPool {
 	private UserGroupPool() {
 		reset();
 	}
-	
-	public void reset(){
-		time = new Hashtable<Long, Long>();
-		groups = new Hashtable<Long, UserGroup>();
+
+	public void reset() {
+		time = new HashMap<Long, Long>();
+		groups = new HashMap<Long, UserGroup>();
 	}
 
 	public void addGroup(UserGroup group) {
@@ -38,9 +39,9 @@ public class UserGroupPool {
 		long now = System.currentTimeMillis();
 		Long storedObject = null;
 		if (time.size() > 0) {
-			Enumeration<Long> e = time.keys();
-			while (e.hasMoreElements()) {
-				storedObject = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
+			while (e.hasNext()) {
+				storedObject = e.next();
 				if ((now - time.get(storedObject)) > EXPIRATION_TIME) {
 					// object has expired
 					removeGroup(storedObject);
@@ -59,9 +60,9 @@ public class UserGroupPool {
 		long now = System.currentTimeMillis();
 		Long storedObject = null;
 		if (time.size() > 0) {
-			Enumeration<Long> e = time.keys();
-			while (e.hasMoreElements()) {
-				storedObject = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
+			while (e.hasNext()) {
+				storedObject = e.next();
 				if ((now - time.get(storedObject)) > EXPIRATION_TIME) {
 					// object has expired
 					removeGroup(storedObject);

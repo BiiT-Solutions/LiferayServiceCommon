@@ -1,9 +1,11 @@
 package com.biit.liferay.access;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -15,30 +17,30 @@ public class OrganizationPool {
 
 	private final static long EXPIRATION_TIME = 300000;// 5 minutes
 
-	private Hashtable<Long, Long> time; // Company id -> time.
+	private Map<Long, Long> time; // Company id -> time.
 	// Company id -> Organizations.
-	private Hashtable<Long, List<Organization>> organizationsByCompany;
+	private Map<Long, List<Organization>> organizationsByCompany;
 
 	// Organizations by id;
-	private Hashtable<Long, Long> organizationTime; // user id -> time.
-	private Hashtable<Long, Organization> organizationsById;
+	private Map<Long, Long> organizationTime; // user id -> time.
+	private Map<Long, Organization> organizationsById;
 
-	private Hashtable<Long, Long> userTime; // user id -> time.
+	private Map<Long, Long> userTime; // user id -> time.
 	// Group by user.
-	private Hashtable<Long, List<Group>> organizationsGroupByUser;
+	private Map<Long, List<Group>> organizationsGroupByUser;
 
-	private Hashtable<Long, Long> organizationUsersTime; // group id -> time.
-	private Hashtable<Long, List<User>> organizationUsers; // Users by organization.
+	private Map<Long, Long> organizationUsersTime; // group id -> time.
+	private Map<Long, List<User>> organizationUsers; // Users by organization.
 
-	private Hashtable<Long, Hashtable<Long, Long>> organizationSiteAndUsersTime; // group id -> time.
+	private Map<Long, Map<Long, Long>> organizationSiteAndUsersTime; // group id -> time.
 	// Site -> User -> Organizations
-	private Hashtable<Long, Hashtable<Long, List<Organization>>> organizationSiteAndUsers;
+	private Map<Long, Map<Long, List<Organization>>> organizationSiteAndUsers;
 
 	private static OrganizationPool instance = new OrganizationPool();
 
 	// User --> List<Organization>
-	private Hashtable<Long, Long> organizationsByUserTime;
-	private Hashtable<Long, List<Organization>> organizationsByUser;
+	private Map<Long, Long> organizationsByUserTime;
+	private Map<Long, List<Organization>> organizationsByUser;
 
 	public static OrganizationPool getInstance() {
 		return instance;
@@ -49,18 +51,18 @@ public class OrganizationPool {
 	}
 
 	public void reset() {
-		time = new Hashtable<Long, Long>();
-		organizationsByCompany = new Hashtable<Long, List<Organization>>();
-		userTime = new Hashtable<Long, Long>();
-		organizationsGroupByUser = new Hashtable<Long, List<Group>>();
-		organizationUsersTime = new Hashtable<Long, Long>();
-		organizationUsers = new Hashtable<Long, List<User>>();
-		organizationSiteAndUsersTime = new Hashtable<Long, Hashtable<Long, Long>>();
-		organizationSiteAndUsers = new Hashtable<Long, Hashtable<Long, List<Organization>>>();
-		organizationsById = new Hashtable<Long, Organization>();
-		organizationTime = new Hashtable<Long, Long>();
-		organizationsByUser = new Hashtable<Long, List<Organization>>();
-		organizationsByUserTime = new Hashtable<Long, Long>();
+		time = new HashMap<Long, Long>();
+		organizationsByCompany = new HashMap<Long, List<Organization>>();
+		userTime = new HashMap<Long, Long>();
+		organizationsGroupByUser = new HashMap<Long, List<Group>>();
+		organizationUsersTime = new HashMap<Long, Long>();
+		organizationUsers = new HashMap<Long, List<User>>();
+		organizationSiteAndUsersTime = new HashMap<Long, Map<Long, Long>>();
+		organizationSiteAndUsers = new HashMap<Long, Map<Long, List<Organization>>>();
+		organizationsById = new HashMap<Long, Organization>();
+		organizationTime = new HashMap<Long, Long>();
+		organizationsByUser = new HashMap<Long, List<Organization>>();
+		organizationsByUserTime = new HashMap<Long, Long>();
 	}
 
 	public void addOrganization(Company company, Organization organization) {
@@ -130,7 +132,7 @@ public class OrganizationPool {
 	 */
 	public void addOrganizationsBySiteAndUser(long siteId, long userId, List<Organization> organizations) {
 		// Update data
-		Hashtable<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
+		Map<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
 		if (organizationsByUser == null) {
 			organizationSiteAndUsers.put(siteId, new Hashtable<Long, List<Organization>>());
 		}
@@ -185,9 +187,9 @@ public class OrganizationPool {
 		long now = System.currentTimeMillis();
 		Long storedObjectId = null;
 		if (organizationTime.size() > 0) {
-			Enumeration<Long> organizationsIds = organizationTime.keys();
-			while (organizationsIds.hasMoreElements()) {
-				storedObjectId = organizationsIds.nextElement();
+			Iterator<Long> organizationsIds = new HashMap<Long, Long>(organizationTime).keySet().iterator();
+			while (organizationsIds.hasNext()) {
+				storedObjectId = organizationsIds.next();
 				if ((now - organizationTime.get(storedObjectId)) > EXPIRATION_TIME) {
 					// object has expired
 					removeOrganizationsById(organizationId);
@@ -214,12 +216,14 @@ public class OrganizationPool {
 		Long nextSiteId = null;
 		Long nextUserId = null;
 		if (organizationSiteAndUsersTime.size() > 0) {
-			Enumeration<Long> siteEnum = organizationSiteAndUsersTime.keys();
-			while (siteEnum.hasMoreElements()) {
-				nextSiteId = siteEnum.nextElement();
-				Enumeration<Long> userEnum = organizationSiteAndUsersTime.get(nextSiteId).keys();
-				while (userEnum.hasMoreElements()) {
-					nextUserId = userEnum.nextElement();
+			Iterator<Long> siteEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).keySet()
+					.iterator();
+			while (siteEnum.hasNext()) {
+				nextSiteId = siteEnum.next();
+				Iterator<Long> userEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime)
+						.get(nextSiteId).keySet().iterator();
+				while (userEnum.hasNext()) {
+					nextUserId = userEnum.next();
 					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > EXPIRATION_TIME) {
 						// object has expired
 						removeOrganizations(nextSiteId, nextUserId);
@@ -252,9 +256,9 @@ public class OrganizationPool {
 		long now = System.currentTimeMillis();
 		Long nextUserId = null;
 		if (userTime.size() > 0) {
-			Enumeration<Long> e = userTime.keys();
-			while (e.hasMoreElements()) {
-				nextUserId = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(userTime).keySet().iterator();
+			while (e.hasNext()) {
+				nextUserId = e.next();
 				if ((now - userTime.get(nextUserId)) > EXPIRATION_TIME) {
 					// object has expired
 					removeOrganizationGroupsOfUser(nextUserId);
@@ -280,9 +284,9 @@ public class OrganizationPool {
 		long now = System.currentTimeMillis();
 		Long companyId = null;
 		if (time.size() > 0) {
-			Enumeration<Long> e = time.keys();
-			while (e.hasMoreElements()) {
-				companyId = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
+			while (e.hasNext()) {
+				companyId = e.next();
 				if ((now - time.get(companyId)) > EXPIRATION_TIME) {
 					// object has expired
 					removeOrganizationsOfCompany(companyId);
@@ -301,9 +305,9 @@ public class OrganizationPool {
 		long now = System.currentTimeMillis();
 		Long nextOrganizationId = null;
 		if (organizationUsersTime.size() > 0) {
-			Enumeration<Long> e = organizationUsersTime.keys();
-			while (e.hasMoreElements()) {
-				nextOrganizationId = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(organizationUsersTime).keySet().iterator();
+			while (e.hasNext()) {
+				nextOrganizationId = e.next();
 				if ((now - organizationUsersTime.get(nextOrganizationId)) > EXPIRATION_TIME) {
 					// Object has expired.
 					removeOrganizationUsers(nextOrganizationId);
@@ -357,7 +361,7 @@ public class OrganizationPool {
 	 * @param user
 	 */
 	public void removeOrganizations(long siteId, long userId) {
-		Hashtable<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
+		Map<Long, List<Organization>> organizationsByUser = organizationSiteAndUsers.get(siteId);
 		if (organizationsByUser != null) {
 			organizationsByUser.remove(userId);
 			// Remove time mark.
@@ -418,9 +422,9 @@ public class OrganizationPool {
 		long now = System.currentTimeMillis();
 		Long nextUserId = null;
 		if (organizationsByUserTime.size() > 0) {
-			Enumeration<Long> e = organizationsByUserTime.keys();
-			while (e.hasMoreElements()) {
-				nextUserId = e.nextElement();
+			Iterator<Long> e = new HashMap<Long, Long>(organizationsByUserTime).keySet().iterator();
+			while (e.hasNext()) {
+				nextUserId = e.next();
 				if ((now - organizationsByUserTime.get(nextUserId)) > EXPIRATION_TIME) {
 					// Object has expired.
 					removeOrganizationByUsers(nextUserId);
