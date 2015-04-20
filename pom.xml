@@ -37,11 +37,12 @@
 		<surefire.version>2.16</surefire.version>
 		<apache-commons.version>1.9</apache-commons.version>
 		<apache-httpclient.version>4.3.1</apache-httpclient.version>
-		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
 		<project.scm.id>git</project.scm.id>
+		<!-- BiiT dependencies -->
+		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 	</properties>
 
 	<dependencies>
