@@ -3,6 +3,7 @@ package com.biit.liferay.access;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -11,26 +12,27 @@ import org.apache.http.message.BasicNameValuePair;
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
+import com.biit.usermanager.entity.IGroup;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Group;
 
-public class GroupService extends ServiceAccess<Group> {
+public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
 
 	public GroupService() {
 	}
 
 	@Override
-	public List<Group> decodeListFromJson(String json, Class<Group> objectClass) throws JsonParseException,
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Group> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
-		List<Group> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<Group>>() {
+		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
 		});
 		return myObjects;
 	}
 
-	public Group getGroup(Long companyId, String groupName) throws NotConnectedToWebServiceException,
+	public IGroup<Long> getGroup(Long companyId, String groupName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && groupName != null) {
 			// Look up user in the liferay.
@@ -43,7 +45,7 @@ public class GroupService extends ServiceAccess<Group> {
 			String result = getHttpResponse("group/get-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
-				Group group = decodeFromJson(result, Group.class);
+				IGroup<Long> group = decodeFromJson(result, Group.class);
 				return group;
 			}
 		}

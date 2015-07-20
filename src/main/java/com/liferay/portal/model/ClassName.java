@@ -1,6 +1,8 @@
 package com.liferay.portal.model;
 
-public class ClassName implements java.io.Serializable {
+import com.biit.usermanager.entity.IElement;
+
+public class ClassName implements java.io.Serializable, IElement<Long> {
 	private static final long serialVersionUID = -2286528085111137398L;
 	private long classNameId;
 	private String value;
@@ -33,5 +35,10 @@ public class ClassName implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return value;
+	}
+
+	@Override
+	public Long getId() {
+		return getClassNameId();
 	}
 }

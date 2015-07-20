@@ -1,17 +1,12 @@
-/**
- * user.java
- *
- * This file was auto-generated from WSDL
- * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
- */
-
 package com.liferay.portal.model;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class User implements java.io.Serializable {
+import com.biit.usermanager.entity.IUser;
+
+public class User implements java.io.Serializable, IUser<Long> {
 	private static final long serialVersionUID = -6134421097495636111L;
 
 	private boolean agreedToTermsOfUse;
@@ -289,6 +284,7 @@ public class User implements java.io.Serializable {
 	 * 
 	 * @return emailAddress
 	 */
+	@Override
 	public java.lang.String getEmailAddress() {
 		return emailAddress;
 	}
@@ -865,7 +861,8 @@ public class User implements java.io.Serializable {
 	 * 
 	 * @return userId
 	 */
-	public long getUserId() {
+	@Override
+	public Long getId() {
 		return userId;
 	}
 
@@ -997,6 +994,11 @@ public class User implements java.io.Serializable {
 		if (userId != other.userId)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String getUniqueName() {
+		return getScreenName();
 	}
 
 }

@@ -3,6 +3,7 @@ package com.biit.liferay.access;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -11,6 +12,8 @@ import org.apache.http.message.BasicNameValuePair;
 import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
+import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.pool.GroupPool;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -20,15 +23,18 @@ import com.liferay.portal.model.Company;
 /**
  * This class allows to obtain a liferay portal instance.
  */
-public class CompanyService extends ServiceAccess<Company> {
+public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
+
+	private GroupPool<Long, Long> groupPool;
 
 	public CompanyService() {
+		groupPool = new GroupPool<Long, Long>();
 	}
 
 	@Override
-	public List<Company> decodeListFromJson(String json, Class<Company> objectClass) throws JsonParseException,
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Company> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
-		List<Company> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<Company>>() {
+		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Company>>() {
 		});
 
 		return myObjects;
@@ -46,10 +52,10 @@ public class CompanyService extends ServiceAccess<Company> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Company getCompanyById(long companyId) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getCompanyById(long companyId) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 
-		Company company = CompanyPool.getInstance().getCompanyById(companyId);
+		IGroup<Long> company = groupPool.getGroupById(companyId);
 		if (company != null) {
 			return company;
 		}
@@ -63,7 +69,7 @@ public class CompanyService extends ServiceAccess<Company> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
-			CompanyPool.getInstance().addCompany(company);
+			groupPool.addGroup(company);
 			return company;
 		}
 
@@ -84,12 +90,16 @@ public class CompanyService extends ServiceAccess<Company> {
 	 * @throws WebServiceAccessError
 	 * 
 	 */
-	public Company getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException,
+	public IGroup<Long> getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException,
 			JsonParseException, JsonMappingException, IOException, AuthenticationRequired, WebServiceAccessError {
 
-		Company company = CompanyPool.getInstance().getCompanyByVirtualHostId(virtualHost);
-		if (company != null) {
-			return company;
+		IGroup<Long> company = null;
+		// Look up user in the pool.
+		if (groupPool.getElementsByTag(virtualHost) != null && !groupPool.getElementsByTag(virtualHost).isEmpty()) {
+			company = groupPool.getElementsByTag(virtualHost).iterator().next();
+			if (company != null) {
+				return company;
+			}
 		}
 
 		checkConnection();
@@ -101,7 +111,7 @@ public class CompanyService extends ServiceAccess<Company> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
-			CompanyPool.getInstance().addCompany(company, virtualHost);
+			groupPool.addGroupByTag(company, virtualHost);
 			return company;
 		}
 
@@ -120,12 +130,16 @@ public class CompanyService extends ServiceAccess<Company> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Company getCompanyByWebId(String webId) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getCompanyByWebId(String webId) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 
-		Company company = CompanyPool.getInstance().getCompanyByWebId(webId);
-		if (company != null) {
-			return company;
+		IGroup<Long> company = null;
+		// Look up user in the pool.
+		if (groupPool.getElementsByTag(webId) != null && !groupPool.getElementsByTag(webId).isEmpty()) {
+			company = groupPool.getElementsByTag(webId).iterator().next();
+			if (company != null) {
+				return company;
+			}
 		}
 
 		checkConnection();
@@ -137,7 +151,7 @@ public class CompanyService extends ServiceAccess<Company> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
-			CompanyPool.getInstance().addCompany(company);
+			groupPool.addGroupByTag(company, webId);
 			return company;
 		}
 
@@ -145,7 +159,7 @@ public class CompanyService extends ServiceAccess<Company> {
 	}
 
 	public void reset() {
-		CompanyPool.getInstance().reset();
+		groupPool.reset();
 	}
 
 }

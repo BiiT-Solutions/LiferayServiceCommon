@@ -2,7 +2,9 @@ package com.biit.liferay.access;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -14,6 +16,8 @@ import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.UserGroupDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
+import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.pool.GroupPool;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -24,14 +28,15 @@ import com.liferay.portal.model.UserGroup;
 /**
  * This class allows to manage group from Liferay portal.
  */
-public class UserGroupService extends ServiceAccess<UserGroup> {
+public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
+	private GroupPool<Long, Long> groupPool;
 
 	public UserGroupService() {
+		groupPool = new GroupPool<Long, Long>();
 	}
-	
-	public void reset(){
-		UserGroupPool.getInstance().reset();
-		UserGroupsPool.getInstance().reset();
+
+	public void reset() {
+		groupPool.reset();
 	}
 
 	/**
@@ -49,7 +54,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
-	public UserGroup addUserGroup(String name, String description) throws NotConnectedToWebServiceException,
+	public IGroup<Long> addUserGroup(String name, String description) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
 			DuplicatedLiferayElement {
 		if (name != null && name.length() > 0) {
@@ -60,7 +65,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 			params.add(new BasicNameValuePair("description", description));
 
 			String result = getHttpResponse("usergroup/add-user-group", params);
-			UserGroup userGroup = null;
+			IGroup<Long> userGroup = null;
 			if (result != null) {
 				// Check some errors
 				if (result.contains("DuplicateUserGroupException")) {
@@ -68,7 +73,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 				}
 				// A Simple JSON Response Read
 				userGroup = decodeFromJson(result, UserGroup.class);
-				UserGroupPool.getInstance().addGroup(userGroup);
+				groupPool.addGroup(userGroup);
 				return userGroup;
 			}
 
@@ -97,7 +102,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 				usersId = "[";
 			}
 			for (int i = 0; i < users.size(); i++) {
-				usersId += users.get(i).getUserId();
+				usersId += users.get(i).getId();
 				if (i < users.size() - 1) {
 					usersId += ",";
 				}
@@ -113,7 +118,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 					"Users ids " + usersId + " added to group '" + group.getName() + "'");
 
 			for (User user : users) {
-				UserGroupsPool.getInstance().addUserGroup(user, group);
+				groupPool.addUserToGroup(user, group);
 			}
 		}
 	}
@@ -136,9 +141,9 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	}
 
 	@Override
-	public List<UserGroup> decodeListFromJson(String json, Class<UserGroup> objectClass) throws JsonParseException,
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<UserGroup> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
-		List<UserGroup> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<UserGroup>>() {
+		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<UserGroup>>() {
 		});
 
 		return myObjects;
@@ -151,10 +156,10 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUserGroupId())));
-			params.add(new BasicNameValuePair("userIds", Long.toString(user.getUserId())));
+			params.add(new BasicNameValuePair("userIds", Long.toString(user.getId())));
 
 			getHttpResponse("user/unset-user-group-users", params);
-			UserGroupsPool.getInstance().removeUserGroups(user);
+			groupPool.removeUserFromGroups(user.getId(), userGroup.getId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getScreenName() + "' unset from '"
 					+ userGroup.getName() + "'.");
@@ -180,8 +185,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroupId)));
 
 			getHttpResponse("usergroup/delete-user-group", params);
-			UserGroupPool.getInstance().removeGroup(userGroupId);
-			UserGroupsPool.getInstance().removeUserGroup(userGroupId);
+			groupPool.removeGroupsById(userGroupId);
 
 			LiferayClientLogger.info(this.getClass().getName(), "Group with id '" + userGroupId + "' deleted.");
 
@@ -206,8 +210,7 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUserGroupId())));
 
 			getHttpResponse("usergroup/delete-user-group", params);
-			UserGroupPool.getInstance().removeGroup(userGroup.getUserGroupId());
-			UserGroupsPool.getInstance().removeUserGroup(userGroup);
+			groupPool.removeGroupsById(userGroup.getUserGroupId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "Group '" + userGroup.getName() + "' deleted.");
 
@@ -226,12 +229,12 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public UserGroup getUserGroup(long userGroupId) throws NotConnectedToWebServiceException,
+	public IGroup<Long> getUserGroup(long userGroupId) throws NotConnectedToWebServiceException,
 			UserGroupDoesNotExistException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		if (userGroupId >= 0) {
 			// Look up UserSoap in the pool.
-			UserGroup group = UserGroupPool.getInstance().getGroup(userGroupId);
+			IGroup<Long> group = groupPool.getGroupById(userGroupId);
 			if (group != null) {
 				return group;
 			}
@@ -244,8 +247,8 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 			String result = getHttpResponse("usergroup/get-user-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
-				UserGroup userGroup = decodeFromJson(result, UserGroup.class);
-				UserGroupPool.getInstance().addGroup(userGroup);
+				IGroup<Long> userGroup = decodeFromJson(result, UserGroup.class);
+				groupPool.addGroup(userGroup);
 				return userGroup;
 			}
 
@@ -267,13 +270,16 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public UserGroup getUserGroup(String name) throws NotConnectedToWebServiceException, ClientProtocolException,
+	public IGroup<Long> getUserGroup(String name) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, UserGroupDoesNotExistException, AuthenticationRequired, WebServiceAccessError {
 		if (name != null && name.length() > 0) {
-			// Look up UserSoap in the pool.
-			UserGroup group = UserGroupPool.getInstance().getGroup(name);
-			if (group != null) {
-				return group;
+			IGroup<Long> group;
+			// Look up in the pool.
+			if (groupPool.getElementsByTag(name) != null && !groupPool.getElementsByTag(name).isEmpty()) {
+				group = groupPool.getElementsByTag(name).iterator().next();
+				if (group != null) {
+					return group;
+				}
 			}
 
 			// Read from Liferay.
@@ -284,8 +290,8 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 			String result = getHttpResponse("usergroup/get-user-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
-				UserGroup userGroup = decodeFromJson(result, UserGroup.class);
-				UserGroupPool.getInstance().addGroup(userGroup);
+				IGroup<Long> userGroup = decodeFromJson(result, UserGroup.class);
+				groupPool.addGroupByTag(userGroup, userGroup.getUniqueName());
 				return userGroup;
 			}
 
@@ -304,27 +310,27 @@ public class UserGroupService extends ServiceAccess<UserGroup> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
-	public List<UserGroup> getUserUserGroups(User user) throws NotConnectedToWebServiceException,
+	public Set<IGroup<Long>> getUserUserGroups(User user) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired {
-		List<UserGroup> groups = new ArrayList<UserGroup>();
+		Set<IGroup<Long>> groups = new HashSet<IGroup<Long>>();
 
 		// Look up UserSoap in the pool.
 		if (user != null) {
-			List<UserGroup> usergroups = UserGroupsPool.getInstance().getGroupsByUser(user);
+			Set<IGroup<Long>> usergroups = groupPool.getGroups(user.getId());
 			if (usergroups != null) {
 				return usergroups;
 			}
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userId", Long.toString(user.getUserId())));
+			params.add(new BasicNameValuePair("userId", Long.toString(user.getId())));
 
 			String result = getHttpResponse("usergroup/get-user-user-groups", params);
 
 			if (result != null) {
 				// A Simple JSON Response Read
 				groups = decodeListFromJson(result, UserGroup.class);
-				UserGroupsPool.getInstance().addUserGroups(user, groups);
+				groupPool.addUserToGroups(user, groups);
 				return groups;
 			}
 		}

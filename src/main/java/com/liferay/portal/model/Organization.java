@@ -7,7 +7,9 @@
 
 package com.liferay.portal.model;
 
-public class Organization implements java.io.Serializable {
+import com.biit.usermanager.entity.IGroup;
+
+public class Organization implements java.io.Serializable, IGroup<Long> {
 	private static final long serialVersionUID = 1788863138408637398L;
 
 	private java.lang.String comments;
@@ -400,6 +402,16 @@ public class Organization implements java.io.Serializable {
 
 	@Override
 	public String toString() {
+		return getName();
+	}
+
+	@Override
+	public Long getId() {
+		return getOrganizationId();
+	}
+
+	@Override
+	public String getUniqueName() {
 		return getName();
 	}
 

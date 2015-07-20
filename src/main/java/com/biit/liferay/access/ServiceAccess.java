@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -43,7 +44,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 /**
  * Common methods for accessing to a Liferay web service.
  */
-public abstract class ServiceAccess<T> implements LiferayService {
+public abstract class ServiceAccess<Type, LiferayType extends Type> implements LiferayService {
 	private final static String NOT_AUTHORIZED_ERROR = "{\"exception\":\"Authenticated access required\"}";
 	private final static String UNRECOGNIZED_FIELD_ERROR = "Unrecognized field \"exception\"";
 	private HttpClient httpClientWithCredentials = null;
@@ -247,13 +248,13 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		return getHttpResponse(webService, params, false);
 	}
 
-	public T decodeFromJson(String json, Class<T> objectClass) throws JsonParseException, JsonMappingException,
-			IOException, NotConnectedToWebServiceException, WebServiceAccessError {
+	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException,
+			JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError {
 		LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
 		try {
 			ObjectMapper jsonMapper = new ObjectMapper();
 			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-			T object = new ObjectMapper().readValue(json, objectClass);
+			LiferayType object = new ObjectMapper().readValue(json, objectClass);
 			return object;
 		} catch (UnrecognizedPropertyException e) {
 			if (e.getMessage().startsWith(UNRECOGNIZED_FIELD_ERROR)) {
@@ -264,8 +265,8 @@ public abstract class ServiceAccess<T> implements LiferayService {
 		}
 	}
 
-	public abstract List<T> decodeListFromJson(String json, Class<T> objectClass) throws JsonParseException,
-			JsonMappingException, IOException;
+	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass)
+			throws JsonParseException, JsonMappingException, IOException;
 
 	public void setAuthParam(List<NameValuePair> params) {
 		if (authToken != null && authToken.length() > 0) {

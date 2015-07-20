@@ -3,6 +3,7 @@ package com.biit.liferay.access;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -18,15 +19,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 
-public class ContactService extends ServiceAccess<Contact> {
+public class ContactService extends ServiceAccess<Contact, Contact> {
+
+	private ContactPool contactPool;
 
 	public ContactService() {
+		contactPool = new ContactPool();
 	}
 
 	@Override
-	public List<Contact> decodeListFromJson(String json, Class<Contact> objectClass) throws JsonParseException,
+	public Set<Contact> decodeListFromJson(String json, Class<Contact> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
-		List<Contact> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<Contact>>() {
+		Set<Contact> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Contact>>() {
 		});
 		return myObjects;
 	}
@@ -65,7 +69,7 @@ public class ContactService extends ServiceAccess<Contact> {
 			IOException, AuthenticationRequired, WebServiceAccessError {
 		if (contactId != null) {
 			// Look up user in the liferay.
-			Contact contact = ContactPool.getInstance().getContact(contactId);
+			Contact contact = contactPool.getContact(contactId);
 			if (contact != null) {
 				return contact;
 			}
@@ -79,7 +83,7 @@ public class ContactService extends ServiceAccess<Contact> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				contact = decodeFromJson(result, Contact.class);
-				ContactPool.getInstance().addContact(contact);
+				contactPool.addContact(contact);
 				return contact;
 			}
 		}

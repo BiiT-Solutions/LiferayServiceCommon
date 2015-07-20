@@ -12,13 +12,7 @@ public class ContactPool {
 	private Map<Long, Long> time; // Contact id -> time.
 	private Map<Long, Contact> contacts; // Contact id -> User.
 
-	private static ContactPool instance = new ContactPool();
-
-	public static ContactPool getInstance() {
-		return instance;
-	}
-
-	private ContactPool() {
+	public ContactPool() {
 		reset();
 	}
 

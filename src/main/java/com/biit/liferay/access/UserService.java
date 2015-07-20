@@ -3,7 +3,9 @@ package com.biit.liferay.access;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -14,6 +16,10 @@ import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.UserDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
+import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.IUser;
+import com.biit.usermanager.entity.pool.GroupPool;
+import com.biit.usermanager.entity.pool.UserPool;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -25,11 +31,16 @@ import com.liferay.portal.model.User;
 /**
  * This class allows to manage users from Liferay portal.
  */
-public class UserService extends ServiceAccess<User> {
+public class UserService extends ServiceAccess<IUser<Long>, User> {
 	private ContactService contactService;
 	private OrganizationService organizationService;
 
+	private final UserPool<Long, Long> userPool;
+	private final GroupPool<Long, Long> groupPool;
+
 	public UserService() {
+		userPool = new UserPool<Long, Long>();
+		groupPool = new GroupPool<Long, Long>();
 	}
 
 	@Override
@@ -82,12 +93,12 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public User addUser(Company company, String password, String screenName, String emailAddress, long facebookId,
-			String openId, String locale, String firstName, String middleName, String lastName, int prefixId,
-			int suffixId, boolean male, int birthdayDay, int birthdayMonth, int birthdayYear, String jobTitle,
-			long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public IUser<Long> addUser(Company company, String password, String screenName, String emailAddress,
+			long facebookId, String openId, String locale, String firstName, String middleName, String lastName,
+			int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds,
+			boolean sendEmail) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
 		checkConnection();
 		boolean autoPassword = false;
 		boolean autoScreenName = false;
@@ -126,12 +137,12 @@ public class UserService extends ServiceAccess<User> {
 		params.add(new BasicNameValuePair("sendEmail", Boolean.toString(sendEmail)));
 
 		String result = getHttpResponse("user/add-user", params);
-		User user = null;
+		IUser<Long> user = null;
 		if (result != null) {
 			// A Simple JSON Response Read
 			user = decodeFromJson(result, User.class);
-			UserPool.getInstance().addUser(user);
-			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getScreenName() + "' added.");
+			userPool.addUser(user);
+			LiferayClientLogger.info(this.getClass().getName(), "IUser<Long> '" + user.getUniqueName() + "' added.");
 			return user;
 		}
 
@@ -150,7 +161,7 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public User addUser(Company companySoap, User user) throws NotConnectedToWebServiceException,
+	public IUser<Long> addUser(Company companySoap, User user) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (user != null) {
 			return addUser(companySoap, user.getPassword(), user.getScreenName(), user.getEmailAddress(),
@@ -162,9 +173,9 @@ public class UserService extends ServiceAccess<User> {
 	}
 
 	@Override
-	public List<User> decodeListFromJson(String json, Class<User> objectClass) throws JsonParseException,
+	public Set<IUser<Long>> decodeListFromJson(String json, Class<User> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
-		List<User> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<User>>() {
+		Set<IUser<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<User>>() {
 		});
 
 		return myObjects;
@@ -187,18 +198,18 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
-	public void deleteUser(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired {
+	public void deleteUser(IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired {
 		if (user != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userId", user.getUserId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getId() + ""));
 
 			getHttpResponse("user/delete-user", params);
 
-			UserPool.getInstance().removeUser(user);
-			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getScreenName() + "' deleted.");
+			userPool.removeUser(user);
+			LiferayClientLogger.info(this.getClass().getName(), "IUser<Long> '" + user.getUniqueName() + "' deleted.");
 		}
 	}
 
@@ -216,12 +227,13 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public User getUserByEmailAddress(Company company, String emailAddress) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IUser<Long> getUserByEmailAddress(Company company, String emailAddress)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		if (company != null && emailAddress != null) {
 			emailAddress = emailAddress.toLowerCase();
 			// Look up user in the pool.
-			User user = UserPool.getInstance().getUserByEmailAddress(emailAddress);
+			IUser<Long> user = userPool.getUserByEmailAddress(emailAddress);
 			if (user != null) {
 				return user;
 			}
@@ -237,7 +249,7 @@ public class UserService extends ServiceAccess<User> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				user = decodeFromJson(result, User.class);
-				UserPool.getInstance().addUser(user);
+				userPool.addUser(user);
 				updateContactInformation(user);
 				return user;
 			}
@@ -258,11 +270,11 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public User getUserById(long userId) throws NotConnectedToWebServiceException, UserDoesNotExistException,
+	public IUser<Long> getUserById(long userId) throws NotConnectedToWebServiceException, UserDoesNotExistException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (userId >= 0) {
 			// Look up user in the pool.
-			User user = UserPool.getInstance().getUserById(userId);
+			IUser<Long> user = userPool.getUserById(userId);
 			if (user != null) {
 				return user;
 			}
@@ -277,7 +289,7 @@ public class UserService extends ServiceAccess<User> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				user = decodeFromJson(result, User.class);
-				UserPool.getInstance().addUser(user);
+				userPool.addUser(user);
 				updateContactInformation(user);
 				return user;
 			}
@@ -300,12 +312,13 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public User getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IUser<Long> getUserByScreenName(Company company, String screenName)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		screenName = screenName.toLowerCase();
 
 		// Look up user in the pool.
-		User user = UserPool.getInstance().getUserByScreenName(screenName);
+		IUser<Long> user = userPool.getUserByScreenName(screenName);
 		if (user != null) {
 			return user;
 		}
@@ -321,7 +334,7 @@ public class UserService extends ServiceAccess<User> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			user = decodeFromJson(result, User.class);
-			UserPool.getInstance().addUser(user);
+			userPool.addUser(user);
 			updateContactInformation(user);
 			return user;
 		}
@@ -340,10 +353,10 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public List<User> getUsers(long roleId) throws ClientProtocolException, IOException,
+	public List<IUser<Long>> getUsers(Long roleId) throws ClientProtocolException, IOException,
 			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError {
-		List<User> users = new ArrayList<User>();
-		List<User> usersOfRoles = UserPool.getInstance().getUsersOfRole(roleId);
+		List<IUser<Long>> users = new ArrayList<IUser<Long>>();
+		List<IUser<Long>> usersOfRoles = userPool.getUsersOfRole(roleId);
 		if (usersOfRoles != null) {
 			return usersOfRoles;
 		}
@@ -355,7 +368,7 @@ public class UserService extends ServiceAccess<User> {
 		if (result != null) {
 			// A Simple JSON Response Read
 			List<Long> usersIds = decodeLongListFromJson(result, Long.class);
-			usersOfRoles = new ArrayList<User>();
+			usersOfRoles = new ArrayList<IUser<Long>>();
 
 			for (Long id : usersIds) {
 				try {
@@ -366,7 +379,7 @@ public class UserService extends ServiceAccess<User> {
 				}
 			}
 
-			UserPool.getInstance().addUsersOfRole(roleId, usersOfRoles);
+			userPool.addUsersOfRole(roleId, usersOfRoles);
 			return usersOfRoles;
 		}
 		return users;
@@ -382,39 +395,43 @@ public class UserService extends ServiceAccess<User> {
 	 * @throws NotConnectedToWebServiceException
 	 * @throws ClientProtocolException
 	 */
-	private void updateContactInformation(User user) throws ClientProtocolException, NotConnectedToWebServiceException,
-			IOException, AuthenticationRequired, WebServiceAccessError {
-		Contact contact = contactService.getContact(user);
-		user.setBirthday(contact.getBirthday());
-		user.setMale(contact.isMale());
+	private void updateContactInformation(IUser<Long> user) throws ClientProtocolException,
+			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
+		Contact contact = contactService.getContact((User) user);
+		((Contact) user).setBirthday(contact.getBirthday());
+		((Contact) user).setMale(contact.isMale());
 	}
 
-	public List<User> getCompanyUsers(long companyId) throws ClientProtocolException, IOException,
+	public Set<IUser<Long>> getCompanyUsers(IGroup<Long> company) throws ClientProtocolException, IOException,
 			NotConnectedToWebServiceException, AuthenticationRequired {
-		List<User> users = new ArrayList<User>();
+		Set<IUser<Long>> users = new HashSet<IUser<Long>>();
+		if (company != null) {
 
-		List<User> usersOfCompany = UserPool.getInstance().getUsersOfCompany(companyId);
-		if (usersOfCompany != null) {
-			return usersOfCompany;
-		}
+			Set<IUser<Long>> usersOfCompany = groupPool.getGroupUsers(company.getId());
+			if (usersOfCompany != null) {
+				return usersOfCompany;
+			}
 
-		checkConnection();
+			checkConnection();
 
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("companyId", companyId + ""));
-		params.add(new BasicNameValuePair("start", 0 + ""));
-		params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
-		String result = getHttpResponse("user/get-company-users", params);
-		if (result != null) {
-			// A Simple JSON Response Read
-			users = decodeListFromJson(result, User.class);
-			UserPool.getInstance().addUsersOfCompany(companyId, users);
-			return users;
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
+			params.add(new BasicNameValuePair("start", 0 + ""));
+			params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
+			String result = getHttpResponse("user/get-company-users", params);
+			if (result != null) {
+				// A Simple JSON Response Read
+				users = decodeListFromJson(result, User.class);
+				for (IUser<Long> user : users) {
+					groupPool.addUserToGroup(user, company);
+				}
+				return users;
+			}
 		}
 		return users;
 	}
 
 	public void reset() {
-		UserPool.getInstance().reset();
+		userPool.reset();
 	}
 }

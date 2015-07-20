@@ -3,6 +3,7 @@ package com.biit.liferay.access;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -12,6 +13,8 @@ import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
+import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.pool.GroupPool;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -23,21 +26,24 @@ import com.liferay.portal.model.Site;
  * Site service is almost the same that Group Service. Liferay stores Sites as Groups.
  * 
  */
-public class SiteService extends ServiceAccess<Site> {
+public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
+
+	private GroupPool<Long, Long> groupPool;
 
 	public SiteService() {
+		groupPool = new GroupPool<Long, Long>();
 	}
 
 	@Override
-	public List<Site> decodeListFromJson(String json, Class<Site> objectClass) throws JsonParseException,
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Site> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
-		List<Site> myObjects = new ObjectMapper().readValue(json, new TypeReference<List<Site>>() {
+		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Site>>() {
 		});
 
 		return myObjects;
 	}
 
-	public Site getSite(Company company, String siteName) throws NotConnectedToWebServiceException,
+	public IGroup<Long> getSite(Company company, String siteName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (company != null) {
 			return getSite(company.getCompanyId(), siteName);
@@ -45,13 +51,17 @@ public class SiteService extends ServiceAccess<Site> {
 		return null;
 	}
 
-	public Site getSite(Long companyId, String siteName) throws NotConnectedToWebServiceException,
+	public IGroup<Long> getSite(Long companyId, String siteName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && siteName != null) {
 			// Look up user in the pool.
-			Site site = SitePool.getInstance().getSiteByName(siteName);
-			if (site != null) {
-				return site;
+			IGroup<Long> site = null;
+			// Look up user in the pool.
+			if (groupPool.getElementsByTag(siteName) != null && !groupPool.getElementsByTag(siteName).isEmpty()) {
+				site = groupPool.getElementsByTag(siteName).iterator().next();
+				if (site != null) {
+					return site;
+				}
 			}
 
 			checkConnection();
@@ -64,27 +74,33 @@ public class SiteService extends ServiceAccess<Site> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				site = decodeFromJson(result, Site.class);
+				groupPool.addGroupByTag(site, siteName);
 				return site;
 			}
 		}
 		return null;
 	}
 
-	public Site getSiteByFriendlyUrl(Company company, String friendlyUrl) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getSiteByFriendlyUrl(Company company, String friendlyUrl)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		if (company != null) {
 			return getSiteByFriendlyUrl(company.getCompanyId(), friendlyUrl);
 		}
 		return null;
 	}
 
-	public Site getSiteByFriendlyUrl(Long companyId, String friendlyUrl) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getSiteByFriendlyUrl(Long companyId, String friendlyUrl)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		if (companyId != null && friendlyUrl != null) {
+			IGroup<Long> site = null;
 			// Look up user in the pool.
-			Site site = SitePool.getInstance().getSiteByFriendlyUrl(friendlyUrl);
-			if (site != null) {
-				return site;
+			if (groupPool.getElementsByTag(friendlyUrl) != null && !groupPool.getElementsByTag(friendlyUrl).isEmpty()) {
+				site = groupPool.getElementsByTag(friendlyUrl).iterator().next();
+				if (site != null) {
+					return site;
+				}
 			}
 
 			checkConnection();
@@ -97,9 +113,10 @@ public class SiteService extends ServiceAccess<Site> {
 			String result = getHttpResponse("group/get-groups", params);
 			if (result != null) {
 				// A Simple JSON Response Read
-				List<Site> sites = decodeListFromJson(result, Site.class);
-				for (Site siteSearch : sites) {
-					if (siteSearch.getFriendlyURL().equals(friendlyUrl)) {
+				Set<IGroup<Long>> sites = decodeListFromJson(result, Site.class);
+				for (IGroup<Long> siteSearch : sites) {
+					if (((Site) siteSearch).getFriendlyURL().equals(friendlyUrl)) {
+						groupPool.addGroupByTag(site, friendlyUrl);
 						return siteSearch;
 					}
 				}
@@ -123,7 +140,7 @@ public class SiteService extends ServiceAccess<Site> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Site addSite(String name, String description, int type, String friendlyURL)
+	public IGroup<Long> addSite(String name, String description, int type, String friendlyURL)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		if (name != null) {
@@ -139,12 +156,12 @@ public class SiteService extends ServiceAccess<Site> {
 			params.add(new BasicNameValuePair("-serviceContext", null));
 
 			String result = getHttpResponse("group/add-group", params);
-			Site site = null;
+			IGroup<Long> site = null;
 			if (result != null) {
 				// A Simple JSON Response Read
 				site = decodeFromJson(result, Site.class);
-				SitePool.getInstance().addSite(site);
-				LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getName() + "' added.");
+				groupPool.addGroup(site);
+				LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' added.");
 				return site;
 			}
 		}
@@ -160,7 +177,7 @@ public class SiteService extends ServiceAccess<Site> {
 			params.add(new BasicNameValuePair("groupId", Long.toString(site.getGroupId())));
 
 			getHttpResponse("group/delete-group", params);
-			SitePool.getInstance().removeSite(site);
+			groupPool.removeGroupsById(site.getId());
 			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getName() + "' deleted.");
 			return true;
 		}

@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.biit.liferay</groupId>
 	<artifactId>liferay-service-common</artifactId>
 	<packaging>jar</packaging>
-	<version>0.6.4-SNAPSHOT</version>
+	<version>0.7.0-SNAPSHOT</version>
 	<name>Liferay Client Common Utils</name>
 	<description>Basic functionality for any Liferay client</description>
 
@@ -43,9 +44,16 @@
 		<project.scm.id>git</project.scm.id>
 		<!-- BiiT dependencies -->
 		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
+		<user-manager.version>[0.1,0.2)</user-manager.version>
 	</properties>
 
 	<dependencies>
+		<!-- User Management -->
+		<dependency>
+			<groupId>com.biit</groupId>
+			<artifactId>user-manager</artifactId>
+			<version>${user-manager.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

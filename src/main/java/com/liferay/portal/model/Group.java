@@ -7,7 +7,9 @@
 
 package com.liferay.portal.model;
 
-public class Group implements java.io.Serializable {
+import com.biit.usermanager.entity.IGroup;
+
+public class Group implements java.io.Serializable, IGroup<Long> {
 	private static final long serialVersionUID = 5541893273783866089L;
 
 	private boolean active;
@@ -211,7 +213,7 @@ public class Group implements java.io.Serializable {
 	 * 
 	 * @return groupId
 	 */
-	public long getGroupId() {
+	public Long getGroupId() {
 		return groupId;
 	}
 
@@ -438,6 +440,16 @@ public class Group implements java.io.Serializable {
 	 */
 	public void setUuid(java.lang.String uuid) {
 		this.uuid = uuid;
+	}
+
+	@Override
+	public Long getId() {
+		return getGroupId();
+	}
+
+	@Override
+	public String getUniqueName() {
+		return getName();
 	}
 
 }

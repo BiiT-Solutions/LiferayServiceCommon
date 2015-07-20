@@ -7,7 +7,9 @@
 
 package com.liferay.portal.model;
 
-public class Company implements java.io.Serializable {
+import com.biit.usermanager.entity.IGroup;
+
+public class Company implements java.io.Serializable, IGroup<Long> {
 	private static final long serialVersionUID = -5076489772058450143L;
 
 	private long accountId;
@@ -246,6 +248,16 @@ public class Company implements java.io.Serializable {
 	 */
 	public void setWebId(java.lang.String webId) {
 		this.webId = webId;
+	}
+
+	@Override
+	public Long getId() {
+		return getCompanyId();
+	}
+
+	@Override
+	public String getUniqueName() {
+		return getWebId();
 	}
 
 }
