@@ -23,7 +23,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Site;
@@ -75,7 +74,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
-	public IGroup<Long> addOrganization(Company company, Long parentOrganizationId, String name, String type,
+	public IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, String type,
 			Long regionId, Long countryId, int statusId, String comments, boolean site)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError, DuplicatedLiferayElement {
@@ -126,7 +125,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
-	public IGroup<Long> addOrganization(Company company, String name) throws ClientProtocolException, IOException,
+	public IGroup<Long> addOrganization(IGroup<Long> company, String name) throws ClientProtocolException, IOException,
 			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		return addOrganization(company, DEFAULT_PARENT_ORGANIZATION_ID, name, DEFAULT_TYPE, DEFAULT_REGION_ID,
 				DEFAULT_COUNTRY_ID, getOrganizationStatus(), "", DEFAULT_CREATE_SITE);
@@ -158,7 +157,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws AuthenticationRequired
 	 * @throws OrganizationNotDeletedException
 	 */
-	public void deleteOrganization(Company company, IGroup<Long> organization)
+	public void deleteOrganization(IGroup<Long> company, IGroup<Long> organization)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			OrganizationNotDeletedException {
 		if (company != null && organization != null) {
@@ -190,7 +189,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws IOException
 	 * @throws AuthenticationRequired
 	 */
-	public Set<IGroup<Long>> getOrganizations(Company company) throws NotConnectedToWebServiceException,
+	public Set<IGroup<Long>> getOrganizations(IGroup<Long> company) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired {
 		// Look up user in the pool.
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
@@ -204,7 +203,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getCompanyId() + ""));
+			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
 			params.add(new BasicNameValuePair("parentOrganizationId", DEFAULT_PARENT_ORGANIZATION_ID + ""));
 
 			String result = getHttpResponse("organization/get-organizations", params);
@@ -229,8 +228,9 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws IOException
 	 * @throws AuthenticationRequired
 	 */
-	public Set<IGroup<Long>> getOrganizations(Site site, User user) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, PortletNotInstalledException {
+	public Set<IGroup<Long>> getOrganizations(IGroup<Long> site, IUser<Long> user)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			PortletNotInstalledException {
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
 
 		if (site != null && user != null) {
@@ -243,7 +243,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("siteId", site.getSiteId() + ""));
+			params.add(new BasicNameValuePair("siteId", site.getId() + ""));
 			params.add(new BasicNameValuePair("userId", user.getId() + ""));
 
 			String result = getHttpResponse("liferay-service-common-portlet.site/get-organizations", params);
@@ -261,7 +261,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		return organizations;
 	}
 
-	public boolean addOrganization(Site site, User user, Organization organization)
+	public boolean addOrganization(Site site, IUser<Long> user, IGroup<Long> organization)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		if (site != null && user != null && organization != null) {
 			// Look up user in the liferay.
@@ -270,7 +270,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("siteId", site.getSiteId() + ""));
 			params.add(new BasicNameValuePair("userId", user.getId() + ""));
-			params.add(new BasicNameValuePair("organizationId", organization.getOrganizationId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
 
 			String result = getHttpResponse("liferay-service-common-portlet.site/add-organization", params);
 
@@ -353,7 +353,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Set<IGroup<Long>> getUserOrganizations(User user) throws ClientProtocolException,
+	public Set<IGroup<Long>> getUserOrganizations(IUser<Long> user) throws ClientProtocolException,
 			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
 		if (user != null) {
@@ -420,7 +420,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		return null;
 	}
 
-	public Set<IUser<Long>> getOrganizationUsers(Organization organization) throws NotConnectedToWebServiceException,
+	public Set<IUser<Long>> getOrganizationUsers(IGroup<Long> organization) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired {
 		Set<IUser<Long>> users = new HashSet<IUser<Long>>();
 		// Look up users in the pool.
@@ -457,9 +457,9 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public void addUserToOrganization(User user, Organization organization) throws ClientProtocolException,
+	public void addUserToOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException,
 			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
-		List<User> users = new ArrayList<User>();
+		List<IUser<Long>> users = new ArrayList<IUser<Long>>();
 		users.add(user);
 		addUsersToOrganization(users, organization);
 	}
@@ -474,7 +474,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public void addUsersToOrganization(List<User> users, Organization organization) throws ClientProtocolException,
+	public void addUsersToOrganization(List<IUser<Long>> users, IGroup<Long> organization) throws ClientProtocolException,
 			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		if (users != null && organization != null && !users.isEmpty()) {
 			// Look up user in the liferay.
@@ -495,19 +495,19 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			}
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("organizationId", organization.getOrganizationId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
 			params.add(new BasicNameValuePair("userIds", usersIds));
 
 			getHttpResponse("user/add-organization-users", params);
 
 			// Reset the pool of groups to calculate again the user's
 			// organization groups.
-			for (User user : users) {
+			for (IUser<Long> user : users) {
 				organizationPool.addUserToGroup(user, organization);
 			}
 
 			LiferayClientLogger.info(this.getClass().getName(), "Users " + usersIds + " added to organization '"
-					+ organization.getName() + "'.");
+					+ organization.getUniqueName() + "'.");
 		}
 	}
 
@@ -521,11 +521,11 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public void removeUserFromOrganization(User user, Organization organization) throws ClientProtocolException,
+	public void removeUserFromOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException,
 			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		if (user != null && organization != null) {
 			// Look up user in the liferay.
-			List<User> users = new ArrayList<User>();
+			List<IUser<Long>> users = new ArrayList<IUser<Long>>();
 			users.add(user);
 			removeUsersFromOrganization(users, organization);
 		}
@@ -541,7 +541,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public void removeUsersFromOrganization(List<User> users, Organization organization)
+	public void removeUsersFromOrganization(List<IUser<Long>> users, IGroup<Long> organization)
 			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		if (users != null && organization != null && !users.isEmpty()) {
 			// Look up user in the liferay.
@@ -562,19 +562,19 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			}
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("organizationId", organization.getOrganizationId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
 			params.add(new BasicNameValuePair("userIds", usersIds));
 
 			getHttpResponse("user/unset-organization-users", params);
 
 			// Reset the pool of groups to calculate again the user's
 			// organization groups.
-			for (User user : users) {
+			for (IUser<Long> user : users) {
 				organizationPool.removeUser(user);
 			}
 
 			LiferayClientLogger.info(this.getClass().getName(), "Users " + usersIds + " removed from organization '"
-					+ organization.getName() + "'.");
+					+ organization.getUniqueName() + "'.");
 		}
 	}
 

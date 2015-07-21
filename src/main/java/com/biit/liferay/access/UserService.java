@@ -93,7 +93,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IUser<Long> addUser(Company company, String password, String screenName, String emailAddress,
+	public IUser<Long> addUser(IGroup<Long> company, String password, String screenName, String emailAddress,
 			long facebookId, String openId, String locale, String firstName, String middleName, String lastName,
 			int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds,
@@ -110,7 +110,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		}
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("companyId", Long.toString(company.getCompanyId())));
+		params.add(new BasicNameValuePair("companyId", Long.toString(company.getId())));
 		params.add(new BasicNameValuePair("autoPassword", Boolean.toString(autoPassword)));
 		params.add(new BasicNameValuePair("password1", password));
 		params.add(new BasicNameValuePair("password2", password));
@@ -227,7 +227,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IUser<Long> getUserByEmailAddress(Company company, String emailAddress)
+	public IUser<Long> getUserByEmailAddress(IGroup<Long> company, String emailAddress)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		if (company != null && emailAddress != null) {
@@ -242,7 +242,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getCompanyId() + ""));
+			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
 			params.add(new BasicNameValuePair("emailAddress", emailAddress));
 
 			String result = getHttpResponse("user/get-user-by-email-address", params);

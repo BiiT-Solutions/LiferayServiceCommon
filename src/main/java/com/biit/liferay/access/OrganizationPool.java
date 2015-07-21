@@ -7,9 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.entity.pool.GroupPool;
-import com.liferay.portal.model.Site;
-import com.liferay.portal.model.User;
 
 public class OrganizationPool extends GroupPool<Long, Long> {
 
@@ -60,9 +59,9 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	 * @param user
 	 * @param organizations
 	 */
-	public void addOrganizationsBySiteAndUser(Site site, User user, Set<IGroup<Long>> organizations) {
+	public void addOrganizationsBySiteAndUser(IGroup<Long> site, IUser<Long> user, Set<IGroup<Long>> organizations) {
 		if (site != null && user != null) {
-			addOrganizationsBySiteAndUser(site.getSiteId(), user.getId(), organizations);
+			addOrganizationsBySiteAndUser(site.getId(), user.getId(), organizations);
 		}
 	}
 
@@ -122,9 +121,9 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	 * @param userId
 	 * @return
 	 */
-	public Set<IGroup<Long>> getOrganizationBySiteAndUser(Site site, User user) {
+	public Set<IGroup<Long>> getOrganizationBySiteAndUser(IGroup<Long> site, IUser<Long> user) {
 		if (site != null && user != null) {
-			return getOrganizationBySiteAndUser(site.getSiteId(), user.getId());
+			return getOrganizationBySiteAndUser(site.getId(), user.getId());
 		}
 		return null;
 	}

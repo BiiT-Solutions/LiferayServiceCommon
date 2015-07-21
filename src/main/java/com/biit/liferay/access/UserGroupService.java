@@ -17,12 +17,12 @@ import com.biit.liferay.access.exceptions.UserGroupDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.entity.pool.GroupPool;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 
 /**
@@ -91,8 +91,8 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
-	public void addUsersToGroup(List<User> users, UserGroup group) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public void addUsersToGroup(List<IUser<Long>> users, IGroup<Long> group) throws ClientProtocolException,
+			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		if (users != null && users.size() > 0 && group != null) {
 			checkConnection();
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -111,13 +111,13 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 				usersId += "]";
 			}
 			params.add(new BasicNameValuePair("userIds", usersId));
-			params.add(new BasicNameValuePair("userGroupId", group.getUserGroupId() + ""));
+			params.add(new BasicNameValuePair("userGroupId", group.getId() + ""));
 
 			getHttpResponse("user/add-user-group-users", params);
 			LiferayClientLogger.info(this.getClass().getName(),
-					"Users ids " + usersId + " added to group '" + group.getName() + "'");
+					"Users ids " + usersId + " added to group '" + group.getUniqueName() + "'");
 
-			for (User user : users) {
+			for (IUser<Long> user : users) {
 				groupPool.addUserToGroup(user, group);
 			}
 		}
@@ -133,9 +133,9 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
-	public void addUserToGroup(User user, UserGroup group) throws NotConnectedToWebServiceException,
+	public void addUserToGroup(IUser<Long> user, IGroup<Long> group) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired {
-		List<User> users = new ArrayList<User>();
+		List<IUser<Long>> users = new ArrayList<IUser<Long>>();
 		users.add(user);
 		addUsersToGroup(users, group);
 	}
@@ -149,20 +149,20 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 		return myObjects;
 	}
 
-	public void deleteUserFromUserGroup(User user, UserGroup userGroup) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired {
+	public void deleteUserFromUserGroup(IUser<Long> user, IGroup<Long> userGroup)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		if (user != null && userGroup != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUserGroupId())));
+			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getId())));
 			params.add(new BasicNameValuePair("userIds", Long.toString(user.getId())));
 
 			getHttpResponse("user/unset-user-group-users", params);
 			groupPool.removeUserFromGroups(user.getId(), userGroup.getId());
 
-			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getScreenName() + "' unset from '"
-					+ userGroup.getName() + "'.");
+			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getUniqueName() + "' unset from '"
+					+ userGroup.getUniqueName() + "'.");
 
 		}
 	}
@@ -201,18 +201,18 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
-	public void deleteUserGroup(UserGroup userGroup) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired {
+	public void deleteUserGroup(IGroup<Long> userGroup) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired {
 		if (userGroup != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUserGroupId())));
+			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getId())));
 
 			getHttpResponse("usergroup/delete-user-group", params);
-			groupPool.removeGroupsById(userGroup.getUserGroupId());
+			groupPool.removeGroupsById(userGroup.getId());
 
-			LiferayClientLogger.info(this.getClass().getName(), "Group '" + userGroup.getName() + "' deleted.");
+			LiferayClientLogger.info(this.getClass().getName(), "Group '" + userGroup.getUniqueName() + "' deleted.");
 
 		}
 	}
@@ -310,7 +310,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
-	public Set<IGroup<Long>> getUserUserGroups(User user) throws NotConnectedToWebServiceException,
+	public Set<IGroup<Long>> getUserUserGroups(IUser<Long> user) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired {
 		Set<IGroup<Long>> groups = new HashSet<IGroup<Long>>();
 
