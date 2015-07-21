@@ -57,41 +57,6 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	private String authToken;
 
 	@Override
-	public boolean isNotConnected() {
-		return httpClientWithCredentials == null && httpClientWithoutCredentials == null;
-	}
-
-	@Override
-	public void disconnect() {
-		if (httpClientWithCredentials instanceof CloseableHttpClient) {
-			try {
-				((CloseableHttpClient) httpClientWithCredentials).close();
-			} catch (IOException e) {
-				// e.printStackTrace();
-			}
-		}
-		httpClientWithCredentials = null;
-		if (httpClientWithoutCredentials instanceof CloseableHttpClient) {
-			try {
-				((CloseableHttpClient) httpClientWithoutCredentials).close();
-			} catch (IOException e) {
-				// e.printStackTrace();
-			}
-		}
-		httpClientWithoutCredentials = null;
-	}
-
-	private HttpClient getAuthorizedHttpClient() throws NotConnectedToWebServiceException {
-		checkConnection();
-		return httpClientWithCredentials;
-	}
-
-	private HttpClient getHttpClientWithoutCredentials() throws NotConnectedToWebServiceException {
-		checkConnection();
-		return httpClientWithoutCredentials;
-	}
-
-	@Override
 	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
 			String authenticationToken, String loginUser, String password) {
 		this.webservicesPath = webservicesPath;
@@ -131,6 +96,14 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		authToken = authenticationToken;
 	}
 
+	@Override
+	public void checkConnection() throws NotConnectedToWebServiceException {
+		if (isNotConnected()) {
+			throw new NotConnectedToWebServiceException(
+					"User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
+		}
+	}
+
 	/**
 	 * Stores authentication data.
 	 */
@@ -145,38 +118,83 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		httpContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
 	}
 
-	@Override
-	public void serverConnection(String user, String password) {
-		// Read user and password.
-		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
-		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
-		String address = ConfigurationReader.getInstance().getVirtualHost();
-		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
-		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
-
-		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, user, password);
-	}
-
-	@Override
-	public void serverConnection() {
-		// Read user and password.
-		String loginUser = ConfigurationReader.getInstance().getUser();
-		String password = ConfigurationReader.getInstance().getPassword();
-		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
-		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
-		String address = ConfigurationReader.getInstance().getVirtualHost();
-		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
-		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
-
-		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
-	}
-
-	@Override
-	public void checkConnection() throws NotConnectedToWebServiceException {
-		if (isNotConnected()) {
-			throw new NotConnectedToWebServiceException(
-					"User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
+	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException,
+			JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError {
+		LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
+		try {
+			ObjectMapper jsonMapper = new ObjectMapper();
+			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			LiferayType object = new ObjectMapper().readValue(json, objectClass);
+			return object;
+		} catch (UnrecognizedPropertyException e) {
+			if (e.getMessage().startsWith(UNRECOGNIZED_FIELD_ERROR)) {
+				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
+			} else {
+				throw e;
+			}
 		}
+	}
+
+	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass)
+			throws JsonParseException, JsonMappingException, IOException;
+
+	@Override
+	public void disconnect() {
+		if (httpClientWithCredentials instanceof CloseableHttpClient) {
+			try {
+				((CloseableHttpClient) httpClientWithCredentials).close();
+			} catch (IOException e) {
+				// e.printStackTrace();
+			}
+		}
+		httpClientWithCredentials = null;
+		if (httpClientWithoutCredentials instanceof CloseableHttpClient) {
+			try {
+				((CloseableHttpClient) httpClientWithoutCredentials).close();
+			} catch (IOException e) {
+				// e.printStackTrace();
+			}
+		}
+		httpClientWithoutCredentials = null;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public String encodeMapToJson(Map map) {
+		return JSONValue.toJSONString(map);
+	}
+
+	private HttpClient getAuthorizedHttpClient() throws NotConnectedToWebServiceException {
+		checkConnection();
+		return httpClientWithCredentials;
+	}
+
+	public String getConnectionPassword() {
+		return connectionPassword;
+	}
+
+	public String getConnectionUser() {
+		return connectionUser;
+	}
+
+	private HttpClient getHttpClientWithoutCredentials() throws NotConnectedToWebServiceException {
+		checkConnection();
+		return httpClientWithoutCredentials;
+	}
+
+	/**
+	 * Gets a response for a webservice. If it is not authorized to use the web service, try to authorize first.
+	 * 
+	 * @param webService
+	 * @param params
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws NotConnectedToWebServiceException
+	 * @throws AuthenticationRequired
+	 */
+	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException,
+			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+		return getHttpResponse(webService, params, false);
 	}
 
 	public String getHttpResponse(String webService, List<NameValuePair> params, boolean useAuthorization)
@@ -232,63 +250,45 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		return null;
 	}
 
-	/**
-	 * Gets a response for a webservice. If it is not authorized to use the web service, try to authorize first.
-	 * 
-	 * @param webService
-	 * @param params
-	 * @return
-	 * @throws ClientProtocolException
-	 * @throws IOException
-	 * @throws NotConnectedToWebServiceException
-	 * @throws AuthenticationRequired
-	 */
-	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException,
-			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
-		return getHttpResponse(webService, params, false);
+	protected HttpHost getTargetHost() {
+		return targetHost;
 	}
 
-	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException,
-			JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError {
-		LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
-		try {
-			ObjectMapper jsonMapper = new ObjectMapper();
-			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-			LiferayType object = new ObjectMapper().readValue(json, objectClass);
-			return object;
-		} catch (UnrecognizedPropertyException e) {
-			if (e.getMessage().startsWith(UNRECOGNIZED_FIELD_ERROR)) {
-				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
-			} else {
-				throw e;
-			}
-		}
+	@Override
+	public boolean isNotConnected() {
+		return httpClientWithCredentials == null && httpClientWithoutCredentials == null;
 	}
 
-	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass)
-			throws JsonParseException, JsonMappingException, IOException;
+	@Override
+	public void serverConnection() {
+		// Read user and password.
+		String loginUser = ConfigurationReader.getInstance().getUser();
+		String password = ConfigurationReader.getInstance().getPassword();
+		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
+		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
+		String address = ConfigurationReader.getInstance().getVirtualHost();
+		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
+		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
+
+		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
+	}
+
+	@Override
+	public void serverConnection(String user, String password) {
+		// Read user and password.
+		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
+		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
+		String address = ConfigurationReader.getInstance().getVirtualHost();
+		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
+		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
+
+		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, user, password);
+	}
 
 	public void setAuthParam(List<NameValuePair> params) {
 		if (authToken != null && authToken.length() > 0) {
 			params.add(new BasicNameValuePair("p_auth", authToken));
 		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	public String encodeMapToJson(Map map) {
-		return JSONValue.toJSONString(map);
-	}
-
-	protected HttpHost getTargetHost() {
-		return targetHost;
-	}
-
-	public String getConnectionUser() {
-		return connectionUser;
-	}
-
-	public String getConnectionPassword() {
-		return connectionPassword;
 	}
 
 }

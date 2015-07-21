@@ -63,6 +63,26 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 		return instance;
 	}
 
+	public String getAuthToken() {
+		return getPropertyLogException(ID_AUTH_TOKEN);
+	}
+	
+	public String getConnectionPort() {
+		return getPropertyLogException(ID_PORT);
+	}
+
+	public String getLiferayProtocol() {
+		return getPropertyLogException(ID_LIFERAY_PROTOCOL);
+	}
+
+	public String getPassword() {
+		return getPropertyLogException(ID_PASSWORD);
+	}
+
+	public PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithm() {
+		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
+	}
+
 	private String getPropertyLogException(String propertyId) {
 		try {
 			return getProperty(propertyId);
@@ -71,21 +91,13 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 			return null;
 		}
 	}
-	
+
 	public String getUser() {
 		return getPropertyLogException(ID_USER);
 	}
 
-	public String getPassword() {
-		return getPropertyLogException(ID_PASSWORD);
-	}
-
 	public String getVirtualHost() {
 		return getPropertyLogException(ID_VIRTUAL_HOST);
-	}
-
-	public String getConnectionPort() {
-		return getPropertyLogException(ID_PORT);
 	}
 
 	public String getWebAppName() {
@@ -96,19 +108,7 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 		return "";
 	}
 
-	public PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithm() {
-		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
-	}
-
 	public String getWebServicesPath() {
 		return getPropertyLogException(ID_WEBSERVICES_PATH);
-	}
-
-	public String getLiferayProtocol() {
-		return getPropertyLogException(ID_LIFERAY_PROTOCOL);
-	}
-
-	public String getAuthToken() {
-		return getPropertyLogException(ID_AUTH_TOKEN);
 	}
 }

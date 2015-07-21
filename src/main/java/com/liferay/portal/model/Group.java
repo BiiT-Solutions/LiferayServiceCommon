@@ -83,39 +83,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the active value for this GroupSoap.
-	 * 
-	 * @return active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * Sets the active value for this GroupSoap.
-	 * 
-	 * @param active
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	/**
 	 * Gets the classNameId value for this GroupSoap.
 	 * 
 	 * @return classNameId
 	 */
 	public long getClassNameId() {
 		return classNameId;
-	}
-
-	/**
-	 * Sets the classNameId value for this GroupSoap.
-	 * 
-	 * @param classNameId
-	 */
-	public void setClassNameId(long classNameId) {
-		this.classNameId = classNameId;
 	}
 
 	/**
@@ -128,30 +101,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the classPK value for this GroupSoap.
-	 * 
-	 * @param classPK
-	 */
-	public void setClassPK(long classPK) {
-		this.classPK = classPK;
-	}
-
-	/**
 	 * Gets the companyId value for this GroupSoap.
 	 * 
 	 * @return companyId
 	 */
 	public long getCompanyId() {
 		return companyId;
-	}
-
-	/**
-	 * Sets the companyId value for this GroupSoap.
-	 * 
-	 * @param companyId
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
 	}
 
 	/**
@@ -164,30 +119,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the creatorUserId value for this GroupSoap.
-	 * 
-	 * @param creatorUserId
-	 */
-	public void setCreatorUserId(long creatorUserId) {
-		this.creatorUserId = creatorUserId;
-	}
-
-	/**
 	 * Gets the description value for this GroupSoap.
 	 * 
 	 * @return description
 	 */
 	public java.lang.String getDescription() {
 		return description;
-	}
-
-	/**
-	 * Sets the description value for this GroupSoap.
-	 * 
-	 * @param description
-	 */
-	public void setDescription(java.lang.String description) {
-		this.description = description;
 	}
 
 	/**
@@ -200,15 +137,6 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the friendlyURL value for this GroupSoap.
-	 * 
-	 * @param friendlyURL
-	 */
-	public void setFriendlyURL(java.lang.String friendlyURL) {
-		this.friendlyURL = friendlyURL;
-	}
-
-	/**
 	 * Gets the groupId value for this GroupSoap.
 	 * 
 	 * @return groupId
@@ -217,13 +145,9 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 		return groupId;
 	}
 
-	/**
-	 * Sets the groupId value for this GroupSoap.
-	 * 
-	 * @param groupId
-	 */
-	public void setGroupId(long groupId) {
-		this.groupId = groupId;
+	@Override
+	public Long getId() {
+		return getGroupId();
 	}
 
 	/**
@@ -236,48 +160,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the liveGroupId value for this GroupSoap.
-	 * 
-	 * @param liveGroupId
-	 */
-	public void setLiveGroupId(long liveGroupId) {
-		this.liveGroupId = liveGroupId;
-	}
-
-	/**
-	 * Gets the manualMembership value for this GroupSoap.
-	 * 
-	 * @return manualMembership
-	 */
-	public boolean isManualMembership() {
-		return manualMembership;
-	}
-
-	/**
-	 * Sets the manualMembership value for this GroupSoap.
-	 * 
-	 * @param manualMembership
-	 */
-	public void setManualMembership(boolean manualMembership) {
-		this.manualMembership = manualMembership;
-	}
-
-	/**
 	 * Gets the membershipRestriction value for this GroupSoap.
 	 * 
 	 * @return membershipRestriction
 	 */
 	public int getMembershipRestriction() {
 		return membershipRestriction;
-	}
-
-	/**
-	 * Sets the membershipRestriction value for this GroupSoap.
-	 * 
-	 * @param membershipRestriction
-	 */
-	public void setMembershipRestriction(int membershipRestriction) {
-		this.membershipRestriction = membershipRestriction;
 	}
 
 	/**
@@ -290,30 +178,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the name value for this GroupSoap.
-	 * 
-	 * @param name
-	 */
-	public void setName(java.lang.String name) {
-		this.name = name;
-	}
-
-	/**
 	 * Gets the parentGroupId value for this GroupSoap.
 	 * 
 	 * @return parentGroupId
 	 */
 	public long getParentGroupId() {
 		return parentGroupId;
-	}
-
-	/**
-	 * Sets the parentGroupId value for this GroupSoap.
-	 * 
-	 * @param parentGroupId
-	 */
-	public void setParentGroupId(long parentGroupId) {
-		this.parentGroupId = parentGroupId;
 	}
 
 	/**
@@ -326,48 +196,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the primaryKey value for this GroupSoap.
-	 * 
-	 * @param primaryKey
-	 */
-	public void setPrimaryKey(long primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-
-	/**
 	 * Gets the remoteStagingGroupCount value for this GroupSoap.
 	 * 
 	 * @return remoteStagingGroupCount
 	 */
 	public int getRemoteStagingGroupCount() {
 		return remoteStagingGroupCount;
-	}
-
-	/**
-	 * Sets the remoteStagingGroupCount value for this GroupSoap.
-	 * 
-	 * @param remoteStagingGroupCount
-	 */
-	public void setRemoteStagingGroupCount(int remoteStagingGroupCount) {
-		this.remoteStagingGroupCount = remoteStagingGroupCount;
-	}
-
-	/**
-	 * Gets the site value for this GroupSoap.
-	 * 
-	 * @return site
-	 */
-	public boolean isSite() {
-		return site;
-	}
-
-	/**
-	 * Sets the site value for this GroupSoap.
-	 * 
-	 * @param site
-	 */
-	public void setSite(boolean site) {
-		this.site = site;
 	}
 
 	/**
@@ -380,30 +214,12 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the treePath value for this GroupSoap.
-	 * 
-	 * @param treePath
-	 */
-	public void setTreePath(java.lang.String treePath) {
-		this.treePath = treePath;
-	}
-
-	/**
 	 * Gets the type value for this GroupSoap.
 	 * 
 	 * @return type
 	 */
 	public int getType() {
 		return type;
-	}
-
-	/**
-	 * Sets the type value for this GroupSoap.
-	 * 
-	 * @param type
-	 */
-	public void setType(int type) {
-		this.type = type;
 	}
 
 	/**
@@ -415,13 +231,9 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 		return typeSettings;
 	}
 
-	/**
-	 * Sets the typeSettings value for this GroupSoap.
-	 * 
-	 * @param typeSettings
-	 */
-	public void setTypeSettings(java.lang.String typeSettings) {
-		this.typeSettings = typeSettings;
+	@Override
+	public String getUniqueName() {
+		return getName();
 	}
 
 	/**
@@ -434,22 +246,210 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
+	 * Gets the active value for this GroupSoap.
+	 * 
+	 * @return active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * Gets the manualMembership value for this GroupSoap.
+	 * 
+	 * @return manualMembership
+	 */
+	public boolean isManualMembership() {
+		return manualMembership;
+	}
+
+	/**
+	 * Gets the site value for this GroupSoap.
+	 * 
+	 * @return site
+	 */
+	public boolean isSite() {
+		return site;
+	}
+
+	/**
+	 * Sets the active value for this GroupSoap.
+	 * 
+	 * @param active
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * Sets the classNameId value for this GroupSoap.
+	 * 
+	 * @param classNameId
+	 */
+	public void setClassNameId(long classNameId) {
+		this.classNameId = classNameId;
+	}
+
+	/**
+	 * Sets the classPK value for this GroupSoap.
+	 * 
+	 * @param classPK
+	 */
+	public void setClassPK(long classPK) {
+		this.classPK = classPK;
+	}
+
+	/**
+	 * Sets the companyId value for this GroupSoap.
+	 * 
+	 * @param companyId
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * Sets the creatorUserId value for this GroupSoap.
+	 * 
+	 * @param creatorUserId
+	 */
+	public void setCreatorUserId(long creatorUserId) {
+		this.creatorUserId = creatorUserId;
+	}
+
+	/**
+	 * Sets the description value for this GroupSoap.
+	 * 
+	 * @param description
+	 */
+	public void setDescription(java.lang.String description) {
+		this.description = description;
+	}
+
+	/**
+	 * Sets the friendlyURL value for this GroupSoap.
+	 * 
+	 * @param friendlyURL
+	 */
+	public void setFriendlyURL(java.lang.String friendlyURL) {
+		this.friendlyURL = friendlyURL;
+	}
+
+	/**
+	 * Sets the groupId value for this GroupSoap.
+	 * 
+	 * @param groupId
+	 */
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * Sets the liveGroupId value for this GroupSoap.
+	 * 
+	 * @param liveGroupId
+	 */
+	public void setLiveGroupId(long liveGroupId) {
+		this.liveGroupId = liveGroupId;
+	}
+
+	/**
+	 * Sets the manualMembership value for this GroupSoap.
+	 * 
+	 * @param manualMembership
+	 */
+	public void setManualMembership(boolean manualMembership) {
+		this.manualMembership = manualMembership;
+	}
+
+	/**
+	 * Sets the membershipRestriction value for this GroupSoap.
+	 * 
+	 * @param membershipRestriction
+	 */
+	public void setMembershipRestriction(int membershipRestriction) {
+		this.membershipRestriction = membershipRestriction;
+	}
+
+	/**
+	 * Sets the name value for this GroupSoap.
+	 * 
+	 * @param name
+	 */
+	public void setName(java.lang.String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Sets the parentGroupId value for this GroupSoap.
+	 * 
+	 * @param parentGroupId
+	 */
+	public void setParentGroupId(long parentGroupId) {
+		this.parentGroupId = parentGroupId;
+	}
+
+	/**
+	 * Sets the primaryKey value for this GroupSoap.
+	 * 
+	 * @param primaryKey
+	 */
+	public void setPrimaryKey(long primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	/**
+	 * Sets the remoteStagingGroupCount value for this GroupSoap.
+	 * 
+	 * @param remoteStagingGroupCount
+	 */
+	public void setRemoteStagingGroupCount(int remoteStagingGroupCount) {
+		this.remoteStagingGroupCount = remoteStagingGroupCount;
+	}
+
+	/**
+	 * Sets the site value for this GroupSoap.
+	 * 
+	 * @param site
+	 */
+	public void setSite(boolean site) {
+		this.site = site;
+	}
+
+	/**
+	 * Sets the treePath value for this GroupSoap.
+	 * 
+	 * @param treePath
+	 */
+	public void setTreePath(java.lang.String treePath) {
+		this.treePath = treePath;
+	}
+
+	/**
+	 * Sets the type value for this GroupSoap.
+	 * 
+	 * @param type
+	 */
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	/**
+	 * Sets the typeSettings value for this GroupSoap.
+	 * 
+	 * @param typeSettings
+	 */
+	public void setTypeSettings(java.lang.String typeSettings) {
+		this.typeSettings = typeSettings;
+	}
+
+	/**
 	 * Sets the uuid value for this GroupSoap.
 	 * 
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {
 		this.uuid = uuid;
-	}
-
-	@Override
-	public Long getId() {
-		return getGroupId();
-	}
-
-	@Override
-	public String getUniqueName() {
-		return getName();
 	}
 
 }

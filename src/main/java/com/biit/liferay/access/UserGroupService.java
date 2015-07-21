@@ -35,10 +35,6 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 		groupPool = new GroupPool<Long, Long>();
 	}
 
-	public void reset() {
-		groupPool.reset();
-	}
-
 	/**
 	 * Creates a new group on Liferay. For testing use only.
 	 * 
@@ -170,31 +166,6 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 	/**
 	 * Removes a group from Liferay portal. For testing use only.
 	 * 
-	 * @param userGroupId
-	 * @throws NotConnectedToWebServiceException
-	 * @throws IOException
-	 * @throws ClientProtocolException
-	 * @throws AuthenticationRequired
-	 */
-	public void deleteUserGroup(long userGroupId) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired {
-		if (userGroupId > 0) {
-			checkConnection();
-
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroupId)));
-
-			getHttpResponse("usergroup/delete-user-group", params);
-			groupPool.removeGroupsById(userGroupId);
-
-			LiferayClientLogger.info(this.getClass().getName(), "Group with id '" + userGroupId + "' deleted.");
-
-		}
-	}
-
-	/**
-	 * Removes a group from Liferay portal. For testing use only.
-	 * 
 	 * @param userGroup
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
@@ -213,6 +184,31 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 			groupPool.removeGroupsById(userGroup.getId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "Group '" + userGroup.getUniqueName() + "' deleted.");
+
+		}
+	}
+
+	/**
+	 * Removes a group from Liferay portal. For testing use only.
+	 * 
+	 * @param userGroupId
+	 * @throws NotConnectedToWebServiceException
+	 * @throws IOException
+	 * @throws ClientProtocolException
+	 * @throws AuthenticationRequired
+	 */
+	public void deleteUserGroup(long userGroupId) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired {
+		if (userGroupId > 0) {
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroupId)));
+
+			getHttpResponse("usergroup/delete-user-group", params);
+			groupPool.removeGroupsById(userGroupId);
+
+			LiferayClientLogger.info(this.getClass().getName(), "Group with id '" + userGroupId + "' deleted.");
 
 		}
 	}
@@ -335,6 +331,10 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> {
 			}
 		}
 		return groups;
+	}
+
+	public void reset() {
+		groupPool.reset();
 	}
 
 }

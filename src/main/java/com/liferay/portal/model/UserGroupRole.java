@@ -35,15 +35,6 @@ public class UserGroupRole implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the groupId value for this UserGroupRoleSoap.
-	 * 
-	 * @param groupId
-	 */
-	public void setGroupId(long groupId) {
-		this.groupId = groupId;
-	}
-
-	/**
 	 * Gets the roleId value for this UserGroupRoleSoap.
 	 * 
 	 * @return roleId
@@ -53,21 +44,30 @@ public class UserGroupRole implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the roleId value for this UserGroupRoleSoap.
-	 * 
-	 * @param roleId
-	 */
-	public void setRoleId(long roleId) {
-		this.roleId = roleId;
-	}
-
-	/**
 	 * Gets the userId value for this UserGroupRoleSoap.
 	 * 
 	 * @return userId
 	 */
 	public long getUserId() {
 		return userId;
+	}
+
+	/**
+	 * Sets the groupId value for this UserGroupRoleSoap.
+	 * 
+	 * @param groupId
+	 */
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * Sets the roleId value for this UserGroupRoleSoap.
+	 * 
+	 * @param roleId
+	 */
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
 	}
 
 	/**

@@ -18,11 +18,17 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	// Site -> User -> Organizations
 	private Map<Long, Map<Long, Set<IGroup<Long>>>> organizationSiteAndUsers;
 
-	@Override
-	public void reset() {
-		super.reset();
-		organizationSiteAndUsersTime = new HashMap<Long, Map<Long, Long>>();
-		organizationSiteAndUsers = new HashMap<Long, Map<Long, Set<IGroup<Long>>>>();
+	/**
+	 * Adds organizations for a user in a site to the pool.
+	 * 
+	 * @param site
+	 * @param user
+	 * @param organizations
+	 */
+	public void addOrganizationsBySiteAndUser(IGroup<Long> site, IUser<Long> user, Set<IGroup<Long>> organizations) {
+		if (site != null && user != null) {
+			addOrganizationsBySiteAndUser(site.getId(), user.getId(), organizations);
+		}
 	}
 
 	/**
@@ -53,16 +59,17 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	}
 
 	/**
-	 * Adds organizations for a user in a site to the pool.
+	 * Gets all previously stored organizations of a user in a site.
 	 * 
-	 * @param site
-	 * @param user
-	 * @param organizations
+	 * @param siteId
+	 * @param userId
+	 * @return
 	 */
-	public void addOrganizationsBySiteAndUser(IGroup<Long> site, IUser<Long> user, Set<IGroup<Long>> organizations) {
+	public Set<IGroup<Long>> getOrganizationBySiteAndUser(IGroup<Long> site, IUser<Long> user) {
 		if (site != null && user != null) {
-			addOrganizationsBySiteAndUser(site.getId(), user.getId(), organizations);
+			return getOrganizationBySiteAndUser(site.getId(), user.getId());
 		}
+		return null;
 	}
 
 	/**
@@ -114,18 +121,11 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 		}
 	}
 
-	/**
-	 * Gets all previously stored organizations of a user in a site.
-	 * 
-	 * @param siteId
-	 * @param userId
-	 * @return
-	 */
-	public Set<IGroup<Long>> getOrganizationBySiteAndUser(IGroup<Long> site, IUser<Long> user) {
-		if (site != null && user != null) {
-			return getOrganizationBySiteAndUser(site.getId(), user.getId());
-		}
-		return null;
+	@Override
+	public void reset() {
+		super.reset();
+		organizationSiteAndUsersTime = new HashMap<Long, Map<Long, Long>>();
+		organizationSiteAndUsers = new HashMap<Long, Map<Long, Set<IGroup<Long>>>>();
 	}
 
 }

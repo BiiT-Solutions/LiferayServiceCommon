@@ -20,12 +20,17 @@ public class ClassName implements java.io.Serializable, IElement<Long> {
 		return classNameId;
 	}
 
-	public void setClassNameId(long classNameId) {
-		this.classNameId = classNameId;
+	@Override
+	public Long getId() {
+		return getClassNameId();
 	}
 
 	public String getValue() {
 		return value;
+	}
+
+	public void setClassNameId(long classNameId) {
+		this.classNameId = classNameId;
 	}
 
 	public void setValue(String value) {
@@ -35,10 +40,5 @@ public class ClassName implements java.io.Serializable, IElement<Long> {
 	@Override
 	public String toString() {
 		return value;
-	}
-
-	@Override
-	public Long getId() {
-		return getClassNameId();
 	}
 }

@@ -67,30 +67,12 @@ public class EmailAddress implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the address value for this EmailAddressSoap.
-	 * 
-	 * @param address
-	 */
-	public void setAddress(java.lang.String address) {
-		this.address = address;
-	}
-
-	/**
 	 * Gets the classNameId value for this EmailAddressSoap.
 	 * 
 	 * @return classNameId
 	 */
 	public long getClassNameId() {
 		return classNameId;
-	}
-
-	/**
-	 * Sets the classNameId value for this EmailAddressSoap.
-	 * 
-	 * @param classNameId
-	 */
-	public void setClassNameId(long classNameId) {
-		this.classNameId = classNameId;
 	}
 
 	/**
@@ -103,30 +85,12 @@ public class EmailAddress implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the classPK value for this EmailAddressSoap.
-	 * 
-	 * @param classPK
-	 */
-	public void setClassPK(long classPK) {
-		this.classPK = classPK;
-	}
-
-	/**
 	 * Gets the companyId value for this EmailAddressSoap.
 	 * 
 	 * @return companyId
 	 */
 	public long getCompanyId() {
 		return companyId;
-	}
-
-	/**
-	 * Sets the companyId value for this EmailAddressSoap.
-	 * 
-	 * @param companyId
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
 	}
 
 	/**
@@ -139,30 +103,12 @@ public class EmailAddress implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the createDate value for this EmailAddressSoap.
-	 * 
-	 * @param createDate
-	 */
-	public void setCreateDate(java.util.Calendar createDate) {
-		this.createDate = createDate;
-	}
-
-	/**
 	 * Gets the emailAddressId value for this EmailAddressSoap.
 	 * 
 	 * @return emailAddressId
 	 */
 	public long getEmailAddressId() {
 		return emailAddressId;
-	}
-
-	/**
-	 * Sets the emailAddressId value for this EmailAddressSoap.
-	 * 
-	 * @param emailAddressId
-	 */
-	public void setEmailAddressId(long emailAddressId) {
-		this.emailAddressId = emailAddressId;
 	}
 
 	/**
@@ -175,48 +121,12 @@ public class EmailAddress implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the modifiedDate value for this EmailAddressSoap.
-	 * 
-	 * @param modifiedDate
-	 */
-	public void setModifiedDate(java.util.Calendar modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	/**
-	 * Gets the primary value for this EmailAddressSoap.
-	 * 
-	 * @return primary
-	 */
-	public boolean isPrimary() {
-		return primary;
-	}
-
-	/**
-	 * Sets the primary value for this EmailAddressSoap.
-	 * 
-	 * @param primary
-	 */
-	public void setPrimary(boolean primary) {
-		this.primary = primary;
-	}
-
-	/**
 	 * Gets the primaryKey value for this EmailAddressSoap.
 	 * 
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
 		return primaryKey;
-	}
-
-	/**
-	 * Sets the primaryKey value for this EmailAddressSoap.
-	 * 
-	 * @param primaryKey
-	 */
-	public void setPrimaryKey(long primaryKey) {
-		this.primaryKey = primaryKey;
 	}
 
 	/**
@@ -229,30 +139,12 @@ public class EmailAddress implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the typeId value for this EmailAddressSoap.
-	 * 
-	 * @param typeId
-	 */
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
-	}
-
-	/**
 	 * Gets the userId value for this EmailAddressSoap.
 	 * 
 	 * @return userId
 	 */
 	public long getUserId() {
 		return userId;
-	}
-
-	/**
-	 * Sets the userId value for this EmailAddressSoap.
-	 * 
-	 * @param userId
-	 */
-	public void setUserId(long userId) {
-		this.userId = userId;
 	}
 
 	/**
@@ -265,21 +157,129 @@ public class EmailAddress implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the userName value for this EmailAddressSoap.
-	 * 
-	 * @param userName
-	 */
-	public void setUserName(java.lang.String userName) {
-		this.userName = userName;
-	}
-
-	/**
 	 * Gets the uuid value for this EmailAddressSoap.
 	 * 
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
 		return uuid;
+	}
+
+	/**
+	 * Gets the primary value for this EmailAddressSoap.
+	 * 
+	 * @return primary
+	 */
+	public boolean isPrimary() {
+		return primary;
+	}
+
+	/**
+	 * Sets the address value for this EmailAddressSoap.
+	 * 
+	 * @param address
+	 */
+	public void setAddress(java.lang.String address) {
+		this.address = address;
+	}
+
+	/**
+	 * Sets the classNameId value for this EmailAddressSoap.
+	 * 
+	 * @param classNameId
+	 */
+	public void setClassNameId(long classNameId) {
+		this.classNameId = classNameId;
+	}
+
+	/**
+	 * Sets the classPK value for this EmailAddressSoap.
+	 * 
+	 * @param classPK
+	 */
+	public void setClassPK(long classPK) {
+		this.classPK = classPK;
+	}
+
+	/**
+	 * Sets the companyId value for this EmailAddressSoap.
+	 * 
+	 * @param companyId
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * Sets the createDate value for this EmailAddressSoap.
+	 * 
+	 * @param createDate
+	 */
+	public void setCreateDate(java.util.Calendar createDate) {
+		this.createDate = createDate;
+	}
+
+	/**
+	 * Sets the emailAddressId value for this EmailAddressSoap.
+	 * 
+	 * @param emailAddressId
+	 */
+	public void setEmailAddressId(long emailAddressId) {
+		this.emailAddressId = emailAddressId;
+	}
+
+	/**
+	 * Sets the modifiedDate value for this EmailAddressSoap.
+	 * 
+	 * @param modifiedDate
+	 */
+	public void setModifiedDate(java.util.Calendar modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * Sets the primary value for this EmailAddressSoap.
+	 * 
+	 * @param primary
+	 */
+	public void setPrimary(boolean primary) {
+		this.primary = primary;
+	}
+
+	/**
+	 * Sets the primaryKey value for this EmailAddressSoap.
+	 * 
+	 * @param primaryKey
+	 */
+	public void setPrimaryKey(long primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	/**
+	 * Sets the typeId value for this EmailAddressSoap.
+	 * 
+	 * @param typeId
+	 */
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+
+	/**
+	 * Sets the userId value for this EmailAddressSoap.
+	 * 
+	 * @param userId
+	 */
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * Sets the userName value for this EmailAddressSoap.
+	 * 
+	 * @param userName
+	 */
+	public void setUserName(java.lang.String userName) {
+		this.userName = userName;
 	}
 
 	/**

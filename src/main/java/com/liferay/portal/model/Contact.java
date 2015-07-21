@@ -45,275 +45,23 @@ public class Contact {
 		return accountId;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
-
 	public String getAimSn() {
 		return aimSn;
-	}
-
-	public void setAimSn(String aimSn) {
-		this.aimSn = aimSn;
 	}
 
 	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public long getClassNameId() {
-		return classNameId;
-	}
-
-	public void setClassNameId(long classNameId) {
-		this.classNameId = classNameId;
-	}
-
-	public long getClassPK() {
-		return classPK;
-	}
-
-	public void setClassPK(long classPK) {
-		this.classPK = classPK;
-	}
-
-	public long getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
-	}
-
-	public long getContactId() {
-		return contactId;
-	}
-
-	public void setContactId(long contactId) {
-		this.contactId = contactId;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	public String getEmployeeNumber() {
-		return employeeNumber;
-	}
-
-	public void setEmployeeNumber(String employeeNumber) {
-		this.employeeNumber = employeeNumber;
-	}
-
-	public String getEmployeeStatusId() {
-		return employeeStatusId;
-	}
-
-	public void setEmployeeStatusId(String employeeStatusId) {
-		this.employeeStatusId = employeeStatusId;
-	}
-
-	public String getFacebookSn() {
-		return facebookSn;
-	}
-
-	public void setFacebookSn(String facebookSn) {
-		this.facebookSn = facebookSn;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getHoursOfOperation() {
-		return hoursOfOperation;
-	}
-
-	public void setHoursOfOperation(String hoursOfOperation) {
-		this.hoursOfOperation = hoursOfOperation;
-	}
-
-	public String getIcqSn() {
-		return icqSn;
-	}
-
-	public void setIcqSn(String icqSn) {
-		this.icqSn = icqSn;
-	}
-
-	public String getJabberSn() {
-		return jabberSn;
-	}
-
-	public void setJabberSn(String jabberSn) {
-		this.jabberSn = jabberSn;
-	}
-
-	public String getJobClass() {
-		return jobClass;
-	}
-
-	public void setJobClass(String jobClass) {
-		this.jobClass = jobClass;
-	}
-
-	public String getJobTitle() {
-		return jobTitle;
-	}
-
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public boolean isMale() {
-		return male;
-	}
-
-	public void setMale(boolean male) {
-		this.male = male;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public String getMsnSn() {
-		return msnSn;
-	}
-
-	public void setMsnSn(String msnSn) {
-		this.msnSn = msnSn;
-	}
-
-	public String getMySpaceSn() {
-		return mySpaceSn;
-	}
-
-	public void setMySpaceSn(String mySpaceSn) {
-		this.mySpaceSn = mySpaceSn;
-	}
-
-	public long getParentContactId() {
-		return parentContactId;
-	}
-
-	public void setParentContactId(long parentContactId) {
-		this.parentContactId = parentContactId;
-	}
-
-	public int getPrefixId() {
-		return prefixId;
-	}
-
-	public void setPrefixId(int prefixId) {
-		this.prefixId = prefixId;
-	}
-
-	public String getSkypeSn() {
-		return skypeSn;
-	}
-
-	public void setSkypeSn(String skypeSn) {
-		this.skypeSn = skypeSn;
-	}
-
-	public String getSmsSn() {
-		return smsSn;
-	}
-
-	public void setSmsSn(String smsSn) {
-		this.smsSn = smsSn;
-	}
-
-	public int getSuffixId() {
-		return suffixId;
-	}
-
-	public void setSuffixId(int suffixId) {
-		this.suffixId = suffixId;
-	}
-
-	public String getTwitterSn() {
-		return twitterSn;
-	}
-
-	public void setTwitterSn(String twitterSn) {
-		this.twitterSn = twitterSn;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getYmSn() {
-		return ymSn;
-	}
-
-	public void setYmSn(String ymSn) {
-		this.ymSn = ymSn;
-	}
-
 	/**
-	 * Get the year of the birthday.
+	 * Get the day of the birthday.
 	 * 
-	 * @return year (yyyy).
+	 * @return day [1, 365].
 	 */
-	public int getBirthdayYear() {
+	public int getBirthdayDay() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(birthday);
-		return c.get(Calendar.YEAR);
+		return c.get(Calendar.DAY_OF_MONTH);
 	}
 
 	/**
@@ -328,14 +76,266 @@ public class Contact {
 	}
 
 	/**
-	 * Get the day of the birthday.
+	 * Get the year of the birthday.
 	 * 
-	 * @return day [1, 365].
+	 * @return year (yyyy).
 	 */
-	public int getBirthdayDay() {
+	public int getBirthdayYear() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(birthday);
-		return c.get(Calendar.DAY_OF_MONTH);
+		return c.get(Calendar.YEAR);
+	}
+
+	public long getClassNameId() {
+		return classNameId;
+	}
+
+	public long getClassPK() {
+		return classPK;
+	}
+
+	public long getCompanyId() {
+		return companyId;
+	}
+
+	public long getContactId() {
+		return contactId;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public String getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+	public String getEmployeeStatusId() {
+		return employeeStatusId;
+	}
+
+	public String getFacebookSn() {
+		return facebookSn;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getHoursOfOperation() {
+		return hoursOfOperation;
+	}
+
+	public String getIcqSn() {
+		return icqSn;
+	}
+
+	public String getJabberSn() {
+		return jabberSn;
+	}
+
+	public String getJobClass() {
+		return jobClass;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public String getMsnSn() {
+		return msnSn;
+	}
+
+	public String getMySpaceSn() {
+		return mySpaceSn;
+	}
+
+	public long getParentContactId() {
+		return parentContactId;
+	}
+
+	public int getPrefixId() {
+		return prefixId;
+	}
+
+	public String getSkypeSn() {
+		return skypeSn;
+	}
+
+	public String getSmsSn() {
+		return smsSn;
+	}
+
+	public int getSuffixId() {
+		return suffixId;
+	}
+
+	public String getTwitterSn() {
+		return twitterSn;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getYmSn() {
+		return ymSn;
+	}
+
+	public boolean isMale() {
+		return male;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public void setAimSn(String aimSn) {
+		this.aimSn = aimSn;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public void setClassNameId(long classNameId) {
+		this.classNameId = classNameId;
+	}
+
+	public void setClassPK(long classPK) {
+		this.classPK = classPK;
+	}
+
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	public void setContactId(long contactId) {
+		this.contactId = contactId;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public void setEmployeeNumber(String employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
+
+	public void setEmployeeStatusId(String employeeStatusId) {
+		this.employeeStatusId = employeeStatusId;
+	}
+
+	public void setFacebookSn(String facebookSn) {
+		this.facebookSn = facebookSn;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setHoursOfOperation(String hoursOfOperation) {
+		this.hoursOfOperation = hoursOfOperation;
+	}
+
+	public void setIcqSn(String icqSn) {
+		this.icqSn = icqSn;
+	}
+
+	public void setJabberSn(String jabberSn) {
+		this.jabberSn = jabberSn;
+	}
+
+	public void setJobClass(String jobClass) {
+		this.jobClass = jobClass;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setMale(boolean male) {
+		this.male = male;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public void setMsnSn(String msnSn) {
+		this.msnSn = msnSn;
+	}
+
+	public void setMySpaceSn(String mySpaceSn) {
+		this.mySpaceSn = mySpaceSn;
+	}
+
+	public void setParentContactId(long parentContactId) {
+		this.parentContactId = parentContactId;
+	}
+
+	public void setPrefixId(int prefixId) {
+		this.prefixId = prefixId;
+	}
+
+	public void setSkypeSn(String skypeSn) {
+		this.skypeSn = skypeSn;
+	}
+
+	public void setSmsSn(String smsSn) {
+		this.smsSn = smsSn;
+	}
+
+	public void setSuffixId(int suffixId) {
+		this.suffixId = suffixId;
+	}
+
+	public void setTwitterSn(String twitterSn) {
+		this.twitterSn = twitterSn;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setYmSn(String ymSn) {
+		this.ymSn = ymSn;
 	}
 
 }

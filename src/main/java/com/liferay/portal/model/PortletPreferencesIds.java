@@ -20,6 +20,10 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	private java.lang.String portletId;
 
+	private java.lang.Object __equalsCalc = null;
+
+	private boolean __hashCodeCalc = false;
+
 	public PortletPreferencesIds() {
 	}
 
@@ -30,98 +34,6 @@ public class PortletPreferencesIds implements java.io.Serializable {
 		this.plid = plid;
 		this.portletId = portletId;
 	}
-
-	/**
-	 * Gets the companyId value for this PortletPreferencesIds.
-	 * 
-	 * @return companyId
-	 */
-	public long getCompanyId() {
-		return companyId;
-	}
-
-	/**
-	 * Sets the companyId value for this PortletPreferencesIds.
-	 * 
-	 * @param companyId
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
-	}
-
-	/**
-	 * Gets the ownerId value for this PortletPreferencesIds.
-	 * 
-	 * @return ownerId
-	 */
-	public long getOwnerId() {
-		return ownerId;
-	}
-
-	/**
-	 * Sets the ownerId value for this PortletPreferencesIds.
-	 * 
-	 * @param ownerId
-	 */
-	public void setOwnerId(long ownerId) {
-		this.ownerId = ownerId;
-	}
-
-	/**
-	 * Gets the ownerType value for this PortletPreferencesIds.
-	 * 
-	 * @return ownerType
-	 */
-	public int getOwnerType() {
-		return ownerType;
-	}
-
-	/**
-	 * Sets the ownerType value for this PortletPreferencesIds.
-	 * 
-	 * @param ownerType
-	 */
-	public void setOwnerType(int ownerType) {
-		this.ownerType = ownerType;
-	}
-
-	/**
-	 * Gets the plid value for this PortletPreferencesIds.
-	 * 
-	 * @return plid
-	 */
-	public long getPlid() {
-		return plid;
-	}
-
-	/**
-	 * Sets the plid value for this PortletPreferencesIds.
-	 * 
-	 * @param plid
-	 */
-	public void setPlid(long plid) {
-		this.plid = plid;
-	}
-
-	/**
-	 * Gets the portletId value for this PortletPreferencesIds.
-	 * 
-	 * @return portletId
-	 */
-	public java.lang.String getPortletId() {
-		return portletId;
-	}
-
-	/**
-	 * Sets the portletId value for this PortletPreferencesIds.
-	 * 
-	 * @param portletId
-	 */
-	public void setPortletId(java.lang.String portletId) {
-		this.portletId = portletId;
-	}
-
-	private java.lang.Object __equalsCalc = null;
 
 	public synchronized boolean equals(java.lang.Object obj) {
 		if (obj == null)
@@ -147,7 +59,50 @@ public class PortletPreferencesIds implements java.io.Serializable {
 		return _equals;
 	}
 
-	private boolean __hashCodeCalc = false;
+	/**
+	 * Gets the companyId value for this PortletPreferencesIds.
+	 * 
+	 * @return companyId
+	 */
+	public long getCompanyId() {
+		return companyId;
+	}
+
+	/**
+	 * Gets the ownerId value for this PortletPreferencesIds.
+	 * 
+	 * @return ownerId
+	 */
+	public long getOwnerId() {
+		return ownerId;
+	}
+
+	/**
+	 * Gets the ownerType value for this PortletPreferencesIds.
+	 * 
+	 * @return ownerType
+	 */
+	public int getOwnerType() {
+		return ownerType;
+	}
+
+	/**
+	 * Gets the plid value for this PortletPreferencesIds.
+	 * 
+	 * @return plid
+	 */
+	public long getPlid() {
+		return plid;
+	}
+
+	/**
+	 * Gets the portletId value for this PortletPreferencesIds.
+	 * 
+	 * @return portletId
+	 */
+	public java.lang.String getPortletId() {
+		return portletId;
+	}
 
 	public synchronized int hashCode() {
 		if (__hashCodeCalc) {
@@ -164,6 +119,51 @@ public class PortletPreferencesIds implements java.io.Serializable {
 		}
 		__hashCodeCalc = false;
 		return _hashCode;
+	}
+
+	/**
+	 * Sets the companyId value for this PortletPreferencesIds.
+	 * 
+	 * @param companyId
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * Sets the ownerId value for this PortletPreferencesIds.
+	 * 
+	 * @param ownerId
+	 */
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	/**
+	 * Sets the ownerType value for this PortletPreferencesIds.
+	 * 
+	 * @param ownerType
+	 */
+	public void setOwnerType(int ownerType) {
+		this.ownerType = ownerType;
+	}
+
+	/**
+	 * Sets the plid value for this PortletPreferencesIds.
+	 * 
+	 * @param plid
+	 */
+	public void setPlid(long plid) {
+		this.plid = plid;
+	}
+
+	/**
+	 * Sets the portletId value for this PortletPreferencesIds.
+	 * 
+	 * @param portletId
+	 */
+	public void setPortletId(java.lang.String portletId) {
+		this.portletId = portletId;
 	}
 
 }

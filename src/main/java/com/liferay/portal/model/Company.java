@@ -62,48 +62,12 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the accountId value for this CompanySoap.
-	 * 
-	 * @param accountId
-	 */
-	public void setAccountId(long accountId) {
-		this.accountId = accountId;
-	}
-
-	/**
-	 * Gets the active value for this CompanySoap.
-	 * 
-	 * @return active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * Sets the active value for this CompanySoap.
-	 * 
-	 * @param active
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	/**
 	 * Gets the companyId value for this CompanySoap.
 	 * 
 	 * @return companyId
 	 */
 	public long getCompanyId() {
 		return companyId;
-	}
-
-	/**
-	 * Sets the companyId value for this CompanySoap.
-	 * 
-	 * @param companyId
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
 	}
 
 	/**
@@ -115,13 +79,9 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 		return homeURL;
 	}
 
-	/**
-	 * Sets the homeURL value for this CompanySoap.
-	 * 
-	 * @param homeURL
-	 */
-	public void setHomeURL(java.lang.String homeURL) {
-		this.homeURL = homeURL;
+	@Override
+	public Long getId() {
+		return getCompanyId();
 	}
 
 	/**
@@ -134,30 +94,12 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the key value for this CompanySoap.
-	 * 
-	 * @param key
-	 */
-	public void setKey(java.lang.String key) {
-		this.key = key;
-	}
-
-	/**
 	 * Gets the logoId value for this CompanySoap.
 	 * 
 	 * @return logoId
 	 */
 	public long getLogoId() {
 		return logoId;
-	}
-
-	/**
-	 * Sets the logoId value for this CompanySoap.
-	 * 
-	 * @param logoId
-	 */
-	public void setLogoId(long logoId) {
-		this.logoId = logoId;
 	}
 
 	/**
@@ -170,30 +112,12 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Sets the maxUsers value for this CompanySoap.
-	 * 
-	 * @param maxUsers
-	 */
-	public void setMaxUsers(int maxUsers) {
-		this.maxUsers = maxUsers;
-	}
-
-	/**
 	 * Gets the mx value for this CompanySoap.
 	 * 
 	 * @return mx
 	 */
 	public java.lang.String getMx() {
 		return mx;
-	}
-
-	/**
-	 * Sets the mx value for this CompanySoap.
-	 * 
-	 * @param mx
-	 */
-	public void setMx(java.lang.String mx) {
-		this.mx = mx;
 	}
 
 	/**
@@ -205,31 +129,9 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 		return primaryKey;
 	}
 
-	/**
-	 * Sets the primaryKey value for this CompanySoap.
-	 * 
-	 * @param primaryKey
-	 */
-	public void setPrimaryKey(long primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-
-	/**
-	 * Gets the system value for this CompanySoap.
-	 * 
-	 * @return system
-	 */
-	public boolean isSystem() {
-		return system;
-	}
-
-	/**
-	 * Sets the system value for this CompanySoap.
-	 * 
-	 * @param system
-	 */
-	public void setSystem(boolean system) {
-		this.system = system;
+	@Override
+	public String getUniqueName() {
+		return getWebId();
 	}
 
 	/**
@@ -242,22 +144,120 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
+	 * Gets the active value for this CompanySoap.
+	 * 
+	 * @return active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * Gets the system value for this CompanySoap.
+	 * 
+	 * @return system
+	 */
+	public boolean isSystem() {
+		return system;
+	}
+
+	/**
+	 * Sets the accountId value for this CompanySoap.
+	 * 
+	 * @param accountId
+	 */
+	public void setAccountId(long accountId) {
+		this.accountId = accountId;
+	}
+
+	/**
+	 * Sets the active value for this CompanySoap.
+	 * 
+	 * @param active
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * Sets the companyId value for this CompanySoap.
+	 * 
+	 * @param companyId
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * Sets the homeURL value for this CompanySoap.
+	 * 
+	 * @param homeURL
+	 */
+	public void setHomeURL(java.lang.String homeURL) {
+		this.homeURL = homeURL;
+	}
+
+	/**
+	 * Sets the key value for this CompanySoap.
+	 * 
+	 * @param key
+	 */
+	public void setKey(java.lang.String key) {
+		this.key = key;
+	}
+
+	/**
+	 * Sets the logoId value for this CompanySoap.
+	 * 
+	 * @param logoId
+	 */
+	public void setLogoId(long logoId) {
+		this.logoId = logoId;
+	}
+
+	/**
+	 * Sets the maxUsers value for this CompanySoap.
+	 * 
+	 * @param maxUsers
+	 */
+	public void setMaxUsers(int maxUsers) {
+		this.maxUsers = maxUsers;
+	}
+
+	/**
+	 * Sets the mx value for this CompanySoap.
+	 * 
+	 * @param mx
+	 */
+	public void setMx(java.lang.String mx) {
+		this.mx = mx;
+	}
+
+	/**
+	 * Sets the primaryKey value for this CompanySoap.
+	 * 
+	 * @param primaryKey
+	 */
+	public void setPrimaryKey(long primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	/**
+	 * Sets the system value for this CompanySoap.
+	 * 
+	 * @param system
+	 */
+	public void setSystem(boolean system) {
+		this.system = system;
+	}
+
+	/**
 	 * Sets the webId value for this CompanySoap.
 	 * 
 	 * @param webId
 	 */
 	public void setWebId(java.lang.String webId) {
 		this.webId = webId;
-	}
-
-	@Override
-	public Long getId() {
-		return getCompanyId();
-	}
-
-	@Override
-	public String getUniqueName() {
-		return getWebId();
 	}
 
 }

@@ -43,34 +43,27 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		groupPool = new GroupPool<Long, Long>();
 	}
 
-	@Override
-	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
-			String authenticationToken, String loginUser, String password) {
-		// Standard behavior.
-		super.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser,
-				password);
-		// Disconnect previous connections.
-		try {
-			contactService.disconnect();
-			organizationService.disconnect();
-		} catch (Exception e) {
-
+	/**
+	 * Adds an user to Liferay portal.
+	 * 
+	 * @param companySoap
+	 * @param user
+	 * @return a user.
+	 * @throws NotConnectedToWebServiceException
+	 * @throws IOException
+	 * @throws ClientProtocolException
+	 * @throws AuthenticationRequired
+	 * @throws WebServiceAccessError
+	 */
+	public IUser<Long> addUser(Company companySoap, User user) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+		if (user != null) {
+			return addUser(companySoap, user.getPassword(), user.getScreenName(), user.getEmailAddress(),
+					user.getFacebookId(), user.getOpenId(), user.getTimeZoneId(), user.getFirstName(),
+					user.getMiddleName(), user.getLastName(), 0, 0, true, 1, 1, 1900, user.getJobTitle(), new long[0],
+					new long[0], new long[0], new long[0], false);
 		}
-		// Some user information is in the contact object.
-		contactService = new ContactService();
-		contactService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken,
-				loginUser, password);
-		// A service is a mix of the organization service and the user service.
-		organizationService = new OrganizationService();
-		organizationService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken,
-				loginUser, password);
-	}
-
-	@Override
-	public void disconnect() {
-		super.disconnect();
-		contactService.disconnect();
-		organizationService.disconnect();
+		return null;
 	}
 
 	/**
@@ -149,27 +142,27 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		return user;
 	}
 
-	/**
-	 * Adds an user to Liferay portal.
-	 * 
-	 * @param companySoap
-	 * @param user
-	 * @return a user.
-	 * @throws NotConnectedToWebServiceException
-	 * @throws IOException
-	 * @throws ClientProtocolException
-	 * @throws AuthenticationRequired
-	 * @throws WebServiceAccessError
-	 */
-	public IUser<Long> addUser(Company companySoap, User user) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
-		if (user != null) {
-			return addUser(companySoap, user.getPassword(), user.getScreenName(), user.getEmailAddress(),
-					user.getFacebookId(), user.getOpenId(), user.getTimeZoneId(), user.getFirstName(),
-					user.getMiddleName(), user.getLastName(), 0, 0, true, 1, 1, 1900, user.getJobTitle(), new long[0],
-					new long[0], new long[0], new long[0], false);
+	@Override
+	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
+			String authenticationToken, String loginUser, String password) {
+		// Standard behavior.
+		super.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser,
+				password);
+		// Disconnect previous connections.
+		try {
+			contactService.disconnect();
+			organizationService.disconnect();
+		} catch (Exception e) {
+
 		}
-		return null;
+		// Some user information is in the contact object.
+		contactService = new ContactService();
+		contactService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken,
+				loginUser, password);
+		// A service is a mix of the organization service and the user service.
+		organizationService = new OrganizationService();
+		organizationService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken,
+				loginUser, password);
 	}
 
 	@Override
@@ -211,6 +204,42 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 			userPool.removeUser(user);
 			LiferayClientLogger.info(this.getClass().getName(), "IUser<Long> '" + user.getUniqueName() + "' deleted.");
 		}
+	}
+
+	@Override
+	public void disconnect() {
+		super.disconnect();
+		contactService.disconnect();
+		organizationService.disconnect();
+	}
+
+	public Set<IUser<Long>> getCompanyUsers(IGroup<Long> company) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired {
+		Set<IUser<Long>> users = new HashSet<IUser<Long>>();
+		if (company != null) {
+
+			Set<IUser<Long>> usersOfCompany = groupPool.getGroupUsers(company.getId());
+			if (usersOfCompany != null) {
+				return usersOfCompany;
+			}
+
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
+			params.add(new BasicNameValuePair("start", 0 + ""));
+			params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
+			String result = getHttpResponse("user/get-company-users", params);
+			if (result != null) {
+				// A Simple JSON Response Read
+				users = decodeListFromJson(result, User.class);
+				for (IUser<Long> user : users) {
+					groupPool.addUserToGroup(user, company);
+				}
+				return users;
+			}
+		}
+		return users;
 	}
 
 	/**
@@ -385,6 +414,10 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		return users;
 	}
 
+	public void reset() {
+		userPool.reset();
+	}
+
 	/**
 	 * Some user's information in Liferay is in the contact object. We copy it to the user object.
 	 * 
@@ -400,38 +433,5 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		Contact contact = contactService.getContact((User) user);
 		((Contact) user).setBirthday(contact.getBirthday());
 		((Contact) user).setMale(contact.isMale());
-	}
-
-	public Set<IUser<Long>> getCompanyUsers(IGroup<Long> company) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
-		Set<IUser<Long>> users = new HashSet<IUser<Long>>();
-		if (company != null) {
-
-			Set<IUser<Long>> usersOfCompany = groupPool.getGroupUsers(company.getId());
-			if (usersOfCompany != null) {
-				return usersOfCompany;
-			}
-
-			checkConnection();
-
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
-			params.add(new BasicNameValuePair("start", 0 + ""));
-			params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
-			String result = getHttpResponse("user/get-company-users", params);
-			if (result != null) {
-				// A Simple JSON Response Read
-				users = decodeListFromJson(result, User.class);
-				for (IUser<Long> user : users) {
-					groupPool.addUserToGroup(user, company);
-				}
-				return users;
-			}
-		}
-		return users;
-	}
-
-	public void reset() {
-		userPool.reset();
 	}
 }

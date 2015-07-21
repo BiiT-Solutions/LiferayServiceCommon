@@ -36,25 +36,6 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	}
 
 	/**
-	 * Gets the user contact.
-	 * 
-	 * @param user
-	 * @return
-	 * @throws NotConnectedToWebServiceException
-	 * @throws ClientProtocolException
-	 * @throws IOException
-	 * @throws AuthenticationRequired
-	 * @throws WebServiceAccessError
-	 */
-	public Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError {
-		if (user != null) {
-			return getContact(user.getContactId());
-		}
-		return null;
-	}
-
-	/**
 	 * Gets the user's contact by id.
 	 * 
 	 * @param contactId
@@ -86,6 +67,25 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 				contactPool.addContact(contact);
 				return contact;
 			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the user contact.
+	 * 
+	 * @param user
+	 * @return
+	 * @throws NotConnectedToWebServiceException
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws AuthenticationRequired
+	 * @throws WebServiceAccessError
+	 */
+	public Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, WebServiceAccessError {
+		if (user != null) {
+			return getContact(user.getContactId());
 		}
 		return null;
 	}

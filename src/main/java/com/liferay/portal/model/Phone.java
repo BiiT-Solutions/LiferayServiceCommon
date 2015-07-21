@@ -70,30 +70,12 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the classNameId value for this PhoneSoap.
-	 * 
-	 * @param classNameId
-	 */
-	public void setClassNameId(long classNameId) {
-		this.classNameId = classNameId;
-	}
-
-	/**
 	 * Gets the classPK value for this PhoneSoap.
 	 * 
 	 * @return classPK
 	 */
 	public long getClassPK() {
 		return classPK;
-	}
-
-	/**
-	 * Sets the classPK value for this PhoneSoap.
-	 * 
-	 * @param classPK
-	 */
-	public void setClassPK(long classPK) {
-		this.classPK = classPK;
 	}
 
 	/**
@@ -106,30 +88,12 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the companyId value for this PhoneSoap.
-	 * 
-	 * @param companyId
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
-	}
-
-	/**
 	 * Gets the createDate value for this PhoneSoap.
 	 * 
 	 * @return createDate
 	 */
 	public java.util.Calendar getCreateDate() {
 		return createDate;
-	}
-
-	/**
-	 * Sets the createDate value for this PhoneSoap.
-	 * 
-	 * @param createDate
-	 */
-	public void setCreateDate(java.util.Calendar createDate) {
-		this.createDate = createDate;
 	}
 
 	/**
@@ -142,30 +106,12 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the extension value for this PhoneSoap.
-	 * 
-	 * @param extension
-	 */
-	public void setExtension(java.lang.String extension) {
-		this.extension = extension;
-	}
-
-	/**
 	 * Gets the modifiedDate value for this PhoneSoap.
 	 * 
 	 * @return modifiedDate
 	 */
 	public java.util.Calendar getModifiedDate() {
 		return modifiedDate;
-	}
-
-	/**
-	 * Sets the modifiedDate value for this PhoneSoap.
-	 * 
-	 * @param modifiedDate
-	 */
-	public void setModifiedDate(java.util.Calendar modifiedDate) {
-		this.modifiedDate = modifiedDate;
 	}
 
 	/**
@@ -178,48 +124,12 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the number value for this PhoneSoap.
-	 * 
-	 * @param number
-	 */
-	public void setNumber(java.lang.String number) {
-		this.number = number;
-	}
-
-	/**
 	 * Gets the phoneId value for this PhoneSoap.
 	 * 
 	 * @return phoneId
 	 */
 	public long getPhoneId() {
 		return phoneId;
-	}
-
-	/**
-	 * Sets the phoneId value for this PhoneSoap.
-	 * 
-	 * @param phoneId
-	 */
-	public void setPhoneId(long phoneId) {
-		this.phoneId = phoneId;
-	}
-
-	/**
-	 * Gets the primary value for this PhoneSoap.
-	 * 
-	 * @return primary
-	 */
-	public boolean isPrimary() {
-		return primary;
-	}
-
-	/**
-	 * Sets the primary value for this PhoneSoap.
-	 * 
-	 * @param primary
-	 */
-	public void setPrimary(boolean primary) {
-		this.primary = primary;
 	}
 
 	/**
@@ -232,30 +142,12 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the primaryKey value for this PhoneSoap.
-	 * 
-	 * @param primaryKey
-	 */
-	public void setPrimaryKey(long primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-
-	/**
 	 * Gets the typeId value for this PhoneSoap.
 	 * 
 	 * @return typeId
 	 */
 	public int getTypeId() {
 		return typeId;
-	}
-
-	/**
-	 * Sets the typeId value for this PhoneSoap.
-	 * 
-	 * @param typeId
-	 */
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
 	}
 
 	/**
@@ -268,15 +160,6 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the userId value for this PhoneSoap.
-	 * 
-	 * @param userId
-	 */
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	/**
 	 * Gets the userName value for this PhoneSoap.
 	 * 
 	 * @return userName
@@ -286,21 +169,138 @@ public class Phone implements java.io.Serializable {
 	}
 
 	/**
-	 * Sets the userName value for this PhoneSoap.
-	 * 
-	 * @param userName
-	 */
-	public void setUserName(java.lang.String userName) {
-		this.userName = userName;
-	}
-
-	/**
 	 * Gets the uuid value for this PhoneSoap.
 	 * 
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
 		return uuid;
+	}
+
+	/**
+	 * Gets the primary value for this PhoneSoap.
+	 * 
+	 * @return primary
+	 */
+	public boolean isPrimary() {
+		return primary;
+	}
+
+	/**
+	 * Sets the classNameId value for this PhoneSoap.
+	 * 
+	 * @param classNameId
+	 */
+	public void setClassNameId(long classNameId) {
+		this.classNameId = classNameId;
+	}
+
+	/**
+	 * Sets the classPK value for this PhoneSoap.
+	 * 
+	 * @param classPK
+	 */
+	public void setClassPK(long classPK) {
+		this.classPK = classPK;
+	}
+
+	/**
+	 * Sets the companyId value for this PhoneSoap.
+	 * 
+	 * @param companyId
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * Sets the createDate value for this PhoneSoap.
+	 * 
+	 * @param createDate
+	 */
+	public void setCreateDate(java.util.Calendar createDate) {
+		this.createDate = createDate;
+	}
+
+	/**
+	 * Sets the extension value for this PhoneSoap.
+	 * 
+	 * @param extension
+	 */
+	public void setExtension(java.lang.String extension) {
+		this.extension = extension;
+	}
+
+	/**
+	 * Sets the modifiedDate value for this PhoneSoap.
+	 * 
+	 * @param modifiedDate
+	 */
+	public void setModifiedDate(java.util.Calendar modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * Sets the number value for this PhoneSoap.
+	 * 
+	 * @param number
+	 */
+	public void setNumber(java.lang.String number) {
+		this.number = number;
+	}
+
+	/**
+	 * Sets the phoneId value for this PhoneSoap.
+	 * 
+	 * @param phoneId
+	 */
+	public void setPhoneId(long phoneId) {
+		this.phoneId = phoneId;
+	}
+
+	/**
+	 * Sets the primary value for this PhoneSoap.
+	 * 
+	 * @param primary
+	 */
+	public void setPrimary(boolean primary) {
+		this.primary = primary;
+	}
+
+	/**
+	 * Sets the primaryKey value for this PhoneSoap.
+	 * 
+	 * @param primaryKey
+	 */
+	public void setPrimaryKey(long primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	/**
+	 * Sets the typeId value for this PhoneSoap.
+	 * 
+	 * @param typeId
+	 */
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+
+	/**
+	 * Sets the userId value for this PhoneSoap.
+	 * 
+	 * @param userId
+	 */
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * Sets the userName value for this PhoneSoap.
+	 * 
+	 * @param userName
+	 */
+	public void setUserName(java.lang.String userName) {
+		this.userName = userName;
 	}
 
 	/**

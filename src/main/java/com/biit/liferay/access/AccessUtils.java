@@ -20,6 +20,25 @@ public class AccessUtils {
 			+ MAX_PASSWORD_LENGTH + "}$";
 
 	/**
+	 * Check if a password is valid. It is valid if it not uses any special
+	 * character that will cause problems when connection to the Liferay server
+	 * (characters not allowed in URL).
+	 * 
+	 * @param password
+	 * @return
+	 * @throws NotValidPasswordException
+	 */
+	public static void checkPassword(String password) throws NotValidPasswordException {
+		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+		Matcher matcher = pattern.matcher(password);
+		if (!matcher.matches()) {
+			throw new NotValidPasswordException("Password used to connect to Lifera is not valid. Only characters '"
+					+ PASSWORD_ALLOWED_CHARS + "' allowed and password length must be in range [" + MIN_PASSWORD_LENGTH
+					+ "," + MAX_PASSWORD_LENGTH + "].");
+		}
+	}
+
+	/**
 	 * Get the URL Liferay SOAP Service
 	 * 
 	 * @param remoteUser
@@ -51,25 +70,6 @@ public class AccessUtils {
 			e.printStackTrace();
 			LiferayClientLogger.error(AccessUtils.class.getName(), e.getLocalizedMessage());
 			return null;
-		}
-	}
-
-	/**
-	 * Check if a password is valid. It is valid if it not uses any special
-	 * character that will cause problems when connection to the Liferay server
-	 * (characters not allowed in URL).
-	 * 
-	 * @param password
-	 * @return
-	 * @throws NotValidPasswordException
-	 */
-	public static void checkPassword(String password) throws NotValidPasswordException {
-		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-		Matcher matcher = pattern.matcher(password);
-		if (!matcher.matches()) {
-			throw new NotValidPasswordException("Password used to connect to Lifera is not valid. Only characters '"
-					+ PASSWORD_ALLOWED_CHARS + "' allowed and password length must be in range [" + MIN_PASSWORD_LENGTH
-					+ "," + MAX_PASSWORD_LENGTH + "].");
 		}
 	}
 }

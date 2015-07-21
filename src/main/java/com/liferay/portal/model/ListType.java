@@ -13,20 +13,20 @@ public class ListType {
 		return listTypeId;
 	}
 
-	public void setListTypeId(Long listTypeId) {
-		this.listTypeId = listTypeId;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getType() {
 		return type;
+	}
+
+	public void setListTypeId(Long listTypeId) {
+		this.listTypeId = listTypeId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setType(String type) {

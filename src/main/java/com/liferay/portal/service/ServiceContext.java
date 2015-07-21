@@ -102,6 +102,10 @@ public class ServiceContext implements java.io.Serializable {
 
 	private int workflowAction;
 
+	private java.lang.Object __equalsCalc = null;
+
+	private boolean __hashCodeCalc = false;
+
 	public ServiceContext() {
 		attributes = new java.util.HashMap<String, String>();
 	}
@@ -165,800 +169,6 @@ public class ServiceContext implements java.io.Serializable {
 		this.uuid = uuid;
 		this.workflowAction = workflowAction;
 	}
-
-	/**
-	 * Gets the addCommunityPermissions value for this ServiceContext.
-	 * 
-	 * @return addCommunityPermissions
-	 */
-	public boolean isAddCommunityPermissions() {
-		return addCommunityPermissions;
-	}
-
-	/**
-	 * Sets the addCommunityPermissions value for this ServiceContext.
-	 * 
-	 * @param addCommunityPermissions
-	 */
-	public void setAddCommunityPermissions(boolean addCommunityPermissions) {
-		this.addCommunityPermissions = addCommunityPermissions;
-	}
-
-	/**
-	 * Gets the addGroupPermissions value for this ServiceContext.
-	 * 
-	 * @return addGroupPermissions
-	 */
-	public boolean isAddGroupPermissions() {
-		return addGroupPermissions;
-	}
-
-	/**
-	 * Sets the addGroupPermissions value for this ServiceContext.
-	 * 
-	 * @param addGroupPermissions
-	 */
-	public void setAddGroupPermissions(boolean addGroupPermissions) {
-		this.addGroupPermissions = addGroupPermissions;
-	}
-
-	/**
-	 * Gets the addGuestPermissions value for this ServiceContext.
-	 * 
-	 * @return addGuestPermissions
-	 */
-	public boolean isAddGuestPermissions() {
-		return addGuestPermissions;
-	}
-
-	/**
-	 * Sets the addGuestPermissions value for this ServiceContext.
-	 * 
-	 * @param addGuestPermissions
-	 */
-	public void setAddGuestPermissions(boolean addGuestPermissions) {
-		this.addGuestPermissions = addGuestPermissions;
-	}
-
-	/**
-	 * Gets the assetCategoryIds value for this ServiceContext.
-	 * 
-	 * @return assetCategoryIds
-	 */
-	public long[] getAssetCategoryIds() {
-		return assetCategoryIds;
-	}
-
-	/**
-	 * Sets the assetCategoryIds value for this ServiceContext.
-	 * 
-	 * @param assetCategoryIds
-	 */
-	public void setAssetCategoryIds(long[] assetCategoryIds) {
-		this.assetCategoryIds = assetCategoryIds;
-	}
-
-	/**
-	 * Gets the assetEntryVisible value for this ServiceContext.
-	 * 
-	 * @return assetEntryVisible
-	 */
-	public boolean isAssetEntryVisible() {
-		return assetEntryVisible;
-	}
-
-	/**
-	 * Sets the assetEntryVisible value for this ServiceContext.
-	 * 
-	 * @param assetEntryVisible
-	 */
-	public void setAssetEntryVisible(boolean assetEntryVisible) {
-		this.assetEntryVisible = assetEntryVisible;
-	}
-
-	/**
-	 * Gets the assetLinkEntryIds value for this ServiceContext.
-	 * 
-	 * @return assetLinkEntryIds
-	 */
-	public long[] getAssetLinkEntryIds() {
-		return assetLinkEntryIds;
-	}
-
-	/**
-	 * Sets the assetLinkEntryIds value for this ServiceContext.
-	 * 
-	 * @param assetLinkEntryIds
-	 */
-	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
-		this.assetLinkEntryIds = assetLinkEntryIds;
-	}
-
-	/**
-	 * Gets the assetTagNames value for this ServiceContext.
-	 * 
-	 * @return assetTagNames
-	 */
-	public java.lang.String[] getAssetTagNames() {
-		return assetTagNames;
-	}
-
-	/**
-	 * Sets the assetTagNames value for this ServiceContext.
-	 * 
-	 * @param assetTagNames
-	 */
-	public void setAssetTagNames(java.lang.String[] assetTagNames) {
-		this.assetTagNames = assetTagNames;
-	}
-
-	/**
-	 * Gets the attributes value for this ServiceContext.
-	 * 
-	 * @return attributes
-	 */
-	public java.util.HashMap getAttributes() {
-		return attributes;
-	}
-
-	/**
-	 * Sets the attributes value for this ServiceContext.
-	 * 
-	 * @param attributes
-	 */
-	public void setAttributes(java.util.HashMap attributes) {
-		this.attributes = attributes;
-	}
-
-	/**
-	 * Gets the command value for this ServiceContext.
-	 * 
-	 * @return command
-	 */
-	public java.lang.String getCommand() {
-		return command;
-	}
-
-	/**
-	 * Sets the command value for this ServiceContext.
-	 * 
-	 * @param command
-	 */
-	public void setCommand(java.lang.String command) {
-		this.command = command;
-	}
-
-	/**
-	 * Gets the commandAdd value for this ServiceContext.
-	 * 
-	 * @return commandAdd
-	 */
-	public boolean isCommandAdd() {
-		return commandAdd;
-	}
-
-	/**
-	 * Sets the commandAdd value for this ServiceContext.
-	 * 
-	 * @param commandAdd
-	 */
-	public void setCommandAdd(boolean commandAdd) {
-		this.commandAdd = commandAdd;
-	}
-
-	/**
-	 * Gets the commandUpdate value for this ServiceContext.
-	 * 
-	 * @return commandUpdate
-	 */
-	public boolean isCommandUpdate() {
-		return commandUpdate;
-	}
-
-	/**
-	 * Sets the commandUpdate value for this ServiceContext.
-	 * 
-	 * @param commandUpdate
-	 */
-	public void setCommandUpdate(boolean commandUpdate) {
-		this.commandUpdate = commandUpdate;
-	}
-
-	/**
-	 * Gets the communityPermissions value for this ServiceContext.
-	 * 
-	 * @return communityPermissions
-	 */
-	public java.lang.String[] getCommunityPermissions() {
-		return communityPermissions;
-	}
-
-	/**
-	 * Sets the communityPermissions value for this ServiceContext.
-	 * 
-	 * @param communityPermissions
-	 */
-	public void setCommunityPermissions(java.lang.String[] communityPermissions) {
-		this.communityPermissions = communityPermissions;
-	}
-
-	/**
-	 * Gets the companyId value for this ServiceContext.
-	 * 
-	 * @return companyId
-	 */
-	public long getCompanyId() {
-		return companyId;
-	}
-
-	/**
-	 * Sets the companyId value for this ServiceContext.
-	 * 
-	 * @param companyId
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
-	}
-
-	/**
-	 * Gets the createDate value for this ServiceContext.
-	 * 
-	 * @return createDate
-	 */
-	public java.util.Calendar getCreateDate() {
-		return createDate;
-	}
-
-	/**
-	 * Sets the createDate value for this ServiceContext.
-	 * 
-	 * @param createDate
-	 */
-	public void setCreateDate(java.util.Calendar createDate) {
-		this.createDate = createDate;
-	}
-
-	/**
-	 * Gets the currentURL value for this ServiceContext.
-	 * 
-	 * @return currentURL
-	 */
-	public java.lang.String getCurrentURL() {
-		return currentURL;
-	}
-
-	/**
-	 * Sets the currentURL value for this ServiceContext.
-	 * 
-	 * @param currentURL
-	 */
-	public void setCurrentURL(java.lang.String currentURL) {
-		this.currentURL = currentURL;
-	}
-
-	/**
-	 * Gets the deriveDefaultPermissions value for this ServiceContext.
-	 * 
-	 * @return deriveDefaultPermissions
-	 */
-	public boolean isDeriveDefaultPermissions() {
-		return deriveDefaultPermissions;
-	}
-
-	/**
-	 * Sets the deriveDefaultPermissions value for this ServiceContext.
-	 * 
-	 * @param deriveDefaultPermissions
-	 */
-	public void setDeriveDefaultPermissions(boolean deriveDefaultPermissions) {
-		this.deriveDefaultPermissions = deriveDefaultPermissions;
-	}
-
-	/**
-	 * Gets the expandoBridgeAttributes value for this ServiceContext.
-	 * 
-	 * @return expandoBridgeAttributes
-	 */
-	public java.util.HashMap getExpandoBridgeAttributes() {
-		return expandoBridgeAttributes;
-	}
-
-	/**
-	 * Sets the expandoBridgeAttributes value for this ServiceContext.
-	 * 
-	 * @param expandoBridgeAttributes
-	 */
-	public void setExpandoBridgeAttributes(java.util.HashMap expandoBridgeAttributes) {
-		this.expandoBridgeAttributes = expandoBridgeAttributes;
-	}
-
-	/**
-	 * Gets the formDate value for this ServiceContext.
-	 * 
-	 * @return formDate
-	 */
-	public java.util.Calendar getFormDate() {
-		return formDate;
-	}
-
-	/**
-	 * Sets the formDate value for this ServiceContext.
-	 * 
-	 * @param formDate
-	 */
-	public void setFormDate(java.util.Calendar formDate) {
-		this.formDate = formDate;
-	}
-
-	/**
-	 * Gets the groupPermissions value for this ServiceContext.
-	 * 
-	 * @return groupPermissions
-	 */
-	public java.lang.String[] getGroupPermissions() {
-		return groupPermissions;
-	}
-
-	/**
-	 * Sets the groupPermissions value for this ServiceContext.
-	 * 
-	 * @param groupPermissions
-	 */
-	public void setGroupPermissions(java.lang.String[] groupPermissions) {
-		this.groupPermissions = groupPermissions;
-	}
-
-	/**
-	 * Gets the guestOrUserId value for this ServiceContext.
-	 * 
-	 * @return guestOrUserId
-	 */
-	public long getGuestOrUserId() {
-		return guestOrUserId;
-	}
-
-	/**
-	 * Sets the guestOrUserId value for this ServiceContext.
-	 * 
-	 * @param guestOrUserId
-	 */
-	public void setGuestOrUserId(long guestOrUserId) {
-		this.guestOrUserId = guestOrUserId;
-	}
-
-	/**
-	 * Gets the guestPermissions value for this ServiceContext.
-	 * 
-	 * @return guestPermissions
-	 */
-	public java.lang.String[] getGuestPermissions() {
-		return guestPermissions;
-	}
-
-	/**
-	 * Sets the guestPermissions value for this ServiceContext.
-	 * 
-	 * @param guestPermissions
-	 */
-	public void setGuestPermissions(java.lang.String[] guestPermissions) {
-		this.guestPermissions = guestPermissions;
-	}
-
-	/**
-	 * Gets the headers value for this ServiceContext.
-	 * 
-	 * @return headers
-	 */
-	public java.util.HashMap getHeaders() {
-		return headers;
-	}
-
-	/**
-	 * Sets the headers value for this ServiceContext.
-	 * 
-	 * @param headers
-	 */
-	public void setHeaders(java.util.HashMap headers) {
-		this.headers = headers;
-	}
-
-	/**
-	 * Gets the indexingEnabled value for this ServiceContext.
-	 * 
-	 * @return indexingEnabled
-	 */
-	public boolean isIndexingEnabled() {
-		return indexingEnabled;
-	}
-
-	/**
-	 * Sets the indexingEnabled value for this ServiceContext.
-	 * 
-	 * @param indexingEnabled
-	 */
-	public void setIndexingEnabled(boolean indexingEnabled) {
-		this.indexingEnabled = indexingEnabled;
-	}
-
-	/**
-	 * Gets the languageId value for this ServiceContext.
-	 * 
-	 * @return languageId
-	 */
-	public java.lang.String getLanguageId() {
-		return languageId;
-	}
-
-	/**
-	 * Sets the languageId value for this ServiceContext.
-	 * 
-	 * @param languageId
-	 */
-	public void setLanguageId(java.lang.String languageId) {
-		this.languageId = languageId;
-	}
-
-	/**
-	 * Gets the layoutFullURL value for this ServiceContext.
-	 * 
-	 * @return layoutFullURL
-	 */
-	public java.lang.String getLayoutFullURL() {
-		return layoutFullURL;
-	}
-
-	/**
-	 * Sets the layoutFullURL value for this ServiceContext.
-	 * 
-	 * @param layoutFullURL
-	 */
-	public void setLayoutFullURL(java.lang.String layoutFullURL) {
-		this.layoutFullURL = layoutFullURL;
-	}
-
-	/**
-	 * Gets the layoutURL value for this ServiceContext.
-	 * 
-	 * @return layoutURL
-	 */
-	public java.lang.String getLayoutURL() {
-		return layoutURL;
-	}
-
-	/**
-	 * Sets the layoutURL value for this ServiceContext.
-	 * 
-	 * @param layoutURL
-	 */
-	public void setLayoutURL(java.lang.String layoutURL) {
-		this.layoutURL = layoutURL;
-	}
-
-	/**
-	 * Gets the locale value for this ServiceContext.
-	 * 
-	 * @return locale
-	 */
-	public java.lang.Object getLocale() {
-		return locale;
-	}
-
-	/**
-	 * Sets the locale value for this ServiceContext.
-	 * 
-	 * @param locale
-	 */
-	public void setLocale(java.lang.Object locale) {
-		this.locale = locale;
-	}
-
-	/**
-	 * Gets the modifiedDate value for this ServiceContext.
-	 * 
-	 * @return modifiedDate
-	 */
-	public java.util.Calendar getModifiedDate() {
-		return modifiedDate;
-	}
-
-	/**
-	 * Sets the modifiedDate value for this ServiceContext.
-	 * 
-	 * @param modifiedDate
-	 */
-	public void setModifiedDate(java.util.Calendar modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	/**
-	 * Gets the pathMain value for this ServiceContext.
-	 * 
-	 * @return pathMain
-	 */
-	public java.lang.String getPathMain() {
-		return pathMain;
-	}
-
-	/**
-	 * Sets the pathMain value for this ServiceContext.
-	 * 
-	 * @param pathMain
-	 */
-	public void setPathMain(java.lang.String pathMain) {
-		this.pathMain = pathMain;
-	}
-
-	/**
-	 * Gets the plid value for this ServiceContext.
-	 * 
-	 * @return plid
-	 */
-	public long getPlid() {
-		return plid;
-	}
-
-	/**
-	 * Sets the plid value for this ServiceContext.
-	 * 
-	 * @param plid
-	 */
-	public void setPlid(long plid) {
-		this.plid = plid;
-	}
-
-	/**
-	 * Gets the portalURL value for this ServiceContext.
-	 * 
-	 * @return portalURL
-	 */
-	public java.lang.String getPortalURL() {
-		return portalURL;
-	}
-
-	/**
-	 * Sets the portalURL value for this ServiceContext.
-	 * 
-	 * @param portalURL
-	 */
-	public void setPortalURL(java.lang.String portalURL) {
-		this.portalURL = portalURL;
-	}
-
-	/**
-	 * Gets the portletId value for this ServiceContext.
-	 * 
-	 * @return portletId
-	 */
-	public java.lang.String getPortletId() {
-		return portletId;
-	}
-
-	/**
-	 * Sets the portletId value for this ServiceContext.
-	 * 
-	 * @param portletId
-	 */
-	public void setPortletId(java.lang.String portletId) {
-		this.portletId = portletId;
-	}
-
-	/**
-	 * Gets the portletPreferencesIds value for this ServiceContext.
-	 * 
-	 * @return portletPreferencesIds
-	 */
-	public PortletPreferencesIds getPortletPreferencesIds() {
-		return portletPreferencesIds;
-	}
-
-	/**
-	 * Sets the portletPreferencesIds value for this ServiceContext.
-	 * 
-	 * @param portletPreferencesIds
-	 */
-	public void setPortletPreferencesIds(PortletPreferencesIds portletPreferencesIds) {
-		this.portletPreferencesIds = portletPreferencesIds;
-	}
-
-	/**
-	 * Gets the remoteAddr value for this ServiceContext.
-	 * 
-	 * @return remoteAddr
-	 */
-	public java.lang.String getRemoteAddr() {
-		return remoteAddr;
-	}
-
-	/**
-	 * Sets the remoteAddr value for this ServiceContext.
-	 * 
-	 * @param remoteAddr
-	 */
-	public void setRemoteAddr(java.lang.String remoteAddr) {
-		this.remoteAddr = remoteAddr;
-	}
-
-	/**
-	 * Gets the remoteHost value for this ServiceContext.
-	 * 
-	 * @return remoteHost
-	 */
-	public java.lang.String getRemoteHost() {
-		return remoteHost;
-	}
-
-	/**
-	 * Sets the remoteHost value for this ServiceContext.
-	 * 
-	 * @param remoteHost
-	 */
-	public void setRemoteHost(java.lang.String remoteHost) {
-		this.remoteHost = remoteHost;
-	}
-
-	/**
-	 * Gets the request value for this ServiceContext.
-	 * 
-	 * @return request
-	 */
-	public java.lang.Object getRequest() {
-		return request;
-	}
-
-	/**
-	 * Sets the request value for this ServiceContext.
-	 * 
-	 * @param request
-	 */
-	public void setRequest(java.lang.Object request) {
-		this.request = request;
-	}
-
-	/**
-	 * Gets the rootPortletId value for this ServiceContext.
-	 * 
-	 * @return rootPortletId
-	 */
-	public java.lang.String getRootPortletId() {
-		return rootPortletId;
-	}
-
-	/**
-	 * Sets the rootPortletId value for this ServiceContext.
-	 * 
-	 * @param rootPortletId
-	 */
-	public void setRootPortletId(java.lang.String rootPortletId) {
-		this.rootPortletId = rootPortletId;
-	}
-
-	/**
-	 * Gets the scopeGroupId value for this ServiceContext.
-	 * 
-	 * @return scopeGroupId
-	 */
-	public long getScopeGroupId() {
-		return scopeGroupId;
-	}
-
-	/**
-	 * Sets the scopeGroupId value for this ServiceContext.
-	 * 
-	 * @param scopeGroupId
-	 */
-	public void setScopeGroupId(long scopeGroupId) {
-		this.scopeGroupId = scopeGroupId;
-	}
-
-	/**
-	 * Gets the signedIn value for this ServiceContext.
-	 * 
-	 * @return signedIn
-	 */
-	public boolean isSignedIn() {
-		return signedIn;
-	}
-
-	/**
-	 * Sets the signedIn value for this ServiceContext.
-	 * 
-	 * @param signedIn
-	 */
-	public void setSignedIn(boolean signedIn) {
-		this.signedIn = signedIn;
-	}
-
-	/**
-	 * Gets the userAgent value for this ServiceContext.
-	 * 
-	 * @return userAgent
-	 */
-	public java.lang.String getUserAgent() {
-		return userAgent;
-	}
-
-	/**
-	 * Sets the userAgent value for this ServiceContext.
-	 * 
-	 * @param userAgent
-	 */
-	public void setUserAgent(java.lang.String userAgent) {
-		this.userAgent = userAgent;
-	}
-
-	/**
-	 * Gets the userDisplayURL value for this ServiceContext.
-	 * 
-	 * @return userDisplayURL
-	 */
-	public java.lang.String getUserDisplayURL() {
-		return userDisplayURL;
-	}
-
-	/**
-	 * Sets the userDisplayURL value for this ServiceContext.
-	 * 
-	 * @param userDisplayURL
-	 */
-	public void setUserDisplayURL(java.lang.String userDisplayURL) {
-		this.userDisplayURL = userDisplayURL;
-	}
-
-	/**
-	 * Gets the userId value for this ServiceContext.
-	 * 
-	 * @return userId
-	 */
-	public long getUserId() {
-		return userId;
-	}
-
-	/**
-	 * Sets the userId value for this ServiceContext.
-	 * 
-	 * @param userId
-	 */
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * Gets the uuid value for this ServiceContext.
-	 * 
-	 * @return uuid
-	 */
-	public java.lang.String getUuid() {
-		return uuid;
-	}
-
-	/**
-	 * Sets the uuid value for this ServiceContext.
-	 * 
-	 * @param uuid
-	 */
-	public void setUuid(java.lang.String uuid) {
-		this.uuid = uuid;
-	}
-
-	/**
-	 * Gets the workflowAction value for this ServiceContext.
-	 * 
-	 * @return workflowAction
-	 */
-	public int getWorkflowAction() {
-		return workflowAction;
-	}
-
-	/**
-	 * Sets the workflowAction value for this ServiceContext.
-	 * 
-	 * @param workflowAction
-	 */
-	public void setWorkflowAction(int workflowAction) {
-		this.workflowAction = workflowAction;
-	}
-
-	private java.lang.Object __equalsCalc = null;
 
 	public synchronized boolean equals(java.lang.Object obj) {
 		if (obj == null)
@@ -1050,7 +260,320 @@ public class ServiceContext implements java.io.Serializable {
 		return _equals;
 	}
 
-	private boolean __hashCodeCalc = false;
+	/**
+	 * Gets the assetCategoryIds value for this ServiceContext.
+	 * 
+	 * @return assetCategoryIds
+	 */
+	public long[] getAssetCategoryIds() {
+		return assetCategoryIds;
+	}
+
+	/**
+	 * Gets the assetLinkEntryIds value for this ServiceContext.
+	 * 
+	 * @return assetLinkEntryIds
+	 */
+	public long[] getAssetLinkEntryIds() {
+		return assetLinkEntryIds;
+	}
+
+	/**
+	 * Gets the assetTagNames value for this ServiceContext.
+	 * 
+	 * @return assetTagNames
+	 */
+	public java.lang.String[] getAssetTagNames() {
+		return assetTagNames;
+	}
+
+	/**
+	 * Gets the attributes value for this ServiceContext.
+	 * 
+	 * @return attributes
+	 */
+	public java.util.HashMap getAttributes() {
+		return attributes;
+	}
+
+	/**
+	 * Gets the command value for this ServiceContext.
+	 * 
+	 * @return command
+	 */
+	public java.lang.String getCommand() {
+		return command;
+	}
+
+	/**
+	 * Gets the communityPermissions value for this ServiceContext.
+	 * 
+	 * @return communityPermissions
+	 */
+	public java.lang.String[] getCommunityPermissions() {
+		return communityPermissions;
+	}
+
+	/**
+	 * Gets the companyId value for this ServiceContext.
+	 * 
+	 * @return companyId
+	 */
+	public long getCompanyId() {
+		return companyId;
+	}
+
+	/**
+	 * Gets the createDate value for this ServiceContext.
+	 * 
+	 * @return createDate
+	 */
+	public java.util.Calendar getCreateDate() {
+		return createDate;
+	}
+
+	/**
+	 * Gets the currentURL value for this ServiceContext.
+	 * 
+	 * @return currentURL
+	 */
+	public java.lang.String getCurrentURL() {
+		return currentURL;
+	}
+
+	/**
+	 * Gets the expandoBridgeAttributes value for this ServiceContext.
+	 * 
+	 * @return expandoBridgeAttributes
+	 */
+	public java.util.HashMap getExpandoBridgeAttributes() {
+		return expandoBridgeAttributes;
+	}
+
+	/**
+	 * Gets the formDate value for this ServiceContext.
+	 * 
+	 * @return formDate
+	 */
+	public java.util.Calendar getFormDate() {
+		return formDate;
+	}
+
+	/**
+	 * Gets the groupPermissions value for this ServiceContext.
+	 * 
+	 * @return groupPermissions
+	 */
+	public java.lang.String[] getGroupPermissions() {
+		return groupPermissions;
+	}
+
+	/**
+	 * Gets the guestOrUserId value for this ServiceContext.
+	 * 
+	 * @return guestOrUserId
+	 */
+	public long getGuestOrUserId() {
+		return guestOrUserId;
+	}
+
+	/**
+	 * Gets the guestPermissions value for this ServiceContext.
+	 * 
+	 * @return guestPermissions
+	 */
+	public java.lang.String[] getGuestPermissions() {
+		return guestPermissions;
+	}
+
+	/**
+	 * Gets the headers value for this ServiceContext.
+	 * 
+	 * @return headers
+	 */
+	public java.util.HashMap getHeaders() {
+		return headers;
+	}
+
+	/**
+	 * Gets the languageId value for this ServiceContext.
+	 * 
+	 * @return languageId
+	 */
+	public java.lang.String getLanguageId() {
+		return languageId;
+	}
+
+	/**
+	 * Gets the layoutFullURL value for this ServiceContext.
+	 * 
+	 * @return layoutFullURL
+	 */
+	public java.lang.String getLayoutFullURL() {
+		return layoutFullURL;
+	}
+
+	/**
+	 * Gets the layoutURL value for this ServiceContext.
+	 * 
+	 * @return layoutURL
+	 */
+	public java.lang.String getLayoutURL() {
+		return layoutURL;
+	}
+
+	/**
+	 * Gets the locale value for this ServiceContext.
+	 * 
+	 * @return locale
+	 */
+	public java.lang.Object getLocale() {
+		return locale;
+	}
+
+	/**
+	 * Gets the modifiedDate value for this ServiceContext.
+	 * 
+	 * @return modifiedDate
+	 */
+	public java.util.Calendar getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * Gets the pathMain value for this ServiceContext.
+	 * 
+	 * @return pathMain
+	 */
+	public java.lang.String getPathMain() {
+		return pathMain;
+	}
+
+	/**
+	 * Gets the plid value for this ServiceContext.
+	 * 
+	 * @return plid
+	 */
+	public long getPlid() {
+		return plid;
+	}
+
+	/**
+	 * Gets the portalURL value for this ServiceContext.
+	 * 
+	 * @return portalURL
+	 */
+	public java.lang.String getPortalURL() {
+		return portalURL;
+	}
+
+	/**
+	 * Gets the portletId value for this ServiceContext.
+	 * 
+	 * @return portletId
+	 */
+	public java.lang.String getPortletId() {
+		return portletId;
+	}
+
+	/**
+	 * Gets the portletPreferencesIds value for this ServiceContext.
+	 * 
+	 * @return portletPreferencesIds
+	 */
+	public PortletPreferencesIds getPortletPreferencesIds() {
+		return portletPreferencesIds;
+	}
+
+	/**
+	 * Gets the remoteAddr value for this ServiceContext.
+	 * 
+	 * @return remoteAddr
+	 */
+	public java.lang.String getRemoteAddr() {
+		return remoteAddr;
+	}
+
+	/**
+	 * Gets the remoteHost value for this ServiceContext.
+	 * 
+	 * @return remoteHost
+	 */
+	public java.lang.String getRemoteHost() {
+		return remoteHost;
+	}
+
+	/**
+	 * Gets the request value for this ServiceContext.
+	 * 
+	 * @return request
+	 */
+	public java.lang.Object getRequest() {
+		return request;
+	}
+
+	/**
+	 * Gets the rootPortletId value for this ServiceContext.
+	 * 
+	 * @return rootPortletId
+	 */
+	public java.lang.String getRootPortletId() {
+		return rootPortletId;
+	}
+
+	/**
+	 * Gets the scopeGroupId value for this ServiceContext.
+	 * 
+	 * @return scopeGroupId
+	 */
+	public long getScopeGroupId() {
+		return scopeGroupId;
+	}
+
+	/**
+	 * Gets the userAgent value for this ServiceContext.
+	 * 
+	 * @return userAgent
+	 */
+	public java.lang.String getUserAgent() {
+		return userAgent;
+	}
+
+	/**
+	 * Gets the userDisplayURL value for this ServiceContext.
+	 * 
+	 * @return userDisplayURL
+	 */
+	public java.lang.String getUserDisplayURL() {
+		return userDisplayURL;
+	}
+
+	/**
+	 * Gets the userId value for this ServiceContext.
+	 * 
+	 * @return userId
+	 */
+	public long getUserId() {
+		return userId;
+	}
+
+	/**
+	 * Gets the uuid value for this ServiceContext.
+	 * 
+	 * @return uuid
+	 */
+	public java.lang.String getUuid() {
+		return uuid;
+	}
+
+	/**
+	 * Gets the workflowAction value for this ServiceContext.
+	 * 
+	 * @return workflowAction
+	 */
+	public int getWorkflowAction() {
+		return workflowAction;
+	}
 
 	public synchronized int hashCode() {
 		if (__hashCodeCalc) {
@@ -1192,6 +715,483 @@ public class ServiceContext implements java.io.Serializable {
 		_hashCode += getWorkflowAction();
 		__hashCodeCalc = false;
 		return _hashCode;
+	}
+
+	/**
+	 * Gets the addCommunityPermissions value for this ServiceContext.
+	 * 
+	 * @return addCommunityPermissions
+	 */
+	public boolean isAddCommunityPermissions() {
+		return addCommunityPermissions;
+	}
+
+	/**
+	 * Gets the addGroupPermissions value for this ServiceContext.
+	 * 
+	 * @return addGroupPermissions
+	 */
+	public boolean isAddGroupPermissions() {
+		return addGroupPermissions;
+	}
+
+	/**
+	 * Gets the addGuestPermissions value for this ServiceContext.
+	 * 
+	 * @return addGuestPermissions
+	 */
+	public boolean isAddGuestPermissions() {
+		return addGuestPermissions;
+	}
+
+	/**
+	 * Gets the assetEntryVisible value for this ServiceContext.
+	 * 
+	 * @return assetEntryVisible
+	 */
+	public boolean isAssetEntryVisible() {
+		return assetEntryVisible;
+	}
+
+	/**
+	 * Gets the commandAdd value for this ServiceContext.
+	 * 
+	 * @return commandAdd
+	 */
+	public boolean isCommandAdd() {
+		return commandAdd;
+	}
+
+	/**
+	 * Gets the commandUpdate value for this ServiceContext.
+	 * 
+	 * @return commandUpdate
+	 */
+	public boolean isCommandUpdate() {
+		return commandUpdate;
+	}
+
+	/**
+	 * Gets the deriveDefaultPermissions value for this ServiceContext.
+	 * 
+	 * @return deriveDefaultPermissions
+	 */
+	public boolean isDeriveDefaultPermissions() {
+		return deriveDefaultPermissions;
+	}
+
+	/**
+	 * Gets the indexingEnabled value for this ServiceContext.
+	 * 
+	 * @return indexingEnabled
+	 */
+	public boolean isIndexingEnabled() {
+		return indexingEnabled;
+	}
+
+	/**
+	 * Gets the signedIn value for this ServiceContext.
+	 * 
+	 * @return signedIn
+	 */
+	public boolean isSignedIn() {
+		return signedIn;
+	}
+
+	/**
+	 * Sets the addCommunityPermissions value for this ServiceContext.
+	 * 
+	 * @param addCommunityPermissions
+	 */
+	public void setAddCommunityPermissions(boolean addCommunityPermissions) {
+		this.addCommunityPermissions = addCommunityPermissions;
+	}
+
+	/**
+	 * Sets the addGroupPermissions value for this ServiceContext.
+	 * 
+	 * @param addGroupPermissions
+	 */
+	public void setAddGroupPermissions(boolean addGroupPermissions) {
+		this.addGroupPermissions = addGroupPermissions;
+	}
+
+	/**
+	 * Sets the addGuestPermissions value for this ServiceContext.
+	 * 
+	 * @param addGuestPermissions
+	 */
+	public void setAddGuestPermissions(boolean addGuestPermissions) {
+		this.addGuestPermissions = addGuestPermissions;
+	}
+
+	/**
+	 * Sets the assetCategoryIds value for this ServiceContext.
+	 * 
+	 * @param assetCategoryIds
+	 */
+	public void setAssetCategoryIds(long[] assetCategoryIds) {
+		this.assetCategoryIds = assetCategoryIds;
+	}
+
+	/**
+	 * Sets the assetEntryVisible value for this ServiceContext.
+	 * 
+	 * @param assetEntryVisible
+	 */
+	public void setAssetEntryVisible(boolean assetEntryVisible) {
+		this.assetEntryVisible = assetEntryVisible;
+	}
+
+	/**
+	 * Sets the assetLinkEntryIds value for this ServiceContext.
+	 * 
+	 * @param assetLinkEntryIds
+	 */
+	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
+		this.assetLinkEntryIds = assetLinkEntryIds;
+	}
+
+	/**
+	 * Sets the assetTagNames value for this ServiceContext.
+	 * 
+	 * @param assetTagNames
+	 */
+	public void setAssetTagNames(java.lang.String[] assetTagNames) {
+		this.assetTagNames = assetTagNames;
+	}
+
+	/**
+	 * Sets the attributes value for this ServiceContext.
+	 * 
+	 * @param attributes
+	 */
+	public void setAttributes(java.util.HashMap attributes) {
+		this.attributes = attributes;
+	}
+
+	/**
+	 * Sets the command value for this ServiceContext.
+	 * 
+	 * @param command
+	 */
+	public void setCommand(java.lang.String command) {
+		this.command = command;
+	}
+
+	/**
+	 * Sets the commandAdd value for this ServiceContext.
+	 * 
+	 * @param commandAdd
+	 */
+	public void setCommandAdd(boolean commandAdd) {
+		this.commandAdd = commandAdd;
+	}
+
+	/**
+	 * Sets the commandUpdate value for this ServiceContext.
+	 * 
+	 * @param commandUpdate
+	 */
+	public void setCommandUpdate(boolean commandUpdate) {
+		this.commandUpdate = commandUpdate;
+	}
+
+	/**
+	 * Sets the communityPermissions value for this ServiceContext.
+	 * 
+	 * @param communityPermissions
+	 */
+	public void setCommunityPermissions(java.lang.String[] communityPermissions) {
+		this.communityPermissions = communityPermissions;
+	}
+
+	/**
+	 * Sets the companyId value for this ServiceContext.
+	 * 
+	 * @param companyId
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * Sets the createDate value for this ServiceContext.
+	 * 
+	 * @param createDate
+	 */
+	public void setCreateDate(java.util.Calendar createDate) {
+		this.createDate = createDate;
+	}
+
+	/**
+	 * Sets the currentURL value for this ServiceContext.
+	 * 
+	 * @param currentURL
+	 */
+	public void setCurrentURL(java.lang.String currentURL) {
+		this.currentURL = currentURL;
+	}
+
+	/**
+	 * Sets the deriveDefaultPermissions value for this ServiceContext.
+	 * 
+	 * @param deriveDefaultPermissions
+	 */
+	public void setDeriveDefaultPermissions(boolean deriveDefaultPermissions) {
+		this.deriveDefaultPermissions = deriveDefaultPermissions;
+	}
+
+	/**
+	 * Sets the expandoBridgeAttributes value for this ServiceContext.
+	 * 
+	 * @param expandoBridgeAttributes
+	 */
+	public void setExpandoBridgeAttributes(java.util.HashMap expandoBridgeAttributes) {
+		this.expandoBridgeAttributes = expandoBridgeAttributes;
+	}
+
+	/**
+	 * Sets the formDate value for this ServiceContext.
+	 * 
+	 * @param formDate
+	 */
+	public void setFormDate(java.util.Calendar formDate) {
+		this.formDate = formDate;
+	}
+
+	/**
+	 * Sets the groupPermissions value for this ServiceContext.
+	 * 
+	 * @param groupPermissions
+	 */
+	public void setGroupPermissions(java.lang.String[] groupPermissions) {
+		this.groupPermissions = groupPermissions;
+	}
+
+	/**
+	 * Sets the guestOrUserId value for this ServiceContext.
+	 * 
+	 * @param guestOrUserId
+	 */
+	public void setGuestOrUserId(long guestOrUserId) {
+		this.guestOrUserId = guestOrUserId;
+	}
+
+	/**
+	 * Sets the guestPermissions value for this ServiceContext.
+	 * 
+	 * @param guestPermissions
+	 */
+	public void setGuestPermissions(java.lang.String[] guestPermissions) {
+		this.guestPermissions = guestPermissions;
+	}
+
+	/**
+	 * Sets the headers value for this ServiceContext.
+	 * 
+	 * @param headers
+	 */
+	public void setHeaders(java.util.HashMap headers) {
+		this.headers = headers;
+	}
+
+	/**
+	 * Sets the indexingEnabled value for this ServiceContext.
+	 * 
+	 * @param indexingEnabled
+	 */
+	public void setIndexingEnabled(boolean indexingEnabled) {
+		this.indexingEnabled = indexingEnabled;
+	}
+
+	/**
+	 * Sets the languageId value for this ServiceContext.
+	 * 
+	 * @param languageId
+	 */
+	public void setLanguageId(java.lang.String languageId) {
+		this.languageId = languageId;
+	}
+
+	/**
+	 * Sets the layoutFullURL value for this ServiceContext.
+	 * 
+	 * @param layoutFullURL
+	 */
+	public void setLayoutFullURL(java.lang.String layoutFullURL) {
+		this.layoutFullURL = layoutFullURL;
+	}
+
+	/**
+	 * Sets the layoutURL value for this ServiceContext.
+	 * 
+	 * @param layoutURL
+	 */
+	public void setLayoutURL(java.lang.String layoutURL) {
+		this.layoutURL = layoutURL;
+	}
+
+	/**
+	 * Sets the locale value for this ServiceContext.
+	 * 
+	 * @param locale
+	 */
+	public void setLocale(java.lang.Object locale) {
+		this.locale = locale;
+	}
+
+	/**
+	 * Sets the modifiedDate value for this ServiceContext.
+	 * 
+	 * @param modifiedDate
+	 */
+	public void setModifiedDate(java.util.Calendar modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * Sets the pathMain value for this ServiceContext.
+	 * 
+	 * @param pathMain
+	 */
+	public void setPathMain(java.lang.String pathMain) {
+		this.pathMain = pathMain;
+	}
+
+	/**
+	 * Sets the plid value for this ServiceContext.
+	 * 
+	 * @param plid
+	 */
+	public void setPlid(long plid) {
+		this.plid = plid;
+	}
+
+	/**
+	 * Sets the portalURL value for this ServiceContext.
+	 * 
+	 * @param portalURL
+	 */
+	public void setPortalURL(java.lang.String portalURL) {
+		this.portalURL = portalURL;
+	}
+
+	/**
+	 * Sets the portletId value for this ServiceContext.
+	 * 
+	 * @param portletId
+	 */
+	public void setPortletId(java.lang.String portletId) {
+		this.portletId = portletId;
+	}
+
+	/**
+	 * Sets the portletPreferencesIds value for this ServiceContext.
+	 * 
+	 * @param portletPreferencesIds
+	 */
+	public void setPortletPreferencesIds(PortletPreferencesIds portletPreferencesIds) {
+		this.portletPreferencesIds = portletPreferencesIds;
+	}
+
+	/**
+	 * Sets the remoteAddr value for this ServiceContext.
+	 * 
+	 * @param remoteAddr
+	 */
+	public void setRemoteAddr(java.lang.String remoteAddr) {
+		this.remoteAddr = remoteAddr;
+	}
+
+	/**
+	 * Sets the remoteHost value for this ServiceContext.
+	 * 
+	 * @param remoteHost
+	 */
+	public void setRemoteHost(java.lang.String remoteHost) {
+		this.remoteHost = remoteHost;
+	}
+
+	/**
+	 * Sets the request value for this ServiceContext.
+	 * 
+	 * @param request
+	 */
+	public void setRequest(java.lang.Object request) {
+		this.request = request;
+	}
+
+	/**
+	 * Sets the rootPortletId value for this ServiceContext.
+	 * 
+	 * @param rootPortletId
+	 */
+	public void setRootPortletId(java.lang.String rootPortletId) {
+		this.rootPortletId = rootPortletId;
+	}
+
+	/**
+	 * Sets the scopeGroupId value for this ServiceContext.
+	 * 
+	 * @param scopeGroupId
+	 */
+	public void setScopeGroupId(long scopeGroupId) {
+		this.scopeGroupId = scopeGroupId;
+	}
+
+	/**
+	 * Sets the signedIn value for this ServiceContext.
+	 * 
+	 * @param signedIn
+	 */
+	public void setSignedIn(boolean signedIn) {
+		this.signedIn = signedIn;
+	}
+
+	/**
+	 * Sets the userAgent value for this ServiceContext.
+	 * 
+	 * @param userAgent
+	 */
+	public void setUserAgent(java.lang.String userAgent) {
+		this.userAgent = userAgent;
+	}
+
+	/**
+	 * Sets the userDisplayURL value for this ServiceContext.
+	 * 
+	 * @param userDisplayURL
+	 */
+	public void setUserDisplayURL(java.lang.String userDisplayURL) {
+		this.userDisplayURL = userDisplayURL;
+	}
+
+	/**
+	 * Sets the userId value for this ServiceContext.
+	 * 
+	 * @param userId
+	 */
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * Sets the uuid value for this ServiceContext.
+	 * 
+	 * @param uuid
+	 */
+	public void setUuid(java.lang.String uuid) {
+		this.uuid = uuid;
+	}
+
+	/**
+	 * Sets the workflowAction value for this ServiceContext.
+	 * 
+	 * @param workflowAction
+	 */
+	public void setWorkflowAction(int workflowAction) {
+		this.workflowAction = workflowAction;
 	}
 
 	public String toJson() throws JsonProcessingException {

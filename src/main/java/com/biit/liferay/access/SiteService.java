@@ -34,6 +34,49 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 		groupPool = new GroupPool<Long, Long>();
 	}
 
+	/**
+	 * Add a site to the database. The companyId is set by the serviceContext. If the service context is null, probably
+	 * will be used the service context of the user used for connecting to the webservices?
+	 * 
+	 * @param name
+	 * @param description
+	 * @param type
+	 * @param friendlyURL
+	 * @return
+	 * @throws NotConnectedToWebServiceException
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws AuthenticationRequired
+	 * @throws WebServiceAccessError
+	 */
+	public IGroup<Long> addSite(String name, String description, int type, String friendlyURL)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
+		if (name != null) {
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("name", name));
+			params.add(new BasicNameValuePair("description", description));
+			params.add(new BasicNameValuePair("type", type + ""));
+			params.add(new BasicNameValuePair("friendlyURL", friendlyURL));
+			params.add(new BasicNameValuePair("site", "1"));
+			params.add(new BasicNameValuePair("active", "1"));
+			params.add(new BasicNameValuePair("-serviceContext", null));
+
+			String result = getHttpResponse("group/add-group", params);
+			IGroup<Long> site = null;
+			if (result != null) {
+				// A Simple JSON Response Read
+				site = decodeFromJson(result, Site.class);
+				groupPool.addGroup(site);
+				LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' added.");
+				return site;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Site> objectClass) throws JsonParseException,
 			JsonMappingException, IOException {
@@ -41,6 +84,22 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 		});
 
 		return myObjects;
+	}
+
+	public boolean deleteSite(Site site) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired {
+		if (site != null) {
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("groupId", Long.toString(site.getGroupId())));
+
+			getHttpResponse("group/delete-group", params);
+			groupPool.removeGroupsById(site.getId());
+			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getName() + "' deleted.");
+			return true;
+		}
+		return false;
 	}
 
 	public IGroup<Long> getSite(Company company, String siteName) throws NotConnectedToWebServiceException,
@@ -123,65 +182,6 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Add a site to the database. The companyId is set by the serviceContext. If the service context is null, probably
-	 * will be used the service context of the user used for connecting to the webservices?
-	 * 
-	 * @param name
-	 * @param description
-	 * @param type
-	 * @param friendlyURL
-	 * @return
-	 * @throws NotConnectedToWebServiceException
-	 * @throws ClientProtocolException
-	 * @throws IOException
-	 * @throws AuthenticationRequired
-	 * @throws WebServiceAccessError
-	 */
-	public IGroup<Long> addSite(String name, String description, int type, String friendlyURL)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
-		if (name != null) {
-			checkConnection();
-
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("name", name));
-			params.add(new BasicNameValuePair("description", description));
-			params.add(new BasicNameValuePair("type", type + ""));
-			params.add(new BasicNameValuePair("friendlyURL", friendlyURL));
-			params.add(new BasicNameValuePair("site", "1"));
-			params.add(new BasicNameValuePair("active", "1"));
-			params.add(new BasicNameValuePair("-serviceContext", null));
-
-			String result = getHttpResponse("group/add-group", params);
-			IGroup<Long> site = null;
-			if (result != null) {
-				// A Simple JSON Response Read
-				site = decodeFromJson(result, Site.class);
-				groupPool.addGroup(site);
-				LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' added.");
-				return site;
-			}
-		}
-		return null;
-	}
-
-	public boolean deleteSite(Site site) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired {
-		if (site != null) {
-			checkConnection();
-
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("groupId", Long.toString(site.getGroupId())));
-
-			getHttpResponse("group/delete-group", params);
-			groupPool.removeGroupsById(site.getId());
-			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getName() + "' deleted.");
-			return true;
-		}
-		return false;
 	}
 
 }

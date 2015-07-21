@@ -58,6 +58,115 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
+	 * Gets the companyId value for this UserGroupSoap.
+	 * 
+	 * @return companyId
+	 */
+	public long getCompanyId() {
+		return companyId;
+	}
+
+	/**
+	 * Gets the createDate value for this UserGroupSoap.
+	 * 
+	 * @return createDate
+	 */
+	public java.util.Calendar getCreateDate() {
+		return createDate;
+	}
+
+	/**
+	 * Gets the description value for this UserGroupSoap.
+	 * 
+	 * @return description
+	 */
+	public java.lang.String getDescription() {
+		return description;
+	}
+
+	@Override
+	public Long getId() {
+		return getUserGroupId();
+	}
+
+	/**
+	 * Gets the modifiedDate value for this UserGroupSoap.
+	 * 
+	 * @return modifiedDate
+	 */
+	public java.util.Calendar getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * Gets the name value for this UserGroupSoap.
+	 * 
+	 * @return name
+	 */
+	public java.lang.String getName() {
+		return name;
+	}
+
+	/**
+	 * Gets the parentUserGroupId value for this UserGroupSoap.
+	 * 
+	 * @return parentUserGroupId
+	 */
+	public long getParentUserGroupId() {
+		return parentUserGroupId;
+	}
+
+	/**
+	 * Gets the primaryKey value for this UserGroupSoap.
+	 * 
+	 * @return primaryKey
+	 */
+	public long getPrimaryKey() {
+		return primaryKey;
+	}
+
+	@Override
+	public String getUniqueName() {
+		return getName();
+	}
+
+	/**
+	 * Gets the userGroupId value for this UserGroupSoap.
+	 * 
+	 * @return userGroupId
+	 */
+	public long getUserGroupId() {
+		return userGroupId;
+	}
+
+	/**
+	 * Gets the userId value for this UserGroupSoap.
+	 * 
+	 * @return userId
+	 */
+	public long getUserId() {
+		return userId;
+	}
+
+	/**
+	 * Gets the userName value for this UserGroupSoap.
+	 * 
+	 * @return userName
+	 */
+	public java.lang.String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * Gets the uuid value for this UserGroupSoap.
+	 * 
+	 * @return uuid
+	 */
+	public java.lang.String getUuid() {
+		return uuid;
+	}
+
+	/**
 	 * Gets the addedByLDAPImport value for this UserGroupSoap.
 	 * 
 	 * @return addedByLDAPImport
@@ -76,30 +185,12 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the companyId value for this UserGroupSoap.
-	 * 
-	 * @return companyId
-	 */
-	public long getCompanyId() {
-		return companyId;
-	}
-
-	/**
 	 * Sets the companyId value for this UserGroupSoap.
 	 * 
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
-	}
-
-	/**
-	 * Gets the createDate value for this UserGroupSoap.
-	 * 
-	 * @return createDate
-	 */
-	public java.util.Calendar getCreateDate() {
-		return createDate;
 	}
 
 	/**
@@ -112,30 +203,12 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the description value for this UserGroupSoap.
-	 * 
-	 * @return description
-	 */
-	public java.lang.String getDescription() {
-		return description;
-	}
-
-	/**
 	 * Sets the description value for this UserGroupSoap.
 	 * 
 	 * @param description
 	 */
 	public void setDescription(java.lang.String description) {
 		this.description = description;
-	}
-
-	/**
-	 * Gets the modifiedDate value for this UserGroupSoap.
-	 * 
-	 * @return modifiedDate
-	 */
-	public java.util.Calendar getModifiedDate() {
-		return modifiedDate;
 	}
 
 	/**
@@ -148,30 +221,12 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the name value for this UserGroupSoap.
-	 * 
-	 * @return name
-	 */
-	public java.lang.String getName() {
-		return name;
-	}
-
-	/**
 	 * Sets the name value for this UserGroupSoap.
 	 * 
 	 * @param name
 	 */
 	public void setName(java.lang.String name) {
 		this.name = name;
-	}
-
-	/**
-	 * Gets the parentUserGroupId value for this UserGroupSoap.
-	 * 
-	 * @return parentUserGroupId
-	 */
-	public long getParentUserGroupId() {
-		return parentUserGroupId;
 	}
 
 	/**
@@ -184,30 +239,12 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the primaryKey value for this UserGroupSoap.
-	 * 
-	 * @return primaryKey
-	 */
-	public long getPrimaryKey() {
-		return primaryKey;
-	}
-
-	/**
 	 * Sets the primaryKey value for this UserGroupSoap.
 	 * 
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
 		this.primaryKey = primaryKey;
-	}
-
-	/**
-	 * Gets the userGroupId value for this UserGroupSoap.
-	 * 
-	 * @return userGroupId
-	 */
-	public long getUserGroupId() {
-		return userGroupId;
 	}
 
 	/**
@@ -220,15 +257,6 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the userId value for this UserGroupSoap.
-	 * 
-	 * @return userId
-	 */
-	public long getUserId() {
-		return userId;
-	}
-
-	/**
 	 * Sets the userId value for this UserGroupSoap.
 	 * 
 	 * @param userId
@@ -238,30 +266,12 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	/**
-	 * Gets the userName value for this UserGroupSoap.
-	 * 
-	 * @return userName
-	 */
-	public java.lang.String getUserName() {
-		return userName;
-	}
-
-	/**
 	 * Sets the userName value for this UserGroupSoap.
 	 * 
 	 * @param userName
 	 */
 	public void setUserName(java.lang.String userName) {
 		this.userName = userName;
-	}
-
-	/**
-	 * Gets the uuid value for this UserGroupSoap.
-	 * 
-	 * @return uuid
-	 */
-	public java.lang.String getUuid() {
-		return uuid;
 	}
 
 	/**
@@ -276,15 +286,5 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	@Override
-	public Long getId() {
-		return getUserGroupId();
-	}
-
-	@Override
-	public String getUniqueName() {
-		return getName();
 	}
 }

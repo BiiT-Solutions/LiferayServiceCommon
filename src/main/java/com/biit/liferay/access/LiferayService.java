@@ -5,18 +5,16 @@ import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 public interface LiferayService {
 
 	/**
-	 * Check if the user and password has been successfully inserted before.
+	 * Starts the secure communication with the server to obtain the JSON services.
 	 * 
-	 * @return
+	 * @param address
+	 * @param port
+	 * @param protocol
+	 * @param loginUser
+	 * @param password
 	 */
-	boolean isNotConnected();
-
-	/**
-	 * Connects to Liferay webservice using the liferay.conf file.
-	 * 
-	 * @throws ServiceException
-	 */
-	void serverConnection();
+	void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
+			String authenticationToken, String loginUser, String password);
 
 	/**
 	 * Checks if a connection has been established.
@@ -31,16 +29,18 @@ public interface LiferayService {
 	void disconnect();
 
 	/**
-	 * Starts the secure communication with the server to obtain the JSON services.
+	 * Check if the user and password has been successfully inserted before.
 	 * 
-	 * @param address
-	 * @param port
-	 * @param protocol
-	 * @param loginUser
-	 * @param password
+	 * @return
 	 */
-	void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
-			String authenticationToken, String loginUser, String password);
+	boolean isNotConnected();
+
+	/**
+	 * Connects to Liferay webservice using the liferay.conf file.
+	 * 
+	 * @throws ServiceException
+	 */
+	void serverConnection();
 
 	/**
 	 * Starts the secure communication with the server to obtain the JSON services.

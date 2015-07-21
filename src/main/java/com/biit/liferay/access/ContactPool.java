@@ -16,9 +16,11 @@ public class ContactPool {
 		reset();
 	}
 
-	public void reset() {
-		time = new HashMap<Long, Long>();
-		contacts = new HashMap<Long, Contact>();
+	public void addContact(Contact contact) {
+		if (contact != null) {
+			time.put(contact.getContactId(), System.currentTimeMillis());
+			contacts.put(contact.getUserId(), contact);
+		}
 	}
 
 	public Contact getContact(long contactId) {
@@ -42,16 +44,14 @@ public class ContactPool {
 		return null;
 	}
 
-	public void addContact(Contact contact) {
-		if (contact != null) {
-			time.put(contact.getContactId(), System.currentTimeMillis());
-			contacts.put(contact.getUserId(), contact);
-		}
-	}
-
 	private void removeContact(long contactId) {
 		time.remove(contactId);
 		contacts.remove(contactId);
+	}
+
+	public void reset() {
+		time = new HashMap<Long, Long>();
+		contacts = new HashMap<Long, Contact>();
 	}
 
 }

@@ -13,10 +13,6 @@ public enum PasswordEncryptationAlgorithmType {
 		this.tag = tag;
 	}
 
-	public String getTag() {
-		return tag;
-	}
-
 	public static PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithms(String tag) {
 		for (PasswordEncryptationAlgorithmType algorithm : values()) {
 			if (algorithm.getTag().equals(tag.toLowerCase())) {
@@ -24,6 +20,10 @@ public enum PasswordEncryptationAlgorithmType {
 			}
 		}
 		return PasswordEncryptationAlgorithmType.SHA;
+	}
+
+	public String getTag() {
+		return tag;
 	}
 
 }
