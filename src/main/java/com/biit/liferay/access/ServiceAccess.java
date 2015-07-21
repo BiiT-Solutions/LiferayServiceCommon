@@ -30,11 +30,11 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONValue;
 
-import com.biit.liferay.access.exceptions.AuthenticationRequired;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.configuration.ConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
+import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
