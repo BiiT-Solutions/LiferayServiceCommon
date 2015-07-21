@@ -4,7 +4,7 @@
 	<groupId>com.biit.liferay</groupId>
 	<artifactId>liferay-service-common</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.3-SNAPSHOT</version>
+	<version>0.7.3</version>
 	<name>Liferay Client Common Utils</name>
 	<description>Basic functionality for any Liferay client</description>
 
@@ -24,7 +24,7 @@
 	<scm>
 		<connection>scm:git:dev.biit-solutions.com:LiferayServiceCommon.git</connection>
 		<developerConnection>scm:git:dev.biit-solutions.com:LiferayServiceCommon.git</developerConnection>
-		<tag>liferay-service-common</tag>
+		<tag>liferay-service-common-0.7.3</tag>
 	</scm>
 
 	<properties>
