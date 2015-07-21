@@ -384,6 +384,7 @@ public class User implements java.io.Serializable, IUser<Long> {
 		return ldapServerId;
 	}
 
+	@Override
 	public Locale getLocale() {
 		return Locale.forLanguageTag(getLanguageId().replace("_", "-"));
 	}
