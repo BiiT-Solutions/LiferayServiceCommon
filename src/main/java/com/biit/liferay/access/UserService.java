@@ -431,7 +431,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	private void updateContactInformation(IUser<Long> user) throws ClientProtocolException,
 			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
 		Contact contact = contactService.getContact((User) user);
-		((Contact) user).setBirthday(contact.getBirthday());
-		((Contact) user).setMale(contact.isMale());
+		((User) user).setBirthday(contact.getBirthday());
+		((User) user).setMale(contact.isMale());
 	}
 }
