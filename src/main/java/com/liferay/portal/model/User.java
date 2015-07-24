@@ -276,6 +276,7 @@ public class User implements java.io.Serializable, IUser<Long> {
 	 * 
 	 * @return firstName
 	 */
+	@Override
 	public java.lang.String getFirstName() {
 		return firstName;
 	}
@@ -371,6 +372,7 @@ public class User implements java.io.Serializable, IUser<Long> {
 	 * 
 	 * @return lastName
 	 */
+	@Override
 	public java.lang.String getLastName() {
 		return lastName;
 	}

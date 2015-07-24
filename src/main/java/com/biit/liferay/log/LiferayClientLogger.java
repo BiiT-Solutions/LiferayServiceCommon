@@ -3,10 +3,11 @@ package com.biit.liferay.log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+
 import org.apache.log4j.Logger;
 
 public class LiferayClientLogger {
-	private static final Logger logger = Logger.getLogger("org.biit.liferay.client");
+	private static final Logger logger = Logger.getLogger(LiferayClientLogger.class);
 
 	private LiferayClientLogger() {
 	}
