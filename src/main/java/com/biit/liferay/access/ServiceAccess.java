@@ -45,6 +45,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  * Common methods for accessing to a Liferay web service.
  */
 public abstract class ServiceAccess<Type, LiferayType extends Type> implements LiferayService {
+	public static final String LIFERAY_ORGANIZATION_GROUP_SUFIX = " LFR_ORGANIZATION";
 	private final static String NOT_AUTHORIZED_ERROR = "{\"exception\":\"Authenticated access required\"}";
 	private final static String UNRECOGNIZED_FIELD_ERROR = "Unrecognized field \"exception\"";
 	private HttpClient httpClientWithCredentials = null;
