@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.pool.GroupPool;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -21,7 +22,10 @@ import com.liferay.portal.model.Group;
 
 public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
 
+	private GroupPool<Long, Long> groupPool;
+
 	public GroupService() {
+		groupPool = new GroupPool<Long, Long>();
 	}
 
 	@Override
@@ -35,6 +39,13 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
 	public IGroup<Long> getGroup(Long companyId, String groupName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && groupName != null) {
+
+			Set<IGroup<Long>> groups = groupPool.getElementsByTag(groupName);
+			// Only one group by name.
+			if (groups != null && groups.size() > 0) {
+				return groups.iterator().next();
+			}
+
 			// Look up user in the liferay.
 			checkConnection();
 
@@ -46,10 +57,15 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				IGroup<Long> group = decodeFromJson(result, Group.class);
+				groupPool.addElementByTag(group, groupName);
 				return group;
 			}
 		}
 		return null;
+	}
+
+	public void reset() {
+		groupPool.reset();
 	}
 
 }

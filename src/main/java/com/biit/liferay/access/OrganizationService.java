@@ -155,8 +155,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public void addUsersToOrganization(List<IUser<Long>> users, IGroup<Long> organization) throws ClientProtocolException,
-			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+	public void addUsersToOrganization(List<IUser<Long>> users, IGroup<Long> organization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		if (users != null && organization != null && !users.isEmpty()) {
 			// Look up user in the liferay.
 			checkConnection();
@@ -327,7 +327,6 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			}
 		}
 		return null;
-
 	}
 
 	/**
