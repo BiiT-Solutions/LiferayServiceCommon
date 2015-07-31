@@ -233,9 +233,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				users = decodeListFromJson(result, User.class);
-				for (IUser<Long> user : users) {
-					groupPool.addUserToGroup(user, company);
-				}
+				groupPool.addGroupUsers(company.getId(), users);
 				return users;
 			}
 		}

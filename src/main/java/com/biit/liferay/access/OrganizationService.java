@@ -453,9 +453,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		if (result != null) {
 			// A Simple JSON Response Read
 			users = (new UserService()).decodeListFromJson(result, User.class);
-			for (IUser<Long> user : users) {
-				organizationPool.addUserToGroup(user, organization);
-			}
+			organizationPool.addGroupUsers(organization.getId(), users);
 			return users;
 		}
 		return null;
