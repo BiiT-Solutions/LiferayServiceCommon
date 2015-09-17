@@ -41,6 +41,7 @@
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
 		<project.scm.id>git</project.scm.id>
+		<log4j.version>1.2.17</log4j.version>
 		<!-- BiiT dependencies -->
 		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 		<user-manager.version>[0.1,0.2)</user-manager.version>
@@ -56,7 +57,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
