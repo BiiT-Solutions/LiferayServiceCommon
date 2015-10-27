@@ -23,7 +23,8 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Site;
 
 /**
- * Site service is almost the same that Group Service. Liferay stores Sites as Groups.
+ * Site service is almost the same that Group Service. Liferay stores Sites as
+ * Groups.
  * 
  */
 public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
@@ -35,8 +36,9 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	}
 
 	/**
-	 * Add a site to the database. The companyId is set by the serviceContext. If the service context is null, probably
-	 * will be used the service context of the user used for connecting to the webservices?
+	 * Add a site to the database. The companyId is set by the serviceContext.
+	 * If the service context is null, probably will be used the service context
+	 * of the user used for connecting to the webservices?
 	 * 
 	 * @param name
 	 * @param description
@@ -49,9 +51,8 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IGroup<Long> addSite(String name, String description, int type, String friendlyURL)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public IGroup<Long> addSite(String name, String description, int type, String friendlyURL) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (name != null) {
 			checkConnection();
 
@@ -78,16 +79,14 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	}
 
 	@Override
-	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Site> objectClass) throws JsonParseException,
-			JsonMappingException, IOException {
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Site> objectClass) throws JsonParseException, JsonMappingException, IOException {
 		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Site>>() {
 		});
 
 		return myObjects;
 	}
 
-	public boolean deleteSite(Site site) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired {
+	public boolean deleteSite(Site site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		if (site != null) {
 			checkConnection();
 
@@ -102,16 +101,16 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 		return false;
 	}
 
-	public IGroup<Long> getSite(Company company, String siteName) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getSite(IGroup<Long> company, String siteName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
 		if (company != null) {
-			return getSite(company.getCompanyId(), siteName);
+			return getSite(company.getId(), siteName);
 		}
 		return null;
 	}
 
-	public IGroup<Long> getSite(Long companyId, String siteName) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getSite(Long companyId, String siteName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && siteName != null) {
 			// Look up user in the pool.
 			IGroup<Long> site = null;
@@ -140,18 +139,16 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 		return null;
 	}
 
-	public IGroup<Long> getSiteByFriendlyUrl(Company company, String friendlyUrl)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public IGroup<Long> getSiteByFriendlyUrl(Company company, String friendlyUrl) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, WebServiceAccessError {
 		if (company != null) {
 			return getSiteByFriendlyUrl(company.getCompanyId(), friendlyUrl);
 		}
 		return null;
 	}
 
-	public IGroup<Long> getSiteByFriendlyUrl(Long companyId, String friendlyUrl)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public IGroup<Long> getSiteByFriendlyUrl(Long companyId, String friendlyUrl) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && friendlyUrl != null) {
 			IGroup<Long> site = null;
 			// Look up user in the pool.
