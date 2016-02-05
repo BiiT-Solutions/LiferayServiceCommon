@@ -14,7 +14,7 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 	private static final String ID_USER = "user";
 	private static final String ID_PASSWORD = "password";
 	private static final String ID_VIRTUAL_HOST = "virtualhost";
-	private static final String ID_SITE = "site";
+	private static final String ID_SITE = "defaultSite";
 	private static final String ID_WEBAPP = "webapp";
 	private static final String ID_PORT = "port";
 	private static final String ID_PASSWORD_ALGORITHM = "passwordEncriptationAlgorithm";
