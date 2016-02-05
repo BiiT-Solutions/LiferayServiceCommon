@@ -6,14 +6,15 @@ import com.biit.utils.configuration.PropertiesSourceFile;
 import com.biit.utils.configuration.SystemVariablePropertiesSourceFile;
 import com.biit.utils.configuration.exceptions.PropertyNotFoundException;
 
-public class ConfigurationReader extends com.biit.utils.configuration.ConfigurationReader{
-	
+public class ConfigurationReader extends com.biit.utils.configuration.ConfigurationReader {
+
 	private static final String DATABASE_CONFIG_FILE = "liferay.conf";
 	private static final String LIFERAY_SYSTEM_VARIABLE_CONFIG = "LIFERAY_CONFIG";
 
 	private static final String ID_USER = "user";
 	private static final String ID_PASSWORD = "password";
 	private static final String ID_VIRTUAL_HOST = "virtualhost";
+	private static final String ID_SITE = "site";
 	private static final String ID_WEBAPP = "webapp";
 	private static final String ID_PORT = "port";
 	private static final String ID_PASSWORD_ALGORITHM = "passwordEncriptationAlgorithm";
@@ -24,21 +25,23 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 	private static final String DEFAULT_USER = "user";
 	private static final String DEFAULT_PASSWORD = "pass";
 	private static final String DEFAULT_VIRTUAL_HOST = "localhost";
+	private static final String DEFAULT_SITE = "Guest";
 	private static final String DEFAULT_WEBAPP = "";
 	private static final String DEFAULT_PORT = "8080";
 	private static final String DEFAULT_PASSWORD_ALGORITHM = "PBKDF2";
 	private static final String DEFAULT_WEBSERVICES_PATH = "api/jsonws/";
 	private static final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
 	private static final String DEFAULT_AUTH_TOKEN = "";
-	
+
 	private static ConfigurationReader instance;
-	
+
 	private ConfigurationReader() {
 		super();
 
 		addProperty(ID_USER, DEFAULT_USER);
 		addProperty(ID_PASSWORD, DEFAULT_PASSWORD);
 		addProperty(ID_VIRTUAL_HOST, DEFAULT_VIRTUAL_HOST);
+		addProperty(ID_SITE, DEFAULT_SITE);
 		addProperty(ID_WEBAPP, DEFAULT_WEBAPP);
 		addProperty(ID_PORT, DEFAULT_PORT);
 		addProperty(ID_PASSWORD_ALGORITHM, DEFAULT_PASSWORD_ALGORITHM);
@@ -47,11 +50,12 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 		addProperty(ID_AUTH_TOKEN, DEFAULT_AUTH_TOKEN);
 
 		addPropertiesSource(new PropertiesSourceFile(DATABASE_CONFIG_FILE));
-		addPropertiesSource(new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, DATABASE_CONFIG_FILE));
+		addPropertiesSource(
+				new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, DATABASE_CONFIG_FILE));
 
 		readConfigurations();
 	}
-	
+
 	public static ConfigurationReader getInstance() {
 		if (instance == null) {
 			synchronized (ConfigurationReader.class) {
@@ -66,7 +70,7 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 	public String getAuthToken() {
 		return getPropertyLogException(ID_AUTH_TOKEN);
 	}
-	
+
 	public String getConnectionPort() {
 		return getPropertyLogException(ID_PORT);
 	}
@@ -80,7 +84,8 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 	}
 
 	public PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithm() {
-		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
+		return PasswordEncryptationAlgorithmType
+				.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
 	}
 
 	private String getPropertyLogException(String propertyId) {
@@ -98,6 +103,10 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 
 	public String getVirtualHost() {
 		return getPropertyLogException(ID_VIRTUAL_HOST);
+	}
+
+	public String getSite() {
+		return getPropertyLogException(ID_SITE);
 	}
 
 	public String getWebAppName() {
