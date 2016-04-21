@@ -32,7 +32,7 @@ import org.json.simple.JSONValue;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
-import com.biit.liferay.configuration.ConfigurationReader;
+import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -263,13 +263,13 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	@Override
 	public void serverConnection() {
 		// Read user and password.
-		String loginUser = ConfigurationReader.getInstance().getUser();
-		String password = ConfigurationReader.getInstance().getPassword();
-		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
-		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
-		String address = ConfigurationReader.getInstance().getVirtualHost();
-		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
-		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
+		String loginUser = LiferayConfigurationReader.getInstance().getUser();
+		String password = LiferayConfigurationReader.getInstance().getPassword();
+		String protocol = LiferayConfigurationReader.getInstance().getLiferayProtocol();
+		Integer port = Integer.parseInt(LiferayConfigurationReader.getInstance().getConnectionPort());
+		String address = LiferayConfigurationReader.getInstance().getVirtualHost();
+		String webservicesPath = LiferayConfigurationReader.getInstance().getWebServicesPath();
+		String authenticationToken = LiferayConfigurationReader.getInstance().getAuthToken();
 
 		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
 	}
@@ -277,11 +277,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	@Override
 	public void serverConnection(String user, String password) {
 		// Read user and password.
-		String protocol = ConfigurationReader.getInstance().getLiferayProtocol();
-		Integer port = Integer.parseInt(ConfigurationReader.getInstance().getConnectionPort());
-		String address = ConfigurationReader.getInstance().getVirtualHost();
-		String webservicesPath = ConfigurationReader.getInstance().getWebServicesPath();
-		String authenticationToken = ConfigurationReader.getInstance().getAuthToken();
+		String protocol = LiferayConfigurationReader.getInstance().getLiferayProtocol();
+		Integer port = Integer.parseInt(LiferayConfigurationReader.getInstance().getConnectionPort());
+		String address = LiferayConfigurationReader.getInstance().getVirtualHost();
+		String webservicesPath = LiferayConfigurationReader.getInstance().getWebServicesPath();
+		String authenticationToken = LiferayConfigurationReader.getInstance().getAuthToken();
 
 		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, user, password);
 	}

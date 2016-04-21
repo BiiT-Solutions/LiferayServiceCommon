@@ -6,9 +6,9 @@ import com.biit.utils.configuration.PropertiesSourceFile;
 import com.biit.utils.configuration.SystemVariablePropertiesSourceFile;
 import com.biit.utils.configuration.exceptions.PropertyNotFoundException;
 
-public class ConfigurationReader extends com.biit.utils.configuration.ConfigurationReader {
+public class LiferayConfigurationReader extends com.biit.utils.configuration.ConfigurationReader {
 
-	private static final String DATABASE_CONFIG_FILE = "liferay.conf";
+	private static final String CONFIG_FILE = "liferay.conf";
 	private static final String LIFERAY_SYSTEM_VARIABLE_CONFIG = "LIFERAY_CONFIG";
 
 	private static final String ID_USER = "user";
@@ -33,9 +33,9 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 	private static final String DEFAULT_LIFERAY_PROTOCOL_PATH = "http";
 	private static final String DEFAULT_AUTH_TOKEN = "";
 
-	private static ConfigurationReader instance;
+	private static LiferayConfigurationReader instance;
 
-	private ConfigurationReader() {
+	private LiferayConfigurationReader() {
 		super();
 
 		addProperty(ID_USER, DEFAULT_USER);
@@ -49,18 +49,18 @@ public class ConfigurationReader extends com.biit.utils.configuration.Configurat
 		addProperty(ID_LIFERAY_PROTOCOL, DEFAULT_LIFERAY_PROTOCOL_PATH);
 		addProperty(ID_AUTH_TOKEN, DEFAULT_AUTH_TOKEN);
 
-		addPropertiesSource(new PropertiesSourceFile(DATABASE_CONFIG_FILE));
+		addPropertiesSource(new PropertiesSourceFile(CONFIG_FILE));
 		addPropertiesSource(
-				new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, DATABASE_CONFIG_FILE));
+				new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, CONFIG_FILE));
 
 		readConfigurations();
 	}
 
-	public static ConfigurationReader getInstance() {
+	public static LiferayConfigurationReader getInstance() {
 		if (instance == null) {
-			synchronized (ConfigurationReader.class) {
+			synchronized (LiferayConfigurationReader.class) {
 				if (instance == null) {
-					instance = new ConfigurationReader();
+					instance = new LiferayConfigurationReader();
 				}
 			}
 		}
