@@ -11,10 +11,8 @@ import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.entity.pool.GroupPool;
 
 public class OrganizationPool extends GroupPool<Long, Long> {
-
-	private final static long EXPIRATION_TIME = 300000;// 5 minutes
-
-	private Map<Long, Map<Long, Long>> organizationSiteAndUsersTime; // group id -> time.
+	// group id -> time.
+	private Map<Long, Map<Long, Long>> organizationSiteAndUsersTime;
 	// Site -> User -> Organizations
 	private Map<Long, Map<Long, Set<IGroup<Long>>>> organizationSiteAndUsers;
 
@@ -92,7 +90,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 						.get(nextSiteId).keySet().iterator();
 				while (userEnum.hasNext()) {
 					nextUserId = userEnum.next();
-					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > EXPIRATION_TIME) {
+					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > getExpirationTime()) {
 						// object has expired
 						removeOrganizations(nextSiteId, nextUserId);
 					} else {

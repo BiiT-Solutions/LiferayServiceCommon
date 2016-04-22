@@ -7,7 +7,7 @@ import java.util.Map;
 import com.liferay.portal.model.Contact;
 
 public class ContactPool {
-	private final static long EXPIRATION_TIME = 300000;// 5 minutes
+	private final static long EXPIRATION_TIME = 3600000; // 60 minutes
 
 	private Map<Long, Long> time; // Contact id -> time.
 	private Map<Long, Contact> contacts; // Contact id -> User.
