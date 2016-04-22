@@ -82,12 +82,10 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 		Long nextSiteId = null;
 		Long nextUserId = null;
 		if (organizationSiteAndUsersTime.size() > 0) {
-			Iterator<Long> siteEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).keySet()
-					.iterator();
+			Iterator<Long> siteEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).keySet().iterator();
 			while (siteEnum.hasNext()) {
 				nextSiteId = siteEnum.next();
-				Iterator<Long> userEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime)
-						.get(nextSiteId).keySet().iterator();
+				Iterator<Long> userEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).get(nextSiteId).keySet().iterator();
 				while (userEnum.hasNext()) {
 					nextUserId = userEnum.next();
 					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > getExpirationTime()) {
