@@ -99,17 +99,14 @@ public class User implements java.io.Serializable, IUser<Long> {
 	public User() {
 	}
 
-	public User(boolean agreedToTermsOfUse, java.lang.String comments, long companyId, long contactId,
-			java.util.Calendar createDate, boolean defaultUser, java.lang.String digest, java.lang.String emailAddress,
-			boolean emailAddressVerified, long facebookId, int failedLoginAttempts, java.lang.String firstName,
-			int graceLoginCount, java.lang.String greeting, java.lang.String jobTitle, java.lang.String languageId,
-			java.util.Calendar lastFailedLoginDate, java.util.Calendar lastLoginDate, java.lang.String lastLoginIP,
-			java.lang.String lastName, long ldapServerId, boolean lockout, java.util.Calendar lockoutDate,
-			java.util.Calendar loginDate, java.lang.String loginIP, java.lang.String middleName,
-			java.util.Calendar modifiedDate, java.lang.String openId, java.lang.String password,
-			boolean passwordEncrypted, java.util.Calendar passwordModifiedDate, boolean passwordReset, long portraitId,
-			long primaryKey, java.lang.String reminderQueryAnswer, java.lang.String reminderQueryQuestion,
-			java.lang.String screenName, int status, java.lang.String timeZoneId, long userId, java.lang.String uuid) {
+	public User(boolean agreedToTermsOfUse, java.lang.String comments, long companyId, long contactId, java.util.Calendar createDate, boolean defaultUser,
+			java.lang.String digest, java.lang.String emailAddress, boolean emailAddressVerified, long facebookId, int failedLoginAttempts,
+			java.lang.String firstName, int graceLoginCount, java.lang.String greeting, java.lang.String jobTitle, java.lang.String languageId,
+			java.util.Calendar lastFailedLoginDate, java.util.Calendar lastLoginDate, java.lang.String lastLoginIP, java.lang.String lastName,
+			long ldapServerId, boolean lockout, java.util.Calendar lockoutDate, java.util.Calendar loginDate, java.lang.String loginIP,
+			java.lang.String middleName, java.util.Calendar modifiedDate, java.lang.String openId, java.lang.String password, boolean passwordEncrypted,
+			java.util.Calendar passwordModifiedDate, boolean passwordReset, long portraitId, long primaryKey, java.lang.String reminderQueryAnswer,
+			java.lang.String reminderQueryQuestion, java.lang.String screenName, int status, java.lang.String timeZoneId, long userId, java.lang.String uuid) {
 		this.agreedToTermsOfUse = agreedToTermsOfUse;
 		this.comments = comments;
 		this.companyId = companyId;
@@ -182,8 +179,7 @@ public class User implements java.io.Serializable, IUser<Long> {
 		int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
 		if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
 			age--;
-		} else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH)
-				&& today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+		} else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
 			age--;
 		}
 		return age;
@@ -389,6 +385,13 @@ public class User implements java.io.Serializable, IUser<Long> {
 	@Override
 	public Locale getLocale() {
 		return Locale.forLanguageTag(getLanguageId().replace("_", "-"));
+	}
+
+	@Override
+	public void setLocale(Locale locale) {
+		if (locale != null) {
+			setLanguageId(locale.toLanguageTag().replace("-", "_"));
+		}
 	}
 
 	/**
