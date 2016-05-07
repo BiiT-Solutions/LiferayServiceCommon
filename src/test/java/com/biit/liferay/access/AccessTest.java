@@ -218,7 +218,7 @@ public class AccessTest {
 		group = (UserGroup) userGroupService.addUserGroup(TEST_GROUP, "");
 	}
 
-	@Test(groups = { "groupAccess" }, dependsOnMethods = { "userAccess", "groupAdd" })
+	@Test(groups = { "groupAccess" }, dependsOnMethods = { "userEdit", "groupAdd" })
 	public void groupUserAdd() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		int prevGroups = userGroupService.getUserUserGroups(user).size();
 		userGroupService.addUserToGroup(user, group);
@@ -389,7 +389,7 @@ public class AccessTest {
 		Assert.assertEquals(prevGroups - 1, userGroupService.getUserUserGroups(user).size());
 	}
 
-	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "groupAccess", "userAccess" }, dependsOnMethods = { "userAdd", "addOrganization" })
+	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "groupAccess", "userAccess" }, dependsOnMethods = { "userEdit", "addOrganization" })
 	public void unsetUserFromOrganization() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		int usersInOrg1 = organizationService.getOrganizationUsers(organization1).size();
 		int usersInOrg2 = organizationService.getOrganizationUsers(organization2).size();
@@ -409,7 +409,7 @@ public class AccessTest {
 	}
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "userAccess", "groupAccess", "contactAccess", "pool" }, dependsOnMethods = {
-			"userAdd", "userAccess", "groupDelete" }, expectedExceptions = WebServiceAccessError.class)
+			"userEdit", "userAccess", "groupDelete" }, expectedExceptions = WebServiceAccessError.class)
 	public void userDelete() throws NotConnectedToWebServiceException, UserDoesNotExistException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		userService.deleteUser(user);
