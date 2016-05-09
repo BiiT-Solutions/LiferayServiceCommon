@@ -407,6 +407,9 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 
 	public void reset() {
 		userPool.reset();
+		groupPool.reset();
+		contactService.reset();
+		organizationService.reset();
 	}
 
 	/**
