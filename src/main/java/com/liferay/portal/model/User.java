@@ -1009,12 +1009,12 @@ public class User implements java.io.Serializable, IUser<Long> {
 	}
 	
 	@Override
-	public String setName(String name){
+	public void setFirstname(String name){
 		setFirstName(name);
 	}
 	
 	@Override
-	public String setSurname(String surname){
+	public void setLastname(String surname){
 		setLastName(surname);
 	}
 	
