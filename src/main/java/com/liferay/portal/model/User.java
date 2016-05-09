@@ -332,6 +332,7 @@ public class User implements java.io.Serializable, IUser<Long> {
 	 * 
 	 * @return languageId
 	 */
+	@Override
 	public java.lang.String getLanguageId() {
 		return languageId;
 	}
@@ -1006,5 +1007,16 @@ public class User implements java.io.Serializable, IUser<Long> {
 	public String toString() {
 		return screenName;
 	}
+	
+	@Override
+	public String setName(String name){
+		setFirstName(name);
+	}
+	
+	@Override
+	public String setSurname(String surname){
+		setLastName(surname);
+	}
+	
 
 }

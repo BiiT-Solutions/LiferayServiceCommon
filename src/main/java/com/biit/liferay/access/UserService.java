@@ -487,7 +487,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		params.add(new BasicNameValuePair("emailAddress", user.getEmailAddress()));
 		params.add(new BasicNameValuePair("facebookId", Long.toString(((User) user).getFacebookId())));
 		params.add(new BasicNameValuePair("openId", ((User) user).getOpenId()));
-		params.add(new BasicNameValuePair("locale", user.getLocale().getDisplayName()));
+		params.add(new BasicNameValuePair("locale", user.getLocale().toString()));
 		params.add(new BasicNameValuePair("firstName", user.getFirstName()));
 		params.add(new BasicNameValuePair("middleName", ((User) user).getMiddleName()));
 		params.add(new BasicNameValuePair("lastName", user.getLastName()));

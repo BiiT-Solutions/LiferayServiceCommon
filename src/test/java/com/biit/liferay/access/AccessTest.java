@@ -47,6 +47,7 @@ public class AccessTest {
 
 	private final static String TEST_USER_EDIT_NAME = "editedTestUser";
 	private final static String TEST_USER_EDIT_SURNAME = "Surname";
+	private final static String TEST_USER_EDIT_LANGUAGE = "nl_NL";
 
 	private final static String SITE_NAME = "testSite";
 	private final static String SITE_DESCRIPTION = "This site is created with the automated Shap testing.";
@@ -166,17 +167,22 @@ public class AccessTest {
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAccess" })
 	public void userEdit() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		// Change some fields.
+		String language = user.getLanguageId();
+		
 		user.setFirstName(TEST_USER_EDIT_NAME);
 		user.setLastName(TEST_USER_EDIT_SURNAME);
+		user.setLanguageId(TEST_USER_EDIT_LANGUAGE);
 		user = (User) userService.updateUser(user);
 
 		// Retrieve again from database to check it.
 		IUser<Long> updatedUser = userService.getUserByEmailAddress(company, TEST_USER_MAIL);
 		Assert.assertEquals(TEST_USER_EDIT_NAME, updatedUser.getFirstName());
 		Assert.assertEquals(TEST_USER_EDIT_SURNAME, updatedUser.getLastName());
+		Assert.assertEquals(TEST_USER_EDIT_LANGUAGE, updatedUser.getLanguageId());
 
 		// Let data as it is at the start.
 		user.setFirstName(TEST_USER);
+		user.setLanguageId(language);
 		user = (User) userService.updateUser(user);
 		updatedUser = (User) userService.getUserByEmailAddress(company, TEST_USER_MAIL);
 		Assert.assertEquals(TEST_USER, updatedUser.getFirstName());
