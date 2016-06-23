@@ -58,32 +58,28 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	private String authToken;
 
 	@Override
-	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
-			String authenticationToken, String loginUser, String password) {
+	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
+			String password) {
 		this.webservicesPath = webservicesPath;
 		// Host definition
 		targetHost = new HttpHost(address, port, protocol);
 		// Credentials
 		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()),
-				new UsernamePasswordCredentials(loginUser, password));
+		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()), new UsernamePasswordCredentials(loginUser, password));
 
 		// Client
 		SocketConfig defaultSocketConfig = SocketConfig.custom().setTcpNoDelay(true).build();
-		SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true)
-				.setSoReuseAddress(true).build();
+		SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).setSoReuseAddress(true).build();
 
 		// Creates a client with credentials.
 		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
 		connManager.setDefaultSocketConfig(defaultSocketConfig);
 		connManager.setSocketConfig(new HttpHost(address, port), socketConfig);
-		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider)
-				.setConnectionManager(connManager).build();
+		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).setConnectionManager(connManager).build();
 
 		// Creates a client without credentials.
 		SocketConfig defaultSocketConfig2 = SocketConfig.custom().setTcpNoDelay(true).build();
-		SocketConfig socketConfig2 = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true)
-				.setSoReuseAddress(true).build();
+		SocketConfig socketConfig2 = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).setSoReuseAddress(true).build();
 		PoolingHttpClientConnectionManager connManager2 = new PoolingHttpClientConnectionManager();
 		connManager2.setDefaultSocketConfig(defaultSocketConfig2);
 		connManager2.setSocketConfig(new HttpHost(address, port), socketConfig2);
@@ -100,8 +96,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	@Override
 	public void checkConnection() throws NotConnectedToWebServiceException {
 		if (isNotConnected()) {
-			throw new NotConnectedToWebServiceException(
-					"User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
+			throw new NotConnectedToWebServiceException("User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
 		}
 	}
 
@@ -119,12 +114,15 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		httpContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
 	}
 
-	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException,
-			JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError {
+	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException, JsonMappingException, IOException,
+			NotConnectedToWebServiceException, WebServiceAccessError {
 		LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
 		try {
 			ObjectMapper jsonMapper = new ObjectMapper();
 			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			if (json.contains("Authenticated access required")) {
+				throw new WebServiceAccessError("User not authorized: " + json);
+			}
 			LiferayType object = new ObjectMapper().readValue(json, objectClass);
 			return object;
 		} catch (UnrecognizedPropertyException e) {
@@ -136,8 +134,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		}
 	}
 
-	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass)
-			throws JsonParseException, JsonMappingException, IOException;
+	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException, JsonMappingException, IOException;
 
 	@Override
 	public void disconnect() {
@@ -183,7 +180,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	}
 
 	/**
-	 * Gets a response for a webservice. If it is not authorized to use the web service, try to authorize first.
+	 * Gets a response for a webservice. If it is not authorized to use the web
+	 * service, try to authorize first.
 	 * 
 	 * @param webService
 	 * @param params
@@ -193,13 +191,13 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException,
-			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired {
 		return getHttpResponse(webService, params, false);
 	}
 
-	public String getHttpResponse(String webService, List<NameValuePair> params, boolean useAuthorization)
-			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+	public String getHttpResponse(String webService, List<NameValuePair> params, boolean useAuthorization) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired {
 		// Set authentication param if defined.
 		long startTime = System.currentTimeMillis();
 
@@ -223,8 +221,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			if (result.contains(NOT_AUTHORIZED_ERROR)) {
 				if (!useAuthorization) {
 					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessed to '" + webService
-							+ "' without authorization. Retry with authorization ("
-							+ (System.currentTimeMillis() - startTime) + " ms).");
+							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
 					// Redo authorization cache for invalid or expired.
 					createAuthCache();
 					return getHttpResponse(webService, params, true);
@@ -234,8 +231,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			}
 
 			// Measure response time.
-			LiferayClientLogger.debug(ServiceAccess.class.getName(),
-					"Accessed to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessed to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			if (LiferayClientLogger.isDebugEnabled()) {
 				String paramsText = "";
 				for (NameValuePair param : authParams) {
