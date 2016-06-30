@@ -290,19 +290,20 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
 	protected String convertListToJsonString(List<String> list) {
 		String listAsString = "";
-		if (!list.isEmpty()) {
-			listAsString = "[";
-		}
-		for (String section : list) {
-			if (listAsString.length() > 1) {
-				listAsString += ",";
+		if (list != null) {
+			if (!list.isEmpty()) {
+				listAsString = "[";
 			}
-			listAsString += section;
+			for (String section : list) {
+				if (listAsString.length() > 1) {
+					listAsString += ",";
+				}
+				listAsString += section;
+			}
+			if (listAsString.length() > 0) {
+				listAsString += "]";
+			}
 		}
-		if (listAsString.length() > 0) {
-			listAsString += "]";
-		}
-
 		return listAsString;
 	}
 
