@@ -139,7 +139,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
 
 			String result = getHttpResponse("liferay-service-common-portlet.site/add-organization", params);
-
+			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getId() + "' added.");
+			
 			return Boolean.parseBoolean(result);
 		}
 		return false;
