@@ -4,11 +4,7 @@
 	<groupId>com.biit.liferay</groupId>
 	<artifactId>liferay-service-common</artifactId>
 	<packaging>jar</packaging>
-<<<<<<< HEAD
-	<version>0.7.25-SNAPSHOT</version>
-=======
 	<version>0.7.29-SNAPSHOT</version>
->>>>>>> e41ff057a60015426127ea853bb845ae4d4ba5b2
 	<name>Liferay Client Common Utils</name>
 	<description>Basic functionality for any Liferay client</description>
 
