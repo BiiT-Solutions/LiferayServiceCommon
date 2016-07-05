@@ -14,6 +14,7 @@
 				<include name="organizationAccess" />
 				<include name="pool" />
 				<include name="clearData" />
+				<include name="className" />
 			</run>
 		</groups>
 		<classes>

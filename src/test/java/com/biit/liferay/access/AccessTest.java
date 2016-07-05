@@ -14,6 +14,7 @@ import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
 import com.biit.liferay.access.exceptions.UserDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
+import com.biit.usermanager.entity.IElement;
 import com.biit.usermanager.entity.IGroup;
 import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
@@ -23,7 +24,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Site;
-import com.liferay.portal.model.Status;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 
@@ -71,6 +71,7 @@ public class AccessTest {
 	private UserGroupService userGroupService = new UserGroupService();
 	private GroupService groupService = new GroupService();
 	private OrganizationService organizationService = new OrganizationService();
+	private ClassNameService classNameService = new ClassNameService();
 
 	@Test(groups = { "connection" }, expectedExceptions = AuthenticationRequired.class)
 	public void notAuthorized() throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException, IOException, AuthenticationRequired,
@@ -97,6 +98,15 @@ public class AccessTest {
 		// LOGIN_PASSWORD);
 		companyService.authorizedServerConnection(HOST, LIFERAY_PROTOCOL, PORT, WEBSERVICES_PATH, AUTHENTICATION_TOKEN, LOGIN_USER, LOGIN_PASSWORD);
 		companyService.getCompanyByVirtualHost(COMPANY_VIRTUALHOST);
+	}
+	
+	@Test(groups = { "className" }, dependsOnGroups = { "connection" })
+	public void classNameAccess() throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
+		classNameService.authorizedServerConnection(HOST, LIFERAY_PROTOCOL, PORT, WEBSERVICES_PATH, AUTHENTICATION_TOKEN, LOGIN_USER, LOGIN_PASSWORD);
+		IElement<Long> className = classNameService.getClassName("com.liferay.knowledgebase.model.KBFolder");
+		Assert.assertNotNull(className);
+		Assert.assertNotNull(className.getId());
 	}
 
 	@Test(groups = { "companyAccess" }, dependsOnGroups = { "connection" }, expectedExceptions = WebServiceAccessError.class)
