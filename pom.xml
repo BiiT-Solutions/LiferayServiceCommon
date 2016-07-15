@@ -33,7 +33,7 @@
 		<plugin.compiler.version>2.3.2</plugin.compiler.version>
 		<plugin.exec.version>1.2.1</plugin.exec.version>
 		<org.testng.version>6.8</org.testng.version>
-		<jackson.version>2.3.0</jackson.version>
+		<jackson.version>2.5.0</jackson.version>
 		<surefire.version>2.16</surefire.version>
 		<apache-commons.version>1.9</apache-commons.version>
 		<apache-httpclient.version>4.3.1</apache-httpclient.version>
