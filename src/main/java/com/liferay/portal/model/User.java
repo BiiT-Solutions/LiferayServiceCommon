@@ -1007,16 +1007,5 @@ public class User implements java.io.Serializable, IUser<Long> {
 	public String toString() {
 		return screenName;
 	}
-	
-	@Override
-	public void setFirstname(String name){
-		setFirstName(name);
-	}
-	
-	@Override
-	public void setLastname(String surname){
-		setLastName(surname);
-	}
-	
 
 }
