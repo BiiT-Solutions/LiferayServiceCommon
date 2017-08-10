@@ -77,7 +77,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	 * @param userId
 	 * @return
 	 */
-	public Set<IGroup<Long>> getOrganizationBySiteAndUser(long siteId, long userId) {
+	public synchronized Set<IGroup<Long>> getOrganizationBySiteAndUser(long siteId, long userId) {
 		long now = System.currentTimeMillis();
 		Long nextSiteId = null;
 		Long nextUserId = null;
@@ -88,14 +88,15 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 				Iterator<Long> userEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).get(nextSiteId).keySet().iterator();
 				while (userEnum.hasNext()) {
 					nextUserId = userEnum.next();
-					if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > getExpirationTime()) {
-						// object has expired
-						removeOrganizations(nextSiteId, nextUserId);
-					} else {
-						if ((nextSiteId == siteId) && (nextUserId == userId)) {
-							return organizationSiteAndUsers.get(siteId).get(userId);
+					if (organizationSiteAndUsersTime.get(nextSiteId) != null && organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId) != null)
+						if ((now - organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId)) > getExpirationTime()) {
+							// object has expired
+							removeOrganizations(nextSiteId, nextUserId);
+						} else {
+							if ((nextSiteId == siteId) && (nextUserId == userId)) {
+								return organizationSiteAndUsers.get(siteId).get(userId);
+							}
 						}
-					}
 				}
 			}
 		}

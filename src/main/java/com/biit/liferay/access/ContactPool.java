@@ -23,7 +23,7 @@ public class ContactPool {
 		}
 	}
 
-	public Contact getContact(long contactId) {
+	public synchronized Contact getContact(long contactId) {
 		long now = System.currentTimeMillis();
 		Long storedObject = null;
 		if (time.size() > 0) {
