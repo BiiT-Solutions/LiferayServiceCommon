@@ -49,7 +49,7 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 			WebServiceAccessError {
 		if (contactId != null) {
 			// Look up user in the liferay.
-			Contact contact = contactPool.getContact(contactId);
+			Contact contact = contactPool.getElement(contactId);
 			if (contact != null) {
 				return contact;
 			}
@@ -63,7 +63,7 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 			if (result != null) {
 				// A Simple JSON Response Read
 				contact = decodeFromJson(result, Contact.class);
-				contactPool.addContact(contact);
+				contactPool.addElement(contact);
 				return contact;
 			}
 		}

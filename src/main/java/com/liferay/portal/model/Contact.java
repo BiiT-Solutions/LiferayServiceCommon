@@ -3,10 +3,12 @@ package com.liferay.portal.model;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.biit.utils.pool.PoolElement;
+
 /**
  * Stores extra information of a user.
  */
-public class Contact {
+public class Contact implements PoolElement<Long> {
 	private Long accountId;
 	private String aimSn;
 	private Date birthday;
@@ -336,6 +338,11 @@ public class Contact {
 
 	public void setYmSn(String ymSn) {
 		this.ymSn = ymSn;
+	}
+
+	@Override
+	public Long getId() {
+		return getContactId();
 	}
 
 }
