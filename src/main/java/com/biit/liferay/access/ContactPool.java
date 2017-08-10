@@ -30,13 +30,15 @@ public class ContactPool {
 			Iterator<Long> e = new HashMap<Long, Long>(time).keySet().iterator();
 			while (e.hasNext()) {
 				storedObject = e.next();
-				if ((now - time.get(storedObject)) > EXPIRATION_TIME) {
-					// object has expired
-					removeContact(storedObject);
-					storedObject = null;
-				} else {
-					if (contacts.get(storedObject) != null && contacts.get(storedObject).getContactId() == contactId) {
-						return contacts.get(contactId);
+				if (time.get(storedObject) != null) {
+					if ((now - time.get(storedObject)) > EXPIRATION_TIME) {
+						// object has expired
+						removeContact(storedObject);
+						storedObject = null;
+					} else {
+						if (contacts.get(storedObject) != null && contacts.get(storedObject).getContactId() == contactId) {
+							return contacts.get(contactId);
+						}
 					}
 				}
 			}
