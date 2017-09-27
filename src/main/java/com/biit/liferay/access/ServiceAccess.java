@@ -121,6 +121,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			ObjectMapper jsonMapper = new ObjectMapper();
 			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			if (json.contains("Authenticated access required")) {
+				LiferayClientLogger.debug(this.getClass().getName(), "User '" + connectionUser + "' with password '" + connectionPassword
+						+ "' not authorized in Liferay.");
 				throw new WebServiceAccessError("User not authorized: " + json);
 			}
 			LiferayType object = new ObjectMapper().readValue(json, objectClass);
