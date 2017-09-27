@@ -60,6 +60,10 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	@Override
 	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
 			String password) {
+
+		LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + address + "', port '" + port + "', path '"
+				+ webservicesPath + "', user '" + loginUser + "', password '" + password + "'.");
+
 		this.webservicesPath = webservicesPath;
 		// Host definition
 		targetHost = new HttpHost(address, port, protocol);
@@ -233,7 +237,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			}
 
 			// Measure response time.
-			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
+			LiferayClientLogger
+					.debug(ServiceAccess.class.getName(), "Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			if (LiferayClientLogger.isDebugEnabled()) {
 				String paramsText = "";
 				for (NameValuePair param : authParams) {
