@@ -222,7 +222,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
 			if (result.contains(NOT_AUTHORIZED_ERROR)) {
 				if (!useAuthorization) {
-					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessed to '" + webService
+					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService
 							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
 					// Redo authorization cache for invalid or expired.
 					createAuthCache();
@@ -233,7 +233,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			}
 
 			// Measure response time.
-			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessed to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			if (LiferayClientLogger.isDebugEnabled()) {
 				String paramsText = "";
 				for (NameValuePair param : authParams) {
