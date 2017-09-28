@@ -1,12 +1,18 @@
 package com.biit.liferay.configuration;
 
+import java.nio.file.Path;
+
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.liferay.security.PasswordEncryptationAlgorithmType;
+import com.biit.usmo.logger.UsmoLogger;
+import com.biit.utils.configuration.ConfigurationReader;
 import com.biit.utils.configuration.PropertiesSourceFile;
 import com.biit.utils.configuration.SystemVariablePropertiesSourceFile;
+import com.biit.utils.configuration.ConfigurationReader.PropertyChangedListener;
 import com.biit.utils.configuration.exceptions.PropertyNotFoundException;
+import com.biit.utils.file.watcher.FileWatcher.FileModifiedListener;
 
-public class LiferayConfigurationReader extends com.biit.utils.configuration.ConfigurationReader {
+public class LiferayConfigurationReader extends ConfigurationReader {
 
 	private static final String CONFIG_FILE = "liferay.conf";
 	private static final String LIFERAY_SYSTEM_VARIABLE_CONFIG = "LIFERAY_CONFIG";
@@ -14,6 +20,7 @@ public class LiferayConfigurationReader extends com.biit.utils.configuration.Con
 	private static final String ID_USER = "user";
 	private static final String ID_PASSWORD = "password";
 	private static final String ID_VIRTUAL_HOST = "virtualhost";
+	private static final String ID_HOST = "host";
 	private static final String ID_SITE = "site";
 	private static final String ID_WEBAPP = "webapp";
 	private static final String ID_PORT = "port";
@@ -25,6 +32,7 @@ public class LiferayConfigurationReader extends com.biit.utils.configuration.Con
 	private static final String DEFAULT_USER = "user";
 	private static final String DEFAULT_PASSWORD = "pass";
 	private static final String DEFAULT_VIRTUAL_HOST = "localhost";
+	private static final String DEFAULT_HOST = "localhost";
 	private static final String DEFAULT_SITE = "Guest";
 	private static final String DEFAULT_WEBAPP = "";
 	private static final String DEFAULT_PORT = "8080";
@@ -39,6 +47,7 @@ public class LiferayConfigurationReader extends com.biit.utils.configuration.Con
 		super();
 
 		addProperty(ID_USER, DEFAULT_USER);
+		addProperty(ID_HOST, DEFAULT_HOST);
 		addProperty(ID_PASSWORD, DEFAULT_PASSWORD);
 		addProperty(ID_VIRTUAL_HOST, DEFAULT_VIRTUAL_HOST);
 		addProperty(ID_SITE, DEFAULT_SITE);
@@ -49,9 +58,27 @@ public class LiferayConfigurationReader extends com.biit.utils.configuration.Con
 		addProperty(ID_LIFERAY_PROTOCOL, DEFAULT_LIFERAY_PROTOCOL_PATH);
 		addProperty(ID_AUTH_TOKEN, DEFAULT_AUTH_TOKEN);
 
-		addPropertiesSource(new PropertiesSourceFile(CONFIG_FILE));
-		addPropertiesSource(
-				new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, CONFIG_FILE));
+		PropertiesSourceFile sourceFile = new PropertiesSourceFile(CONFIG_FILE);
+		addPropertiesSource(sourceFile);
+		sourceFile.addFileModifiedListeners(new FileModifiedListener() {
+
+			@Override
+			public void changeDetected(Path pathToFile) {
+				LiferayClientLogger.info(this.getClass().getName(), "WAR settings file '" + pathToFile + "' change detected.");
+				readConfigurations();
+			}
+		});
+
+		SystemVariablePropertiesSourceFile systemSourceFile = new SystemVariablePropertiesSourceFile(LIFERAY_SYSTEM_VARIABLE_CONFIG, CONFIG_FILE);
+		addPropertiesSource(systemSourceFile);
+		systemSourceFile.addFileModifiedListeners(new FileModifiedListener() {
+
+			@Override
+			public void changeDetected(Path pathToFile) {
+				LiferayClientLogger.info(this.getClass().getName(), "System variable settings file '" + pathToFile + "' change detected.");
+				readConfigurations();
+			}
+		});
 
 		readConfigurations();
 	}
@@ -84,8 +111,7 @@ public class LiferayConfigurationReader extends com.biit.utils.configuration.Con
 	}
 
 	public PasswordEncryptationAlgorithmType getPasswordEncryptationAlgorithm() {
-		return PasswordEncryptationAlgorithmType
-				.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
+		return PasswordEncryptationAlgorithmType.getPasswordEncryptationAlgorithms(getPropertyLogException(ID_PASSWORD_ALGORITHM));
 	}
 
 	private String getPropertyLogException(String propertyId) {
@@ -103,6 +129,10 @@ public class LiferayConfigurationReader extends com.biit.utils.configuration.Con
 
 	public String getVirtualHost() {
 		return getPropertyLogException(ID_VIRTUAL_HOST);
+	}
+
+	public String getHost() {
+		return getPropertyLogException(ID_HOST);
 	}
 
 	public String getSite() {

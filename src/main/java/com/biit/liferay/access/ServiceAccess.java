@@ -216,8 +216,10 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		post.setEntity(entity);
 		HttpResponse response;
 		if (useAuthorization) {
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing with credentials to '" + targetHost + "' service '" + post + "'!");
 			response = getAuthorizedHttpClient().execute(targetHost, post, httpContext);
 		} else {
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing without credentials!");
 			response = getHttpClientWithoutCredentials().execute(targetHost, post, httpContext);
 		}
 		if (response.getEntity() != null) {
@@ -249,6 +251,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 				}
 				LiferayClientLogger.debug(ServiceAccess.class.getName(), "Using parameters: [" + paramsText + "]");
 			}
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Obtained result: " + result);
 			return result;
 		}
 		return null;
