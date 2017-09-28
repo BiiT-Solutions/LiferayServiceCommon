@@ -58,15 +58,15 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	private String authToken;
 
 	@Override
-	public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
+	public void authorizedServerConnection(String host, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
 			String password) {
 
-		LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + address + "', port '" + port + "', path '"
+		LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port + "', path '"
 				+ webservicesPath + "', user '" + loginUser + "', password '" + password + "'.");
 
 		this.webservicesPath = webservicesPath;
 		// Host definition
-		targetHost = new HttpHost(address, port, protocol);
+		targetHost = new HttpHost(host, port, protocol);
 		// Credentials
 		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()), new UsernamePasswordCredentials(loginUser, password));
@@ -78,7 +78,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		// Creates a client with credentials.
 		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
 		connManager.setDefaultSocketConfig(defaultSocketConfig);
-		connManager.setSocketConfig(new HttpHost(address, port), socketConfig);
+		connManager.setSocketConfig(new HttpHost(host, port), socketConfig);
 		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).setConnectionManager(connManager).build();
 
 		// Creates a client without credentials.
@@ -86,7 +86,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		SocketConfig socketConfig2 = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).setSoReuseAddress(true).build();
 		PoolingHttpClientConnectionManager connManager2 = new PoolingHttpClientConnectionManager();
 		connManager2.setDefaultSocketConfig(defaultSocketConfig2);
-		connManager2.setSocketConfig(new HttpHost(address, port), socketConfig2);
+		connManager2.setSocketConfig(new HttpHost(host, port), socketConfig2);
 		httpClientWithoutCredentials = HttpClients.custom().setConnectionManager(connManager2).build();
 
 		createAuthCache();
@@ -273,11 +273,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		String password = LiferayConfigurationReader.getInstance().getPassword();
 		String protocol = LiferayConfigurationReader.getInstance().getLiferayProtocol();
 		Integer port = Integer.parseInt(LiferayConfigurationReader.getInstance().getConnectionPort());
-		String address = LiferayConfigurationReader.getInstance().getVirtualHost();
+		String host = LiferayConfigurationReader.getInstance().getHost();
 		String webservicesPath = LiferayConfigurationReader.getInstance().getWebServicesPath();
 		String authenticationToken = LiferayConfigurationReader.getInstance().getAuthToken();
 
-		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
+		authorizedServerConnection(host, protocol, port, webservicesPath, authenticationToken, loginUser, password);
 	}
 
 	@Override
@@ -285,11 +285,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		// Read user and password.
 		String protocol = LiferayConfigurationReader.getInstance().getLiferayProtocol();
 		Integer port = Integer.parseInt(LiferayConfigurationReader.getInstance().getConnectionPort());
-		String address = LiferayConfigurationReader.getInstance().getVirtualHost();
+		String host = LiferayConfigurationReader.getInstance().getHost();
 		String webservicesPath = LiferayConfigurationReader.getInstance().getWebServicesPath();
 		String authenticationToken = LiferayConfigurationReader.getInstance().getAuthToken();
 
-		authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, user, password);
+		authorizedServerConnection(host, protocol, port, webservicesPath, authenticationToken, user, password);
 	}
 
 	public void setAuthParam(List<NameValuePair> params) {

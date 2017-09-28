@@ -4,11 +4,9 @@ import java.nio.file.Path;
 
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.liferay.security.PasswordEncryptationAlgorithmType;
-import com.biit.usmo.logger.UsmoLogger;
 import com.biit.utils.configuration.ConfigurationReader;
 import com.biit.utils.configuration.PropertiesSourceFile;
 import com.biit.utils.configuration.SystemVariablePropertiesSourceFile;
-import com.biit.utils.configuration.ConfigurationReader.PropertyChangedListener;
 import com.biit.utils.configuration.exceptions.PropertyNotFoundException;
 import com.biit.utils.file.watcher.FileWatcher.FileModifiedListener;
 
@@ -32,7 +30,7 @@ public class LiferayConfigurationReader extends ConfigurationReader {
 	private static final String DEFAULT_USER = "user";
 	private static final String DEFAULT_PASSWORD = "pass";
 	private static final String DEFAULT_VIRTUAL_HOST = "localhost";
-	private static final String DEFAULT_HOST = "localhost";
+	private static final String DEFAULT_HOST = "";
 	private static final String DEFAULT_SITE = "Guest";
 	private static final String DEFAULT_WEBAPP = "";
 	private static final String DEFAULT_PORT = "8080";
@@ -132,7 +130,13 @@ public class LiferayConfigurationReader extends ConfigurationReader {
 	}
 
 	public String getHost() {
-		return getPropertyLogException(ID_HOST);
+		// For compatibility with previous liferay.conf, we return virtual host
+		// if not defined.
+		String host = getPropertyLogException(ID_HOST);
+		if (host.equals("")) {
+			return getVirtualHost();
+		}
+		return host;
 	}
 
 	public String getSite() {
