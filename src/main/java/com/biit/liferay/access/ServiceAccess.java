@@ -137,6 +137,9 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			} else {
 				throw e;
 			}
+		} catch (JsonMappingException jme) {
+			LiferayClientLogger.errorMessage(this.getClass().getName(), jme);
+			throw new WebServiceAccessError("Invalid retrieved json '" + json + "'.");
 		}
 	}
 
