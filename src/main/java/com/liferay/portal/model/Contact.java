@@ -4,10 +4,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.biit.utils.pool.PoolElement;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Stores extra information of a user.
  */
+@JsonIgnoreProperties
 public class Contact implements PoolElement<Long> {
 	private Long accountId;
 	private String aimSn;

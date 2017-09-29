@@ -8,7 +8,9 @@
 package com.liferay.portal.model;
 
 import com.biit.usermanager.entity.IGroup;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties
 public class Company implements java.io.Serializable, IGroup<Long> {
 	private static final long serialVersionUID = -5076489772058450143L;
 

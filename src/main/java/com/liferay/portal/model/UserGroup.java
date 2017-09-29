@@ -8,7 +8,9 @@
 package com.liferay.portal.model;
 
 import com.biit.usermanager.entity.IGroup;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties
 public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	private static final long serialVersionUID = 3795199179122398623L;
 
@@ -39,10 +41,8 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	public UserGroup() {
 	}
 
-	public UserGroup(boolean addedByLDAPImport, long companyId, java.util.Calendar createDate,
-			java.lang.String description, java.util.Calendar modifiedDate, java.lang.String name,
-			long parentUserGroupId, long primaryKey, long userGroupId, long userId, java.lang.String userName,
-			java.lang.String uuid) {
+	public UserGroup(boolean addedByLDAPImport, long companyId, java.util.Calendar createDate, java.lang.String description, java.util.Calendar modifiedDate,
+			java.lang.String name, long parentUserGroupId, long primaryKey, long userGroupId, long userId, java.lang.String userName, java.lang.String uuid) {
 		this.addedByLDAPImport = addedByLDAPImport;
 		this.companyId = companyId;
 		this.createDate = createDate;

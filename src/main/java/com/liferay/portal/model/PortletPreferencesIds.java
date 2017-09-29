@@ -7,6 +7,9 @@
 
 package com.liferay.portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties
 public class PortletPreferencesIds implements java.io.Serializable {
 	private static final long serialVersionUID = 7652885934006438491L;
 
@@ -48,13 +51,9 @@ public class PortletPreferencesIds implements java.io.Serializable {
 		__equalsCalc = obj;
 		boolean _equals;
 		PortletPreferencesIds other = (PortletPreferencesIds) obj;
-		_equals = true
-				&& this.companyId == other.getCompanyId()
-				&& this.ownerId == other.getOwnerId()
-				&& this.ownerType == other.getOwnerType()
+		_equals = true && this.companyId == other.getCompanyId() && this.ownerId == other.getOwnerId() && this.ownerType == other.getOwnerType()
 				&& this.plid == other.getPlid()
-				&& ((this.portletId == null && other.getPortletId() == null) || (this.portletId != null && this.portletId
-						.equals(other.getPortletId())));
+				&& ((this.portletId == null && other.getPortletId() == null) || (this.portletId != null && this.portletId.equals(other.getPortletId())));
 		__equalsCalc = null;
 		return _equals;
 	}

@@ -7,6 +7,9 @@
 
 package com.liferay.portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties
 public class Address implements java.io.Serializable {
 	private static final long serialVersionUID = 8641196722234880238L;
 
@@ -53,11 +56,9 @@ public class Address implements java.io.Serializable {
 	public Address() {
 	}
 
-	public Address(long addressId, java.lang.String city, long classNameId, long classPK, long companyId,
-			long countryId, java.util.Calendar createDate, boolean mailing, java.util.Calendar modifiedDate,
-			boolean primary, long primaryKey, long regionId, java.lang.String street1, java.lang.String street2,
-			java.lang.String street3, int typeId, long userId, java.lang.String userName, java.lang.String uuid,
-			java.lang.String zip) {
+	public Address(long addressId, java.lang.String city, long classNameId, long classPK, long companyId, long countryId, java.util.Calendar createDate,
+			boolean mailing, java.util.Calendar modifiedDate, boolean primary, long primaryKey, long regionId, java.lang.String street1,
+			java.lang.String street2, java.lang.String street3, int typeId, long userId, java.lang.String userName, java.lang.String uuid, java.lang.String zip) {
 		this.addressId = addressId;
 		this.city = city;
 		this.classNameId = classNameId;

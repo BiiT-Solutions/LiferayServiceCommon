@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.biit.usermanager.entity.IUser;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties
 public class User implements java.io.Serializable, IUser<Long> {
 	private static final long serialVersionUID = -6134421097495636111L;
 
