@@ -34,7 +34,6 @@ import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -46,7 +45,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  */
 public abstract class ServiceAccess<Type, LiferayType extends Type> implements LiferayService {
 	public static final String LIFERAY_ORGANIZATION_GROUP_SUFIX = " LFR_ORGANIZATION";
-	private final static String NOT_AUTHORIZED_ERROR = "{\"exception\":\"Authenticated access required\"}";
+	private final static String NOT_AUTHORIZED_ERROR_LIFERAY_621 = "{\"exception\":\"Authenticated access required\"}";
+	private final static String NOT_AUTHORIZED_ERROR_LIFERAY_625 = "{\"exception\":\"java.lang.SecurityException\",\"message\":\"Authenticated access required\"}";
 	private final static String UNRECOGNIZED_FIELD_ERROR = "Unrecognized field \"exception\"";
 	private final static String EXCEPTION_PREFIX = "{\"exception\":";
 	private HttpClient httpClientWithCredentials = null;
@@ -235,7 +235,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			// A Simple JSON Response Read
 			String result = EntityUtils.toString(response.getEntity());
 
-			if (result.contains(NOT_AUTHORIZED_ERROR)) {
+			if (result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_621) || result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_625)) {
 				if (!useAuthorization) {
 					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService
 							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
