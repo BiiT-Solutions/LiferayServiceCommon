@@ -9,7 +9,7 @@ package com.liferay.portal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailAddress implements java.io.Serializable {
 	private static final long serialVersionUID = -2734153079494119731L;
 

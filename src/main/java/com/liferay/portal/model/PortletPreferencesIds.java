@@ -9,7 +9,7 @@ package com.liferay.portal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PortletPreferencesIds implements java.io.Serializable {
 	private static final long serialVersionUID = 7652885934006438491L;
 

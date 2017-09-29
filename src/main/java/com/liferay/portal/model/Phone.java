@@ -9,7 +9,7 @@ package com.liferay.portal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Phone implements java.io.Serializable {
 	private static final long serialVersionUID = -951704976467568624L;
 

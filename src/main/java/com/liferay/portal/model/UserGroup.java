@@ -10,7 +10,7 @@ package com.liferay.portal.model;
 import com.biit.usermanager.entity.IGroup;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	private static final long serialVersionUID = 3795199179122398623L;
 

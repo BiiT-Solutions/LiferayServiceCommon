@@ -9,7 +9,7 @@ package com.liferay.portal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserGroupRole implements java.io.Serializable {
 	private static final long serialVersionUID = 7587586600127968854L;
 

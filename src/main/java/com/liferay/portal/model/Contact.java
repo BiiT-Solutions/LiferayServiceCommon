@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * Stores extra information of a user.
  */
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Contact implements PoolElement<Long> {
 	private Long accountId;
 	private String aimSn;
