@@ -131,9 +131,9 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			}
 			if (json.startsWith(EXCEPTION_PREFIX)) {
 				// If @JsonIgnoreProperties(ignoreUnknown = true) is on
-				// entities, the UnrecognizedPropertyException excetpion is
+				// entities, the JsonMappingException exception is
 				// never launch. We need to check it here.
-				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
+				throw new WebServiceAccessError("Invalid retrieved json '" + json + "'.");
 			}
 			LiferayType object = new ObjectMapper().readValue(json, objectClass);
 			return object;
