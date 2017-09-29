@@ -26,7 +26,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONValue;
 
@@ -51,11 +50,12 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	private HttpClient httpClientWithCredentials = null;
 	private HttpClient httpClientWithoutCredentials = null;
 	private HttpHost targetHost;
-	private BasicHttpContext httpContext = null;
+	private HttpClientContext httpContext = null;
 	private String webservicesPath;
 	private String connectionUser;
 	private String connectionPassword;
 	private String authToken;
+	private CredentialsProvider credentialsProvider;
 
 	@Override
 	public void authorizedServerConnection(String host, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
@@ -67,9 +67,12 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		this.webservicesPath = webservicesPath;
 		// Host definition
 		targetHost = new HttpHost(host, port, protocol);
+
 		// Credentials
-		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+		credentialsProvider = new BasicCredentialsProvider();
 		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()), new UsernamePasswordCredentials(loginUser, password));
+
+		createAuthCache(credentialsProvider);
 
 		// Client
 		SocketConfig defaultSocketConfig = SocketConfig.custom().setTcpNoDelay(true).build();
@@ -79,7 +82,9 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
 		connManager.setDefaultSocketConfig(defaultSocketConfig);
 		connManager.setSocketConfig(new HttpHost(host, port), socketConfig);
+
 		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).setConnectionManager(connManager).build();
+		// httpClientWithCredentials.getParams().setAuthenticationPreemptive(true);
 
 		// Creates a client without credentials.
 		SocketConfig defaultSocketConfig2 = SocketConfig.custom().setTcpNoDelay(true).build();
@@ -89,12 +94,21 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		connManager2.setSocketConfig(new HttpHost(host, port), socketConfig2);
 		httpClientWithoutCredentials = HttpClients.custom().setConnectionManager(connManager2).build();
 
-		createAuthCache();
-
 		connectionUser = loginUser;
 		connectionPassword = password;
 
 		authToken = authenticationToken;
+	}
+
+	private void createAuthCache(CredentialsProvider credentialsProvider) {
+		// Create AuthCache instance
+		AuthCache authCache = new BasicAuthCache();
+		// Generate BASIC scheme object and add it to the local auth cache
+		authCache.put(targetHost, new BasicScheme());
+		// Add AuthCache to the execution context
+		httpContext = HttpClientContext.create();
+		httpContext.setCredentialsProvider(credentialsProvider);
+		httpContext.setAuthCache(authCache);
 	}
 
 	@Override
@@ -102,20 +116,6 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		if (isNotConnected()) {
 			throw new NotConnectedToWebServiceException("User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
 		}
-	}
-
-	/**
-	 * Stores authentication data.
-	 */
-	private void createAuthCache() {
-		// Create AuthCache instance
-		AuthCache authCache = new BasicAuthCache();
-		// Generate BASIC scheme object and add it to the local auth cache
-		BasicScheme basicScheme = new BasicScheme();
-		authCache.put(targetHost, basicScheme);
-		// Add AuthCache to the execution context
-		httpContext = new BasicHttpContext();
-		httpContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
 	}
 
 	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException, JsonMappingException, IOException,
@@ -234,7 +234,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService
 							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
 					// Redo authorization cache for invalid or expired.
-					createAuthCache();
+					createAuthCache(credentialsProvider);
 					return getHttpResponse(webService, params, true);
 				} else {
 					throw new AuthenticationRequired("Authenticated access required.");

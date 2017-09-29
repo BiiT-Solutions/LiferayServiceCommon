@@ -36,7 +36,7 @@
 		<jackson.version>2.5.0</jackson.version>
 		<surefire.version>2.16</surefire.version>
 		<apache-commons.version>1.9</apache-commons.version>
-		<apache-httpclient.version>4.3.1</apache-httpclient.version>
+		<apache-httpclient.version>4.5.3</apache-httpclient.version>
 		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
