@@ -99,7 +99,7 @@ public class AccessTest {
 		companyService.authorizedServerConnection(HOST, LIFERAY_PROTOCOL, PORT, WEBSERVICES_PATH, AUTHENTICATION_TOKEN, LOGIN_USER, LOGIN_PASSWORD);
 		companyService.getCompanyByVirtualHost(COMPANY_VIRTUALHOST);
 	}
-	
+
 	@Test(groups = { "className" }, dependsOnGroups = { "connection" })
 	public void classNameAccess() throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
@@ -178,7 +178,7 @@ public class AccessTest {
 	public void userEdit() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		// Change some fields.
 		String language = user.getLanguageId();
-		
+
 		user.setFirstName(TEST_USER_EDIT_NAME);
 		user.setLastName(TEST_USER_EDIT_SURNAME);
 		user.setLanguageId(TEST_USER_EDIT_LANGUAGE);

@@ -34,6 +34,7 @@ import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -47,6 +48,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	public static final String LIFERAY_ORGANIZATION_GROUP_SUFIX = " LFR_ORGANIZATION";
 	private final static String NOT_AUTHORIZED_ERROR = "{\"exception\":\"Authenticated access required\"}";
 	private final static String UNRECOGNIZED_FIELD_ERROR = "Unrecognized field \"exception\"";
+	private final static String EXCEPTION_PREFIX = "{\"exception\":";
 	private HttpClient httpClientWithCredentials = null;
 	private HttpClient httpClientWithoutCredentials = null;
 	private HttpHost targetHost;
@@ -125,9 +127,13 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			ObjectMapper jsonMapper = new ObjectMapper();
 			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			if (json.contains("Authenticated access required")) {
-				LiferayClientLogger.debug(this.getClass().getName(), "User '" + connectionUser + "' with password '" + connectionPassword
-						+ "' not authorized in Liferay.");
 				throw new WebServiceAccessError("User not authorized: " + json);
+			}
+			if (json.startsWith(EXCEPTION_PREFIX)) {
+				// If @JsonIgnoreProperties(ignoreUnknown = true) is on
+				// entities, the UnrecognizedPropertyException excetpion is
+				// never launch. We need to check it here.
+				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
 			}
 			LiferayType object = new ObjectMapper().readValue(json, objectClass);
 			return object;
