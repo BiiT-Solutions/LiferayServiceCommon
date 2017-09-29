@@ -1,16 +1,11 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.Header;
-import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -30,7 +25,6 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONValue;
@@ -89,17 +83,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		connManager.setDefaultSocketConfig(defaultSocketConfig);
 		connManager.setSocketConfig(new HttpHost(host, port), socketConfig);
 
-		// Add preemtive authentication as a header.
-		String auth = connectionUser + ":" + connectionPassword;
-		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
-		String authHeader = "Basic " + new String(encodedAuth);
-		Header header = new BasicHeader(HttpHeaders.AUTHORIZATION, authHeader);
-
-		Set<Header> headers = new HashSet<Header>();
-		headers.add(header);
-
-		httpClientWithCredentials = HttpClients.custom().setDefaultHeaders(headers).setDefaultCredentialsProvider(credentialsProvider)
-				.setConnectionManager(connManager).build();
+		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).setConnectionManager(connManager).build();
+		// httpClientWithCredentials.getParams().setAuthenticationPreemptive(true);
 
 		// Creates a client without credentials.
 		SocketConfig defaultSocketConfig2 = SocketConfig.custom().setTcpNoDelay(true).build();
