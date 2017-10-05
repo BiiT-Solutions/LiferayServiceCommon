@@ -48,7 +48,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	/**
 	 * Adds an user to Liferay portal.
 	 * 
-	 * @param companySoap
+	 * @param company
 	 * @param user
 	 * @return a user.
 	 * @throws NotConnectedToWebServiceException
@@ -57,10 +57,10 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IUser<Long> addUser(Company companySoap, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+	public IUser<Long> addUser(Company company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError {
 		if (user != null) {
-			return addUser(companySoap, user.getPassword(), user.getScreenName(), user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
+			return addUser(company, user.getPassword(), user.getScreenName(), user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
 					user.getTimeZoneId(), user.getFirstName(), user.getMiddleName(), user.getLastName(), 0, 0, true, 1, 1, 1900, user.getJobTitle(),
 					new long[0], new long[0], new long[0], new long[0], false);
 		}
