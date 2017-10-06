@@ -97,6 +97,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				throw new DuplicatedLiferayElement("Already exists an organization with name '" + name + "'.");
 			}
 			// A Simple JSON Response Read
+			System.out.println(result);
 			organization = decodeFromJson(result, Organization.class);
 			organizationPool.addGroupByTag(organization, company.getUniqueName());
 			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' added.");
@@ -106,10 +107,10 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		return organization;
 	}
 
-	public IGroup<Long> addOrganization(IGroup<Long> company, Organization organization, boolean site) throws ClientProtocolException,
-			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+	public IGroup<Long> addOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
+			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		return addOrganization(company, organization.getParentOrganizationId(), organization.getName(), organization.getType(), organization.getRegionId(),
-				organization.getCountryId(), organization.getStatusId(), organization.getComments(), site);
+				organization.getCountryId(), getOrganizationStatus(), organization.getComments(), DEFAULT_CREATE_SITE);
 	}
 
 	/**
@@ -191,7 +192,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				organizationPool.addUserToGroup(user, organization);
 			}
 
-			LiferayClientLogger.info(this.getClass().getName(), "Users " + usersIds + " added to organization '" + organization.getUniqueName() + "'.");
+			LiferayClientLogger.info(this.getClass().getName(), "Users " + users + " added to organization '" + organization + "'.");
 		}
 	}
 
