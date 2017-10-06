@@ -20,27 +20,27 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	private long companyId;
 
-	private java.lang.String homeURL;
+	private String homeURL;
 
-	private java.lang.String key;
+	private String key;
 
 	private long logoId;
 
 	private int maxUsers;
 
-	private java.lang.String mx;
+	private String mx;
 
 	private long primaryKey;
 
 	private boolean system;
 
-	private java.lang.String webId;
+	private String webId;
 
 	public Company() {
 	}
 
-	public Company(long accountId, boolean active, long companyId, java.lang.String homeURL, java.lang.String key,
-			long logoId, int maxUsers, java.lang.String mx, long primaryKey, boolean system, java.lang.String webId) {
+	public Company(long accountId, boolean active, long companyId, String homeURL, String key,
+			long logoId, int maxUsers, String mx, long primaryKey, boolean system, String webId) {
 		this.accountId = accountId;
 		this.active = active;
 		this.companyId = companyId;
@@ -77,7 +77,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @return homeURL
 	 */
-	public java.lang.String getHomeURL() {
+	public String getHomeURL() {
 		return homeURL;
 	}
 
@@ -91,7 +91,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @return key
 	 */
-	public java.lang.String getKey() {
+	public String getKey() {
 		return key;
 	}
 
@@ -118,7 +118,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @return mx
 	 */
-	public java.lang.String getMx() {
+	public String getMx() {
 		return mx;
 	}
 
@@ -141,7 +141,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @return webId
 	 */
-	public java.lang.String getWebId() {
+	public String getWebId() {
 		return webId;
 	}
 
@@ -195,7 +195,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @param homeURL
 	 */
-	public void setHomeURL(java.lang.String homeURL) {
+	public void setHomeURL(String homeURL) {
 		this.homeURL = homeURL;
 	}
 
@@ -204,7 +204,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @param key
 	 */
-	public void setKey(java.lang.String key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 
@@ -231,7 +231,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @param mx
 	 */
-	public void setMx(java.lang.String mx) {
+	public void setMx(String mx) {
 		this.mx = mx;
 	}
 
@@ -258,7 +258,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 * 
 	 * @param webId
 	 */
-	public void setWebId(java.lang.String webId) {
+	public void setWebId(String webId) {
 		this.webId = webId;
 	}
 

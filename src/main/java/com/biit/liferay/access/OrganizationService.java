@@ -106,6 +106,12 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		return organization;
 	}
 
+	public IGroup<Long> addOrganization(IGroup<Long> company, Organization organization, boolean site) throws ClientProtocolException,
+			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+		return addOrganization(company, organization.getParentOrganizationId(), organization.getName(), organization.getType(), organization.getRegionId(),
+				organization.getCountryId(), organization.getStatusId(), organization.getComments(), site);
+	}
+
 	/**
 	 * Creates a new organization. Requires the use of ListTypeService.
 	 * 
