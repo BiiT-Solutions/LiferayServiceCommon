@@ -58,10 +58,16 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	private String connectionPassword;
 	private String authToken;
 	private CredentialsProvider credentialsProvider;
+	private String host;
+	private String protocol;
+	private int port;
 
 	@Override
 	public void authorizedServerConnection(String host, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
 			String password) {
+		this.host = host;
+		this.protocol = protocol;
+		this.port = port;
 
 		LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port + "', path '"
 				+ webservicesPath + "', user '" + loginUser + "', password '" + password + "'.");
@@ -324,6 +330,18 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			}
 		}
 		return listAsString;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public String getProtocol() {
+		return protocol;
+	}
+
+	public int getPort() {
+		return port;
 	}
 
 }
