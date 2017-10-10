@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.biit.liferay</groupId>
@@ -41,6 +42,7 @@
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
 		<project.scm.id>git</project.scm.id>
+		<httpmime.version>4.5.3</httpmime.version>
 		<!-- BiiT dependencies -->
 		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 		<user-manager.version>[0.1,0.2)</user-manager.version>
@@ -93,6 +95,12 @@
 			<artifactId>testng</artifactId>
 			<version>${org.testng.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- Multipart http clients (sending files) -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>${httpmime.version}</version>
 		</dependency>
 	</dependencies>
 

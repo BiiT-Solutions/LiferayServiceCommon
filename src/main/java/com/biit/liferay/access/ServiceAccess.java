@@ -1,6 +1,7 @@
 package com.biit.liferay.access;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
@@ -108,7 +111,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		authToken = authenticationToken;
 	}
 
-	private void createAuthCache(CredentialsProvider credentialsProvider) {
+	protected HttpClientContext createAuthCache(CredentialsProvider credentialsProvider) {
 		// Create AuthCache instance
 		AuthCache authCache = new BasicAuthCache();
 		// Generate BASIC scheme object and add it to the local auth cache
@@ -117,6 +120,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		httpContext = HttpClientContext.create();
 		httpContext.setCredentialsProvider(credentialsProvider);
 		httpContext.setAuthCache(authCache);
+
+		return httpContext;
 	}
 
 	@Override
@@ -214,7 +219,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	 */
 	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException, IOException,
 			NotConnectedToWebServiceException, AuthenticationRequired {
-		return getHttpResponse(webService, params, false);
+		return getHttpResponse(webService, params, true);
 	}
 
 	public String getHttpResponse(String webService, List<NameValuePair> params, boolean useAuthorization) throws ClientProtocolException, IOException,
@@ -266,6 +271,78 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 				}
 				LiferayClientLogger.debug(ServiceAccess.class.getName(), "Using parameters: [" + paramsText + "]");
 			}
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Obtained result: " + result);
+			return result;
+		}
+		return null;
+	}
+
+	/**
+	 * Used for sending files to a webservice.
+	 * 
+	 * @param webService
+	 * @param builder
+	 * @param useAuthorization
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws NotConnectedToWebServiceException
+	 * @throws AuthenticationRequired
+	 */
+	public String getHttpResponse(String webService, MultipartEntityBuilder builder) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired {
+		return getHttpResponse(webService, builder, true);
+	}
+
+	/**
+	 * Used for sending files to a webservice.
+	 * 
+	 * @param webService
+	 * @param builder
+	 * @param useAuthorization
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws NotConnectedToWebServiceException
+	 * @throws AuthenticationRequired
+	 */
+	public String getHttpResponse(String webService, MultipartEntityBuilder builder, boolean useAuthorization) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired {
+		long startTime = System.currentTimeMillis();
+
+		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+		builder.setCharset(Charset.forName("UTF-8"));
+
+		HttpPost httpPost = new HttpPost("/" + webservicesPath + webService);
+		httpPost.setEntity(builder.build());
+
+		HttpResponse response;
+		if (useAuthorization) {
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing with credentials to '" + targetHost + "' service '" + httpPost + "'!");
+			response = getAuthorizedHttpClient().execute(targetHost, httpPost, httpContext);
+		} else {
+			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing without credentials!");
+			response = getHttpClientWithoutCredentials().execute(targetHost, httpPost, httpContext);
+		}
+		if (response.getEntity() != null) {
+			// A Simple JSON Response Read
+			String result = EntityUtils.toString(response.getEntity());
+
+			if (result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_621) || result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_625)) {
+				if (!useAuthorization) {
+					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService
+							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
+					// Redo authorization cache for invalid or expired.
+					createAuthCache(credentialsProvider);
+					return getHttpResponse(webService, builder, true);
+				} else {
+					throw new AuthenticationRequired("Authenticated access required.");
+				}
+			}
+
+			// Measure response time.
+			LiferayClientLogger
+					.debug(ServiceAccess.class.getName(), "Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Obtained result: " + result);
 			return result;
 		}
