@@ -41,4 +41,9 @@ public class ClassName implements java.io.Serializable, IElement<Long> {
 	public String toString() {
 		return value;
 	}
+
+	@Override
+	public String getUniqueName() {
+		return value;
+	}
 }

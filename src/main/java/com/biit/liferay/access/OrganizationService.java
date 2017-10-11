@@ -338,7 +338,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 */
 	public Set<IGroup<Long>> getOrganizations(IGroup<Long> company) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired {
-		// Look up user in the pool.
+		// Look up organization in the pool.
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
 		if (company != null) {
 			organizations = organizationPool.getElementsByTag(company.getUniqueName());
@@ -346,7 +346,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				return organizations;
 			}
 
-			// Look up user in the liferay.
+			// Look up organizations in the liferay.
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -487,6 +487,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				// A Simple JSON Response Read
 				groups = decodeGroupListFromJson(result, Group.class);
 				organizationPool.addUserToGroups(user, groups);
+				LiferayClientLogger.debug(this.getClass().getName(), "Obtained '" + groups + "'.");
 				return groups;
 			}
 		}
