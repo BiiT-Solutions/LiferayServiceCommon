@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Site;
 
 /**
@@ -86,16 +85,16 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 		return myObjects;
 	}
 
-	public boolean deleteSite(Site site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
+	public boolean deleteSite(IGroup<Long> site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		if (site != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("groupId", Long.toString(site.getGroupId())));
+			params.add(new BasicNameValuePair("groupId", Long.toString(site.getId())));
 
 			getHttpResponse("group/delete-group", params);
 			groupPool.removeGroupsById(site.getId());
-			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getName() + "' deleted.");
+			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' deleted.");
 			return true;
 		}
 		return false;
@@ -139,10 +138,10 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 		return null;
 	}
 
-	public IGroup<Long> getSiteByFriendlyUrl(Company company, String friendlyUrl) throws NotConnectedToWebServiceException, ClientProtocolException,
+	public IGroup<Long> getSiteByFriendlyUrl(IGroup<Long> company, String friendlyUrl) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
 		if (company != null) {
-			return getSiteByFriendlyUrl(company.getCompanyId(), friendlyUrl);
+			return getSiteByFriendlyUrl(company.getId(), friendlyUrl);
 		}
 		return null;
 	}
