@@ -50,7 +50,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IGroup<Long> addSite(String name, String description, int type, String friendlyURL) throws NotConnectedToWebServiceException,
+	public IGroup<Long> addSite(String name, String description, SiteType type, String friendlyURL) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (name != null) {
 			checkConnection();
@@ -58,7 +58,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("name", name));
 			params.add(new BasicNameValuePair("description", description));
-			params.add(new BasicNameValuePair("type", type + ""));
+			params.add(new BasicNameValuePair("type", type.getType() + ""));
 			params.add(new BasicNameValuePair("friendlyURL", friendlyURL));
 			params.add(new BasicNameValuePair("site", "1"));
 			params.add(new BasicNameValuePair("active", "1"));

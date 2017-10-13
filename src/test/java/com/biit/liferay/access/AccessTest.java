@@ -131,7 +131,7 @@ public class AccessTest {
 
 	@Test(groups = { "siteAccess" }, dependsOnMethods = { "siteAccess" })
 	public void addSite() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
-		siteService.addSite(SITE_NAME, SITE_DESCRIPTION, 0, SITE_URL);
+		siteService.addSite(SITE_NAME, SITE_DESCRIPTION, SiteType.DEFAULT_PARENT_GROUP_ID, SITE_URL);
 	}
 
 	@Test(groups = { "siteAccess" }, dependsOnMethods = { "addSite" })
