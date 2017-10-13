@@ -38,6 +38,7 @@ import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -390,23 +391,22 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		}
 	}
 
-	protected String convertListToJsonString(List<String> list) {
-		String listAsString = "";
-		if (list != null) {
-			if (!list.isEmpty()) {
-				listAsString = "[";
-			}
-			for (String section : list) {
-				if (listAsString.length() > 1) {
-					listAsString += ",";
-				}
-				listAsString += section;
-			}
-			if (listAsString.length() > 0) {
-				listAsString += "]";
-			}
+	protected String convertListToJsonString(List<String> listToConvert) throws WebServiceAccessError {
+		try {
+			return new ObjectMapper().writeValueAsString(listToConvert);
+		} catch (JsonProcessingException jpe) {
+			LiferayClientLogger.error(this.getClass().getName(), "Error converting to json '" + listToConvert + "'.");
+			throw new WebServiceAccessError("Invalid parameter passed to webservice");
 		}
-		return listAsString;
+	}
+
+	protected String convertToJson(Map<Long, String[]> mapToConvert) throws WebServiceAccessError {
+		try {
+			return new ObjectMapper().writeValueAsString(mapToConvert);
+		} catch (JsonProcessingException jpe) {
+			LiferayClientLogger.error(this.getClass().getName(), "Error converting to json '" + mapToConvert + "'.");
+			throw new WebServiceAccessError("Invalid parameter passed to webservice");
+		}
 	}
 
 	public String getHost() {
