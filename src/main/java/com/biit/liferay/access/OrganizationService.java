@@ -97,7 +97,6 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				throw new DuplicatedLiferayElement("Already exists an organization with name '" + name + "'.");
 			}
 			// A Simple JSON Response Read
-			System.out.println(result);
 			organization = decodeFromJson(result, Organization.class);
 			organizationPool.addGroupByTag(organization, company.getUniqueName());
 			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' added.");
