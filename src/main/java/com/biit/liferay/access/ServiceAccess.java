@@ -396,7 +396,6 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			return "";
 		}
 		try {
-			System.out.println(new ObjectMapper().writeValueAsString(listToConvert));
 			return new ObjectMapper().writeValueAsString(listToConvert);
 		} catch (JsonProcessingException jpe) {
 			LiferayClientLogger.error(this.getClass().getName(), "Error converting to json '" + listToConvert + "'.");
