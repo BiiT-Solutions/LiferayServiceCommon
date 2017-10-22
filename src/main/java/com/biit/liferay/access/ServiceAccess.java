@@ -392,7 +392,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	}
 
 	protected String convertListToJsonString(List<String> listToConvert) throws WebServiceAccessError {
+		if (listToConvert == null) {
+			return "";
+		}
 		try {
+			System.out.println(new ObjectMapper().writeValueAsString(listToConvert));
 			return new ObjectMapper().writeValueAsString(listToConvert);
 		} catch (JsonProcessingException jpe) {
 			LiferayClientLogger.error(this.getClass().getName(), "Error converting to json '" + listToConvert + "'.");
@@ -401,8 +405,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	}
 
 	protected String convertToJson(Map<Long, String[]> mapToConvert) throws WebServiceAccessError {
+		if (mapToConvert == null) {
+			return "";
+		}
 		try {
-			return new ObjectMapper().writeValueAsString(mapToConvert);
+			return new ObjectMapper().writeValueAsString(mapToConvert).replaceAll("\\{", "").replace("\\}", "");
 		} catch (JsonProcessingException jpe) {
 			LiferayClientLogger.error(this.getClass().getName(), "Error converting to json '" + mapToConvert + "'.");
 			throw new WebServiceAccessError("Invalid parameter passed to webservice");
