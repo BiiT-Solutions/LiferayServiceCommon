@@ -391,7 +391,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		}
 	}
 
-	protected String convertListToJsonString(List<String> listToConvert) throws WebServiceAccessError {
+	protected String convertToJson(List<String> listToConvert) throws WebServiceAccessError {
 		if (listToConvert == null) {
 			return "";
 		}
