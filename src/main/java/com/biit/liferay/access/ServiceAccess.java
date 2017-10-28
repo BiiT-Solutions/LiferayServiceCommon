@@ -257,7 +257,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 				} else {
 					LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port + "', path '"
 							+ webservicesPath + "', user '" + connectionUser + "', password '" + connectionPassword + "'.");
-					throw new AuthenticationRequired("Authenticated access required.");
+					throw new AuthenticationRequired("Authenticated access failed!");
 				}
 			}
 
@@ -339,7 +339,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 					createAuthCache(credentialsProvider);
 					return getHttpResponse(webService, builder, true);
 				} else {
-					throw new AuthenticationRequired("Authenticated access required.");
+					throw new AuthenticationRequired("Authenticated access failed.");
 				}
 			}
 
