@@ -255,6 +255,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 					createAuthCache(credentialsProvider);
 					return getHttpResponse(webService, params, true);
 				} else {
+					LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port + "', path '"
+							+ webservicesPath + "', user '" + connectionUser + "', password '" + connectionPassword + "'.");
 					throw new AuthenticationRequired("Authenticated access required.");
 				}
 			}
