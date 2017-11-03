@@ -111,7 +111,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	public IGroup<Long> getSite(Long companyId, String siteName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && siteName != null) {
-			// Look up user in the pool.
+			// Look up group in the pool.
 			IGroup<Long> site = null;
 			// Look up user in the pool.
 			if (groupPool.getElementsByTag(siteName) != null && !groupPool.getElementsByTag(siteName).isEmpty()) {
