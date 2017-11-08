@@ -11,6 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
+import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.usermanager.entity.IGroup;
 import com.biit.usermanager.entity.pool.GroupPool;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
@@ -23,7 +24,7 @@ import com.liferay.portal.model.Company;
 /**
  * This class allows to obtain a liferay portal instance.
  */
-public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
+public class CompanyService extends ServiceAccess<IGroup<Long>, Company> implements ICompanyService {
 
 	private GroupPool<Long, Long> groupPool;
 
@@ -32,8 +33,7 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
 	}
 
 	@Override
-	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Company> objectClass) throws JsonParseException,
-			JsonMappingException, IOException {
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Company> objectClass) throws JsonParseException, JsonMappingException, IOException {
 		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Company>>() {
 		});
 
@@ -41,19 +41,20 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
 	}
 
 	/**
-	 * Returns the CompanySoap with the virtual host name.
+	 * Returns the Company with the virtual host name.
 	 * 
 	 * @param companyId
-	 *            the primary key of the CompanySoap
-	 * @return Returns the CompanySoap with the virtual host name.
+	 *            the primary key of the Company
+	 * @return Returns the Company with the virtual host name.
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IGroup<Long> getCompanyById(long companyId) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	@Override
+	public IGroup<Long> getCompanyById(long companyId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 
 		IGroup<Long> company = groupPool.getGroupById(companyId);
 		if (company != null) {
@@ -77,11 +78,11 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
 	}
 
 	/**
-	 * Returns the CompanySoap with the virtual host name.
+	 * Returns the Company with the virtual host name.
 	 * 
 	 * @param virtualHost
-	 *            the CompanySoap's virtual host name.
-	 * @return Returns the CompanySoap with the virtual host name.
+	 *            the Company's virtual host name.
+	 * @return Returns the Company with the virtual host name.
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
 	 * @throws JsonMappingException
@@ -90,8 +91,9 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
 	 * @throws WebServiceAccessError
 	 * 
 	 */
-	public IGroup<Long> getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException,
-			JsonParseException, JsonMappingException, IOException, AuthenticationRequired, WebServiceAccessError {
+	@Override
+	public IGroup<Long> getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException,
+			IOException, AuthenticationRequired, WebServiceAccessError {
 
 		IGroup<Long> company = null;
 		// Look up user in the pool.
@@ -118,20 +120,27 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> {
 		return null;
 	}
 
+	@Override
+	public IGroup<Long> getDefaultCompany() throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
+		return getCompanyByVirtualHost(LiferayConfigurationReader.getInstance().getVirtualHost());
+	}
+
 	/**
-	 * Returns the CompanySoap with the web domain.
+	 * Returns the Company with the web domain.
 	 * 
 	 * @param webId
-	 *            The CompanySoap's web domain
-	 * @return Returns the CompanySoap with the virtual host name.
+	 *            The Company's web domain
+	 * @return Returns the Company with the virtual host name.
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public IGroup<Long> getCompanyByWebId(String webId) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	@Override
+	public IGroup<Long> getCompanyByWebId(String webId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 
 		IGroup<Long> company = null;
 		// Look up user in the pool.
