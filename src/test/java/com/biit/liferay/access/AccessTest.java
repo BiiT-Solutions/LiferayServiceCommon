@@ -9,6 +9,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
+import com.biit.liferay.access.exceptions.InvalidParsedElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
@@ -249,7 +250,7 @@ public class AccessTest {
 
 	@Test(groups = { "organizationAccess" }, dependsOnGroups = { "companyAccess" }, dependsOnMethods = { "connectToOrganizationWebService" })
 	public void addOrganization() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
-			WebServiceAccessError, DuplicatedLiferayElement {
+			WebServiceAccessError, DuplicatedLiferayElement, InvalidParsedElement {
 		// Check previous organization.
 		int previousOrganizations = organizationService.getOrganizations(company).size();
 		// Create two organizations.
@@ -259,6 +260,10 @@ public class AccessTest {
 		Assert.assertNotNull(organization2);
 		// Test the number has increased.
 		Assert.assertTrue(organizationService.getOrganizations(company).size() == previousOrganizations + 2);
+
+		// Get organization.
+		Assert.assertEquals(organization1.getId(), organizationService.getOrganizationId(company, TEST_ORGANIZATION_1));
+		Assert.assertEquals(organization2.getId(), organizationService.getOrganizationId(company, TEST_ORGANIZATION_2));
 	}
 
 	@Test(groups = { "groupAccess" }, dependsOnMethods = { "addOrganization" }, expectedExceptions = { DuplicatedLiferayElement.class })

@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.http.client.ClientProtocolException;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
+import com.biit.liferay.access.exceptions.InvalidParsedElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
@@ -63,5 +64,8 @@ public interface IOrganizationService {
 			NotConnectedToWebServiceException, AuthenticationRequired;
 
 	int getOrganizationStatus() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError;
+
+	Long getOrganizationId(IGroup<Long> company, String name) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, InvalidParsedElement;
 
 }

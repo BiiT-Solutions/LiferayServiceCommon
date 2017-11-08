@@ -11,6 +11,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
+import com.biit.liferay.access.exceptions.InvalidParsedElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
 import com.biit.liferay.access.exceptions.PortletNotInstalledException;
@@ -308,7 +309,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	public IGroup<Long> getOrganization(Long organizationId) throws JsonParseException, JsonMappingException, IOException, NotConnectedToWebServiceException,
 			WebServiceAccessError, AuthenticationRequired {
 		if (organizationId != null && organizationId >= 0) {
-			// Look up user in the pool.
+			// Look up organization in the pool.
 			IGroup<Long> organization = organizationPool.getGroupById(organizationId);
 			if (organization != null) {
 				return organization;
@@ -411,6 +412,29 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			}
 		}
 		return organizations;
+	}
+
+	@Override
+	public Long getOrganizationId(IGroup<Long> company, String name) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, InvalidParsedElement {
+		if (company != null && name != null) {
+			// Read from Liferay.
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("companyId", Long.toString(company.getId())));
+			params.add(new BasicNameValuePair("name", name));
+
+			String result = getHttpResponse("organization/get-organization-id", params);
+			if (result != null) {
+				try {
+					return Long.parseLong(result);
+				} catch (Exception e) {
+					throw new InvalidParsedElement("The response '" + result + "' of the webservice 'organization/get-organization-id'  is invalid.");
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
