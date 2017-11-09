@@ -18,11 +18,11 @@ import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-public interface IOrganizationService {
+public interface IOrganizationService extends LiferayService {
 
-	IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, OrganizationType type, Long regionId, Long countryId, int statusId,
-			String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError, DuplicatedLiferayElement;
+	IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, OrganizationType type, Long regionId, Long countryId,
+			int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
 
 	IGroup<Long> addOrganization(IGroup<Long> company, String name) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
 			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
