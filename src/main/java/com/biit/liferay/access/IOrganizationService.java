@@ -37,7 +37,7 @@ public interface IOrganizationService extends LiferayService {
 	void addUserToOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
 			AuthenticationRequired;
 
-	void deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+	boolean deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, OrganizationNotDeletedException;
 
 	IGroup<Long> getOrganization(Long organizationId) throws JsonParseException, JsonMappingException, IOException, NotConnectedToWebServiceException,
@@ -75,5 +75,8 @@ public interface IOrganizationService extends LiferayService {
 
 	IGroup<Long> updateOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
 			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
+
+	boolean deleteOrganization(IGroup<Long> company, long organizationId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, OrganizationNotDeletedException;
 
 }

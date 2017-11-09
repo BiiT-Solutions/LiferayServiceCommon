@@ -314,24 +314,44 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws OrganizationNotDeletedException
 	 */
 	@Override
-	public void deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException,
+	public boolean deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, OrganizationNotDeletedException {
 		if (company != null && organization != null) {
+			try {
+				if (deleteOrganization(company, organization.getId())) {
+					LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' deleted.");
+					return true;
+				}
+			} catch (OrganizationNotDeletedException ond) {
+				throw new OrganizationNotDeletedException("Organization '" + organization.getUniqueName() + "' (id '" + organization.getId()
+						+ "') not deleted correctly. ");
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteOrganization(IGroup<Long> company, long organizationId) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, OrganizationNotDeletedException {
+		if (company != null) {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organizationId + ""));
 
 			String result = getHttpResponse("organization/delete-organization", params);
 
 			if (result == null || result.length() < 3) {
-				organizationPool.removeGroupByTag(company.getUniqueName(), organization);
-				LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' deleted.");
+				// Cannot remove by tag correctly. Remove everything from the
+				// pool.
+				organizationPool.reset();
+				LiferayClientLogger.info(this.getClass().getName(), "Organization with Id '" + organizationId + "' deleted.");
+				return true;
 			} else {
-				throw new OrganizationNotDeletedException("Organization '" + organization.getUniqueName() + "' (id:" + organization.getId()
-						+ ") not deleted correctly. ");
+				throw new OrganizationNotDeletedException("Organization  with id '" + organizationId + "' not deleted correctly. ");
 			}
 		}
+		return false;
 	}
 
 	@Override

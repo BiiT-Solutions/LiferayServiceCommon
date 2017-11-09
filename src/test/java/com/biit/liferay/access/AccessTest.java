@@ -286,7 +286,7 @@ public class AccessTest {
 		Organization organization = (Organization) organizationService.getOrganization(organization1.getOrganizationId());
 		Assert.assertEquals(TEST_ORGANIZATION_1, organization.getName());
 		organization.setName(TEST_ORGANIZATION_1_UPDATED);
-		organizationService.updateOrganization(company, organization);
+		organization1 = (Organization) organizationService.updateOrganization(company, organization);
 
 		organization = (Organization) organizationService.getOrganization(organization1.getOrganizationId());
 		Assert.assertEquals(TEST_ORGANIZATION_1_UPDATED, organization.getName());
