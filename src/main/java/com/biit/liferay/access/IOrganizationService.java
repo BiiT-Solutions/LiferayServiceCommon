@@ -17,6 +17,7 @@ import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.liferay.portal.model.Organization;
 
 public interface IOrganizationService extends LiferayService {
 
@@ -67,5 +68,12 @@ public interface IOrganizationService extends LiferayService {
 
 	Long getOrganizationId(IGroup<Long> company, String name) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, InvalidParsedElement;
+
+	IGroup<Long> updateOrganization(IGroup<Long> company, Long organizationId, Long parentOrganizationId, String name, OrganizationType type, Long regionId,
+			Long countryId, int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
+
+	IGroup<Long> updateOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
+			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
 
 }

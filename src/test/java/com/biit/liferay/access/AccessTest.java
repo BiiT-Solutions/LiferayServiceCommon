@@ -57,6 +57,7 @@ public class AccessTest {
 	private final static String TEST_GROUP = "TestGroup1";
 
 	private final static String TEST_ORGANIZATION_1 = "TestOrganization1";
+	private final static String TEST_ORGANIZATION_1_UPDATED = "TestOrganization1Updated";
 	private final static String TEST_ORGANIZATION_2 = "TestOrganization2";
 
 	private Company company;
@@ -277,6 +278,18 @@ public class AccessTest {
 			WebServiceAccessError {
 		Organization organization = (Organization) organizationService.getOrganization(organization1.getOrganizationId());
 		Assert.assertEquals(organization1.getName(), organization.getName());
+	}
+
+	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "addOrganization" })
+	public void updateOrganization() throws JsonParseException, JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError,
+			AuthenticationRequired, DuplicatedLiferayElement {
+		Organization organization = (Organization) organizationService.getOrganization(organization1.getOrganizationId());
+		Assert.assertEquals(TEST_ORGANIZATION_1, organization.getName());
+		organization.setName(TEST_ORGANIZATION_1_UPDATED);
+		organizationService.updateOrganization(company, organization);
+
+		organization = (Organization) organizationService.getOrganization(organization1.getOrganizationId());
+		Assert.assertEquals(TEST_ORGANIZATION_1_UPDATED, organization.getName());
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "addOrganization", "userAccess" })

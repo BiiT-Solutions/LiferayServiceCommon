@@ -113,6 +113,54 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				organization.getComments(), DEFAULT_CREATE_SITE);
 	}
 
+	@Override
+	public IGroup<Long> updateOrganization(IGroup<Long> company, Long organizationId, Long parentOrganizationId, String name, OrganizationType type,
+			Long regionId, Long countryId, int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+		if (company == null || parentOrganizationId == null || name == null || type == null || regionId == null || countryId == null || comments == null) {
+			return null;
+		}
+		// Look up user in the liferay.
+		checkConnection();
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("organizationId", organizationId + ""));
+		params.add(new BasicNameValuePair("parentOrganizationId", parentOrganizationId + ""));
+		params.add(new BasicNameValuePair("name", name));
+		params.add(new BasicNameValuePair("type", type.getName()));
+		params.add(new BasicNameValuePair("regionId", regionId + ""));
+		params.add(new BasicNameValuePair("countryId", countryId + ""));
+		params.add(new BasicNameValuePair("statusId", statusId + ""));
+		params.add(new BasicNameValuePair("comments", comments));
+		params.add(new BasicNameValuePair("site", Boolean.toString(site)));
+		params.add(new BasicNameValuePair("-serviceContext", null));
+
+		String result = getHttpResponse("organization/update-organization", params);
+		IGroup<Long> organization = null;
+		if (result != null) {
+			// Check some errors
+			if (result.contains("There is another organization named")) {
+				throw new DuplicatedLiferayElement("Already exists an organization with name '" + name + "'.");
+			}
+			// A Simple JSON Response Read
+			organization = decodeFromJson(result, Organization.class);
+			// Refresh content of the pool.
+			organizationPool.addGroupByTag(organization, company.getUniqueName());
+			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' updated.");
+			return organization;
+		}
+
+		return organization;
+	}
+
+	@Override
+	public IGroup<Long> updateOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
+			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+		return updateOrganization(company, organization.getId(), organization.getParentOrganizationId(), organization.getName(),
+				OrganizationType.getOrganizationType(organization.getType()), organization.getRegionId(), organization.getCountryId(), getOrganizationStatus(),
+				organization.getComments(), DEFAULT_CREATE_SITE);
+	}
+
 	/**
 	 * Creates a new organization. Requires the use of ListTypeService.
 	 * 
