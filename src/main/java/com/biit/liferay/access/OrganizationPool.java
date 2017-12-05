@@ -128,7 +128,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 				while (userIterator.hasNext()) {
 					nextUserId = userIterator.next();
 					Iterator<Long> organizationsIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).get(nextCompanyId)
-							.get(userIterator).keySet().iterator();
+							.get(nextUserId).keySet().iterator();
 					while (organizationsIterator.hasNext()) {
 						nextOrganizationId = organizationsIterator.next();
 						if (suborganizationsByUserTime.get(nextCompanyId) != null && suborganizationsByUserTime.get(nextCompanyId).get(nextUserId) != null
@@ -138,7 +138,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 								removeOrganizations(nextCompanyId, nextUserId, nextOrganizationId);
 							} else {
 								if ((nextCompanyId == compantId) && (nextUserId == userId) && (nextOrganizationId == parentOrganizationId)) {
-									return suborganizationsByUser.get(compantId).get(userId).get(parentOrganizationId);
+									return suborganizationsByUser.get(nextCompanyId).get(nextUserId).get(nextOrganizationId);
 								}
 							}
 						}

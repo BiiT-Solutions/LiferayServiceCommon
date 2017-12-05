@@ -324,10 +324,13 @@ public class AccessTest {
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })
 	public void getOrganizationsWithoutParent() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
-		Set<IGroup<Long>> organizations = organizationService.getOrganizations(company, user, 0l);
+		Set<IGroup<Long>> organizations = organizationService.getOrganizations(company, user, null);
 		Assert.assertEquals(2, organizations.size());
 		Assert.assertTrue(organizations.contains(organization1));
 		Assert.assertTrue(organizations.contains(organization2));
+		
+		organizations = organizationService.getOrganizations(company, user, organization1.getId());
+		Assert.assertEquals(0, organizations.size());
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })
