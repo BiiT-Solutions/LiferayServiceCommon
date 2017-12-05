@@ -12,6 +12,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.UserDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -56,9 +57,10 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws DuplicatedLiferayElement
 	 */
 	public IUser<Long> addUser(Company company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError {
+			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		if (user != null) {
 			return addUser(company, user.getPassword(), user.getScreenName(), user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
 					user.getTimeZoneId(), user.getFirstName(), user.getMiddleName(), user.getLastName(), 0, 0, true, 1, 1, 1900, user.getJobTitle(),
@@ -87,11 +89,12 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws DuplicatedLiferayElement
 	 */
 	public IUser<Long> addUser(IGroup<Long> company, String password, String screenName, String emailAddress, long facebookId, String openId, String locale,
 			String firstName, String middleName, String lastName, int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth,
 			int birthdayYear, String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		checkConnection();
 		boolean autoPassword = false;
 		boolean autoScreenName = false;
@@ -133,12 +136,19 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 		IUser<Long> user = null;
 		if (result != null) {
 			// A Simple JSON Response Read
-			user = decodeFromJson(result, User.class);
+			try {
+				user = decodeFromJson(result, User.class);
+			} catch (WebServiceAccessError wsa) {
+				if (wsa.getMessage().contains("DuplicateUserScreenNameException")) {
+					throw new DuplicatedLiferayElement("Already exists a user with screenName '" + screenName + "'.");
+				} else {
+					throw wsa;
+				}
+			}
 			userPool.addUser(user);
 			LiferayClientLogger.info(this.getClass().getName(), "IUser<Long> '" + user.getUniqueName() + "' added.");
 			return user;
 		}
-
 		return user;
 	}
 

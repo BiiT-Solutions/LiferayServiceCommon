@@ -86,6 +86,14 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (organizationId ^ (organizationId >>> 32));
+		return result;
+	}
 
 	/**
 	 * Gets the comments value for this OrganizationSoap.
@@ -239,14 +247,6 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 	 */
 	public java.lang.String getUuid() {
 		return uuid;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (organizationId ^ (organizationId >>> 32));
-		return result;
 	}
 
 	/**

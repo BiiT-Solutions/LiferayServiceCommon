@@ -9,6 +9,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
@@ -49,9 +50,10 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	 * @throws IOException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws DuplicatedLiferayElement
 	 */
 	public IGroup<Long> addSite(String name, String description, SiteType type, String friendlyURL) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		if (name != null) {
 			checkConnection();
 
@@ -68,7 +70,16 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			IGroup<Long> site = null;
 			if (result != null) {
 				// A Simple JSON Response Read
-				site = decodeFromJson(result, Site.class);
+				try {
+					site = decodeFromJson(result, Site.class);
+				} catch (WebServiceAccessError wsa) {
+					if (wsa.getMessage().contains("DuplicateGroupException")) {
+						throw new DuplicatedLiferayElement("Already exists a site with name '" + name + "'.");
+					} else {
+						throw wsa;
+					}
+				}
+
 				groupPool.addGroup(site);
 				LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' added.");
 				return site;
