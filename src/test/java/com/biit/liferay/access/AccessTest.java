@@ -60,7 +60,7 @@ public class AccessTest {
 	private final static String TEST_ORGANIZATION_1_UPDATED = "TestOrganization1Updated";
 	private final static String TEST_ORGANIZATION_2 = "TestOrganization2";
 	private final static String TEST_ORGANIZATION_3 = "TestOrganization3";
-	
+
 	private Company company;
 	private User user;
 	private UserGroup group;
@@ -327,10 +327,14 @@ public class AccessTest {
 		Assert.assertEquals(2, organizations.size());
 		Assert.assertTrue(organizations.contains(organization1));
 		Assert.assertTrue(organizations.contains(organization2));
-		//TODO -this should work, Something on the pool is not working properly, if we remove this 2 lines, the test passes
-		organizations = organizationService.getOrganizations(company, user, organization1.getId());
+
+	}
+
+	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })
+	public void getOrganizationsWithParent() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+		Set<IGroup<Long>> organizations = organizationService.getOrganizations(company, user, organization1.getId());
 		Assert.assertEquals(0, organizations.size());
-		
+
 		organization3 = (Organization) organizationService.addOrganization(company, organization1.getId(), TEST_ORGANIZATION_3, OrganizationType.REGULAR_ORGANIZATION,
 				organization1.getRegionId(), organization1.getCountryId(), organizationService.getOrganizationStatus(), "", false);
 		Assert.assertNotNull(organization3);
@@ -340,8 +344,6 @@ public class AccessTest {
 		organizations = organizationService.getOrganizations(company, user, organization1.getId());
 		Assert.assertEquals(1, organizations.size());
 		Assert.assertEquals(organization3.getId(), organizations.iterator().next().getId());
-		
-
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })

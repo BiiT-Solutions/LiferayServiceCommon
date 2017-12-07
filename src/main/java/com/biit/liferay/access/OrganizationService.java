@@ -51,9 +51,9 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, OrganizationType type, Long regionId, Long countryId,
-			int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+	public IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, OrganizationType type, Long regionId, Long countryId, int statusId,
+			String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
+			DuplicatedLiferayElement {
 		if (company == null || parentOrganizationId == null || name == null || type == null || regionId == null || countryId == null || comments == null) {
 			return null;
 		}
@@ -80,6 +80,9 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			// A Simple JSON Response Read
 			organization = decodeFromJson(result, Organization.class);
 			organizationPool.addGroupByTag(organization, company.getUniqueName());
+			if (parentOrganizationId.intValue() != 0) {
+				organizationPool.removeSuborganizations(company.getId(), parentOrganizationId);
+			}
 			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' added.");
 			return organization;
 		}
@@ -87,17 +90,16 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		return organization;
 	}
 
-	public IGroup<Long> addOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
-			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
-		return addOrganization(company, organization.getParentOrganizationId(), organization.getName(),
-				OrganizationType.getOrganizationType(organization.getType()), organization.getRegionId(), organization.getCountryId(), getOrganizationStatus(),
-				organization.getComments(), DEFAULT_CREATE_SITE);
+	public IGroup<Long> addOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException, IOException,
+			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+		return addOrganization(company, organization.getParentOrganizationId(), organization.getName(), OrganizationType.getOrganizationType(organization.getType()),
+				organization.getRegionId(), organization.getCountryId(), getOrganizationStatus(), organization.getComments(), DEFAULT_CREATE_SITE);
 	}
 
 	@Override
-	public IGroup<Long> updateOrganization(IGroup<Long> company, Long organizationId, Long parentOrganizationId, String name, OrganizationType type,
-			Long regionId, Long countryId, int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+	public IGroup<Long> updateOrganization(IGroup<Long> company, Long organizationId, Long parentOrganizationId, String name, OrganizationType type, Long regionId,
+			Long countryId, int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		if (company == null || parentOrganizationId == null || name == null || type == null || regionId == null || countryId == null || comments == null) {
 			return null;
 		}
@@ -150,8 +152,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public boolean addOrganization(IGroup<Long> site, IUser<Long> user, IGroup<Long> organization) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired {
+	public boolean addOrganization(IGroup<Long> site, IUser<Long> user, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired {
 		if (site != null && user != null && organization != null) {
 			// Look up user in the liferay.
 			checkConnection();
@@ -207,8 +209,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public void addUserToOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public void addUserToOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
+			AuthenticationRequired {
 		List<IUser<Long>> users = new ArrayList<IUser<Long>>();
 		users.add(user);
 		addUsersToOrganization(users, organization);
@@ -253,8 +255,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public boolean deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, OrganizationNotDeletedException {
+	public boolean deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, OrganizationNotDeletedException {
 		if (company != null && organization != null) {
 			try {
 				if (deleteOrganization(company, organization.getId())) {
@@ -270,8 +272,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public boolean deleteOrganization(IGroup<Long> company, long organizationId) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, OrganizationNotDeletedException {
+	public boolean deleteOrganization(IGroup<Long> company, long organizationId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, OrganizationNotDeletedException {
 		if (company != null) {
 			checkConnection();
 
@@ -357,8 +359,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public Set<IGroup<Long>> getOrganizations(IGroup<Long> site, IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, PortletNotInstalledException {
+	public Set<IGroup<Long>> getOrganizations(IGroup<Long> site, IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, PortletNotInstalledException {
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
 
 		if (site != null && user != null) {
@@ -412,8 +414,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	}
 
 	@Override
-	public int getOrganizationStatus() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public int getOrganizationStatus() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (organizationStatus == null) {
 			try {
 				organizationStatus = listTypeService.getFullMemberStatus();
@@ -533,13 +534,12 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			if (result != null) {
 				// Get organizations with selected parent.
 				organizations = decodeListFromJson(result, Organization.class);
-
 				// Obtain organizations for the user.
 				Set<IGroup<Long>> userOrganizations = getUserOrganizations(user);
 				organizations.retainAll(userOrganizations);
 
 				// Add to pool.
-				organizationPool.addOrganizations(company.getId(), user.getId(), parentOrganizationId, userOrganizations);
+				organizationPool.addOrganizations(company.getId(), user.getId(), parentOrganizationId, organizations);
 
 				return organizations;
 			}
@@ -559,8 +559,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	 * @throws AuthenticationRequired
 	 */
 	@Override
-	public void removeUserFromOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public void removeUserFromOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
+			AuthenticationRequired {
 		if (user != null && organization != null) {
 			// Look up user in the liferay.
 			List<IUser<Long>> users = new ArrayList<IUser<Long>>();

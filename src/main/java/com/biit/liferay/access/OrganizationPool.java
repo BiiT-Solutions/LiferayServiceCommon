@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.biit.usermanager.entity.IGroup;
@@ -127,8 +128,8 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 				Iterator<Long> userIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).get(nextCompanyId).keySet().iterator();
 				while (userIterator.hasNext()) {
 					nextUserId = userIterator.next();
-					Iterator<Long> organizationsIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).get(nextCompanyId)
-							.get(nextUserId).keySet().iterator();
+					Iterator<Long> organizationsIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).get(nextCompanyId).get(nextUserId)
+							.keySet().iterator();
 					while (organizationsIterator.hasNext()) {
 						nextOrganizationId = organizationsIterator.next();
 						if (suborganizationsByUserTime.get(nextCompanyId) != null && suborganizationsByUserTime.get(nextCompanyId).get(nextUserId) != null
@@ -197,6 +198,21 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 			suborganizationsByUser.get(companyId).get(userId).remove(parentOrganizationId);
 			// Remove time mark.
 			suborganizationsByUserTime.get(companyId).get(userId).remove(parentOrganizationId);
+		}
+	}
+
+	public void removeSuborganizations(long companyId, long parentOrganizationId) {
+		if (suborganizationsByUserTime.get(companyId) != null) {
+			for (Entry<Long, Map<Long, Set<IGroup<Long>>>> userOrganizationsEntries : suborganizationsByUser.get(companyId).entrySet()) {
+				if (userOrganizationsEntries.getValue().get(parentOrganizationId) != null) {
+					userOrganizationsEntries.getValue().remove(parentOrganizationId);
+				}
+			}
+			for (Entry<Long, Map<Long, Long>> userOrganizationsEntries : suborganizationsByUserTime.get(companyId).entrySet()) {
+				if (userOrganizationsEntries.getValue().get(parentOrganizationId) != null) {
+					userOrganizationsEntries.getValue().remove(parentOrganizationId);
+				}
+			}
 		}
 	}
 
