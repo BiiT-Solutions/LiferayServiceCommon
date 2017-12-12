@@ -125,10 +125,10 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 			Iterator<Long> companyIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).keySet().iterator();
 			while (companyIterator.hasNext()) {
 				nextCompanyId = companyIterator.next();
-				Iterator<Long> userIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).get(nextCompanyId).keySet().iterator();
+				Iterator<Long> userIterator = new HashMap<Long, Map<Long, Long>>(suborganizationsByUserTime.get(nextCompanyId)).keySet().iterator();
 				while (userIterator.hasNext()) {
 					nextUserId = userIterator.next();
-					Iterator<Long> organizationsIterator = new HashMap<Long, Map<Long, Map<Long, Long>>>(suborganizationsByUserTime).get(nextCompanyId).get(nextUserId)
+					Iterator<Long> organizationsIterator = new HashMap<Long, Long>(suborganizationsByUserTime.get(nextCompanyId).get(nextUserId))
 							.keySet().iterator();
 					while (organizationsIterator.hasNext()) {
 						nextOrganizationId = organizationsIterator.next();
@@ -158,7 +158,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 			Iterator<Long> siteIterator = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).keySet().iterator();
 			while (siteIterator.hasNext()) {
 				nextSiteId = siteIterator.next();
-				Iterator<Long> userEnum = new HashMap<Long, Map<Long, Long>>(organizationSiteAndUsersTime).get(nextSiteId).keySet().iterator();
+				Iterator<Long> userEnum = new HashMap<Long, Long>(organizationSiteAndUsersTime.get(nextSiteId)).keySet().iterator();
 				while (userEnum.hasNext()) {
 					nextUserId = userEnum.next();
 					if (organizationSiteAndUsersTime.get(nextSiteId) != null && organizationSiteAndUsersTime.get(nextSiteId).get(nextUserId) != null) {
