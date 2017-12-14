@@ -34,7 +34,7 @@ import com.liferay.portal.model.User;
 /**
  * This class allows to manage users from Liferay portal.
  */
-public class UserService extends ServiceAccess<IUser<Long>, User> {
+public class UserService extends ServiceAccess<IUser<Long>, User> implements IUserService {
 	private ContactService contactService;
 	private OrganizationService organizationService;
 
@@ -59,6 +59,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
+	@Override
 	public IUser<Long> addUser(Company company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		if (user != null) {
@@ -91,10 +92,12 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
+	@Override
 	public IUser<Long> addUser(IGroup<Long> company, String password, String screenName, String emailAddress, long facebookId, String openId, String locale,
 			String firstName, String middleName, String lastName, int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth,
 			int birthdayYear, String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
+			DuplicatedLiferayElement {
 		checkConnection();
 		boolean autoPassword = false;
 		boolean autoScreenName = false;
@@ -196,6 +199,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 */
+	@Override
 	public void deleteUser(IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		if (user != null) {
 			checkConnection();
@@ -258,6 +262,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
+	@Override
 	public IUser<Long> getUserByEmailAddress(IGroup<Long> company, String emailAddress) throws NotConnectedToWebServiceException, ClientProtocolException,
 			IOException, AuthenticationRequired, WebServiceAccessError {
 		if (company != null && emailAddress != null) {
@@ -300,6 +305,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
+	@Override
 	public IUser<Long> getUserById(long userId) throws NotConnectedToWebServiceException, UserDoesNotExistException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError {
 		if (userId >= 0) {
@@ -342,6 +348,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
+	@Override
 	public IUser<Long> getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError {
 		screenName = screenName.toLowerCase();
@@ -383,6 +390,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
+	@Override
 	public List<IUser<Long>> getUsers(Long roleId) throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired,
 			WebServiceAccessError {
 		List<IUser<Long>> users = new ArrayList<IUser<Long>>();
