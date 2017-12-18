@@ -37,7 +37,7 @@ public interface IUserService {
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
 			DuplicatedLiferayElement;
 
-	IUser<Long> addUser(Company company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+	IUser<Long> addUser(IGroup<Long> company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError, DuplicatedLiferayElement;
 
 }

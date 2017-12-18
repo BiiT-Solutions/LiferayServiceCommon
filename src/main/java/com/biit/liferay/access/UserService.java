@@ -60,7 +60,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 	 * @throws DuplicatedLiferayElement
 	 */
 	@Override
-	public IUser<Long> addUser(Company company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+	public IUser<Long> addUser(IGroup<Long> company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
 		if (user != null) {
 			return addUser(company, user.getPassword(), user.getScreenName(), user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
