@@ -28,7 +28,8 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	}
 
 	@Override
-	public Set<Contact> decodeListFromJson(String json, Class<Contact> objectClass) throws JsonParseException, JsonMappingException, IOException {
+	public Set<Contact> decodeListFromJson(String json, Class<Contact> objectClass)
+			throws JsonParseException, JsonMappingException, IOException {
 		Set<Contact> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Contact>>() {
 		});
 		return myObjects;
@@ -45,8 +46,8 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Contact getContact(Long contactId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public Contact getContact(Long contactId) throws NotConnectedToWebServiceException, ClientProtocolException,
+			IOException, AuthenticationRequired, WebServiceAccessError {
 		if (contactId != null) {
 			// Look up user in the liferay.
 			Contact contact = contactPool.getElement(contactId);
@@ -85,8 +86,8 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
-			WebServiceAccessError {
+	public Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
 		if (user != null) {
 			return getContact(user.getContactId());
 		}

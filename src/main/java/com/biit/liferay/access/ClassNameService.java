@@ -29,8 +29,8 @@ public class ClassNameService extends ServiceAccess<IElement<Long>, ClassName> {
 	}
 
 	@Override
-	public Set<IElement<Long>> decodeListFromJson(String json, Class<ClassName> objectClass) throws JsonParseException,
-			JsonMappingException, IOException {
+	public Set<IElement<Long>> decodeListFromJson(String json, Class<ClassName> objectClass)
+			throws JsonParseException, JsonMappingException, IOException {
 		Set<IElement<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<ClassName>>() {
 		});
 
@@ -61,5 +61,10 @@ public class ClassNameService extends ServiceAccess<IElement<Long>, ClassName> {
 			return className;
 		}
 		return null;
+	}
+
+	@Override
+	public void reset() {
+
 	}
 }

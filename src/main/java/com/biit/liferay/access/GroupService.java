@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Group;
 
-public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
+public class GroupService extends ServiceAccess<IGroup<Long>, Group> implements IGroupService {
 
 	private GroupPool<Long, Long> groupPool;
 
@@ -29,13 +29,14 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
 	}
 
 	@Override
-	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Group> objectClass) throws JsonParseException,
-			JsonMappingException, IOException {
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Group> objectClass)
+			throws JsonParseException, JsonMappingException, IOException {
 		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
 		});
 		return myObjects;
 	}
 
+	@Override
 	public IGroup<Long> getGroup(Long companyId, String groupName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && groupName != null) {
@@ -64,6 +65,7 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> {
 		return null;
 	}
 
+	@Override
 	public void reset() {
 		groupPool.reset();
 	}

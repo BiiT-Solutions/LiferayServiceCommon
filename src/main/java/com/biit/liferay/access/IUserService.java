@@ -2,6 +2,7 @@ package com.biit.liferay.access;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -15,29 +16,36 @@ import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 
-public interface IUserService {
+public interface IUserService extends IServiceAccess {
 
-	List<IUser<Long>> getUsers(Long roleId) throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired,
+	List<IUser<Long>> getUsers(Long roleId) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError;
+
+	IUser<Long> getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError;
+
+	IUser<Long> getUserById(long userId) throws NotConnectedToWebServiceException, UserDoesNotExistException,
+			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError;
+
+	IUser<Long> getUserByEmailAddress(IGroup<Long> company, String emailAddress)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError;
 
-	IUser<Long> getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError;
+	void deleteUser(IUser<Long> user)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
 
-	IUser<Long> getUserById(long userId) throws NotConnectedToWebServiceException, UserDoesNotExistException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError;
-
-	IUser<Long> getUserByEmailAddress(IGroup<Long> company, String emailAddress) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError;
-
-	void deleteUser(IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
-
-	IUser<Long> addUser(IGroup<Long> company, String password, String screenName, String emailAddress, long facebookId, String openId, String locale,
-			String firstName, String middleName, String lastName, int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth,
-			int birthdayYear, String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement;
-
-	IUser<Long> addUser(IGroup<Long> company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+	IUser<Long> addUser(IGroup<Long> company, String password, String screenName, String emailAddress, long facebookId,
+			String openId, String locale, String firstName, String middleName, String lastName, int prefixId,
+			int suffixId, boolean male, int birthdayDay, int birthdayMonth, int birthdayYear, String jobTitle,
+			long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError, DuplicatedLiferayElement;
+
+	IUser<Long> addUser(IGroup<Long> company, User user)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement;
+
+	Set<IUser<Long>> getCompanyUsers(IGroup<Long> company)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired;
 
 }

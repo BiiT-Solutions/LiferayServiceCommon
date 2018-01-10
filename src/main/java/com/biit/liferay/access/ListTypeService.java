@@ -26,8 +26,8 @@ public class ListTypeService extends ServiceAccess<ListType, ListType> {
 	}
 
 	@Override
-	public Set<ListType> decodeListFromJson(String json, Class<ListType> objectClass) throws JsonParseException,
-			JsonMappingException, IOException {
+	public Set<ListType> decodeListFromJson(String json, Class<ListType> objectClass)
+			throws JsonParseException, JsonMappingException, IOException {
 		Set<ListType> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<ListType>>() {
 		});
 		return myObjects;
@@ -53,6 +53,10 @@ public class ListTypeService extends ServiceAccess<ListType, ListType> {
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public void reset() {
 	}
 
 }

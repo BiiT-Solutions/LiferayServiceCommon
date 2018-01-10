@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.liferay.portal.model.Organization;
 
-public interface IOrganizationService extends LiferayService {
+public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Creates a new organization.
@@ -50,9 +50,10 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
-	IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, OrganizationType type, Long regionId, Long countryId,
-			int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
+	IGroup<Long> addOrganization(IGroup<Long> company, Long parentOrganizationId, String name, OrganizationType type,
+			Long regionId, Long countryId, int statusId, String comments, boolean site)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement;
 
 	/**
 	 * Creates a new organization.
@@ -67,11 +68,11 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
 	 */
-	IGroup<Long> addOrganization(IGroup<Long> company, String name) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
-			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
+	IGroup<Long> addOrganization(IGroup<Long> company, String name) throws ClientProtocolException, IOException,
+			NotConnectedToWebServiceException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
 
-	boolean addOrganization(IGroup<Long> site, IUser<Long> user, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired;
+	boolean addOrganization(IGroup<Long> site, IUser<Long> user, IGroup<Long> organization)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
 
 	/**
 	 * Assign a list of users to an organization.
@@ -85,8 +86,8 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	void addUsersToOrganization(List<IUser<Long>> users, IGroup<Long> organization) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired;
+	void addUsersToOrganization(List<IUser<Long>> users, IGroup<Long> organization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired;
 
 	/**
 	 * Assign a user to an organization.
@@ -100,8 +101,8 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	void addUserToOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
-			AuthenticationRequired;
+	void addUserToOrganization(IUser<Long> user, IGroup<Long> organization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired;
 
 	/**
 	 * Deletes an organization in Liferay database.
@@ -117,8 +118,9 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws AuthenticationRequired
 	 * @throws OrganizationNotDeletedException
 	 */
-	boolean deleteOrganization(IGroup<Long> company, IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, OrganizationNotDeletedException;
+	boolean deleteOrganization(IGroup<Long> company, IGroup<Long> organization)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			OrganizationNotDeletedException;
 
 	/**
 	 * Gets an organization by its id.
@@ -133,8 +135,8 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws JsonParseException
 	 * @throws AuthenticationRequired
 	 */
-	IGroup<Long> getOrganization(Long organizationId) throws JsonParseException, JsonMappingException, IOException, NotConnectedToWebServiceException,
-			WebServiceAccessError, AuthenticationRequired;
+	IGroup<Long> getOrganization(Long organizationId) throws JsonParseException, JsonMappingException, IOException,
+			NotConnectedToWebServiceException, WebServiceAccessError, AuthenticationRequired;
 
 	/**
 	 * Gets all organizations of a company.
@@ -147,8 +149,8 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws IOException
 	 * @throws AuthenticationRequired
 	 */
-	Set<IGroup<Long>> getOrganizations(IGroup<Long> company) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired;
+	Set<IGroup<Long>> getOrganizations(IGroup<Long> company)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
 
 	/**
 	 * Gets the organizations of a user in a site.
@@ -163,11 +165,11 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws IOException
 	 * @throws AuthenticationRequired
 	 */
-	Set<IGroup<Long>> getOrganizations(IGroup<Long> site, IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, PortletNotInstalledException;
+	Set<IGroup<Long>> getOrganizations(IGroup<Long> site, IUser<Long> user) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, PortletNotInstalledException;
 
-	Set<IUser<Long>> getOrganizationUsers(IGroup<Long> organization) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired;
+	Set<IUser<Long>> getOrganizationUsers(IGroup<Long> organization)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
 
 	/**
 	 * Gets all organizations of a user.
@@ -180,8 +182,8 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	Set<IGroup<Long>> getUserOrganizationGroups(IUser<Long> user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired;
+	Set<IGroup<Long>> getUserOrganizationGroups(IUser<Long> user)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
 
 	/**
 	 * Gets all organizations where the user pertains to.
@@ -195,14 +197,14 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	Set<IGroup<Long>> getUserOrganizations(IUser<Long> user) throws ClientProtocolException, NotConnectedToWebServiceException, IOException,
-			AuthenticationRequired, WebServiceAccessError;
+	Set<IGroup<Long>> getUserOrganizations(IUser<Long> user) throws ClientProtocolException,
+			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError;
 
-	void removeUserFromOrganization(IUser<Long> user, IGroup<Long> organization) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired;
+	void removeUserFromOrganization(IUser<Long> user, IGroup<Long> organization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired;
 
-	void removeUsersFromOrganization(List<IUser<Long>> users, IGroup<Long> organization) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired;
+	void removeUsersFromOrganization(List<IUser<Long>> users, IGroup<Long> organization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired;
 
 	/**
 	 * Obtains the default status from the database using a webservice.
@@ -214,32 +216,35 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	int getOrganizationStatus() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError;
+	int getOrganizationStatus() throws ClientProtocolException, NotConnectedToWebServiceException, IOException,
+			AuthenticationRequired, WebServiceAccessError;
 
-	Long getOrganizationId(IGroup<Long> company, String name) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, InvalidParsedElement;
+	Long getOrganizationId(IGroup<Long> company, String name) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, InvalidParsedElement;
 
-	IGroup<Long> updateOrganization(IGroup<Long> company, Long organizationId, Long parentOrganizationId, String name, OrganizationType type, Long regionId,
-			Long countryId, int statusId, String comments, boolean site) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
+	IGroup<Long> updateOrganization(IGroup<Long> company, Long organizationId, Long parentOrganizationId, String name,
+			OrganizationType type, Long regionId, Long countryId, int statusId, String comments, boolean site)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement;
 
-	IGroup<Long> updateOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
-			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
+	IGroup<Long> updateOrganization(IGroup<Long> company, Organization organization)
+			throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement;
 
-	boolean deleteOrganization(IGroup<Long> company, long organizationId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, OrganizationNotDeletedException;
+	boolean deleteOrganization(IGroup<Long> company, long organizationId) throws NotConnectedToWebServiceException,
+			ClientProtocolException, IOException, AuthenticationRequired, OrganizationNotDeletedException;
 
 	/**
-	 * Gets the suborganizations/organizations for a user depending on the value
-	 * of {@code parentOrganizationId}
+	 * Gets the suborganizations/organizations for a user depending on the value of
+	 * {@code parentOrganizationId}
 	 * 
 	 * @param company
 	 *            Company where search the organizations
 	 * @param user
 	 *            user that belongs to the organizations to search
 	 * @param parentOrganizationId
-	 *            if null, search only parent organizations, else search a
-	 *            children organizations.
+	 *            if null, search only parent organizations, else search a children
+	 *            organizations.
 	 * @return a set of organizations.
 	 * @throws ClientProtocolException
 	 * @throws NotConnectedToWebServiceException
@@ -247,7 +252,8 @@ public interface IOrganizationService extends LiferayService {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	Set<IGroup<Long>> getOrganizations(IGroup<Long> company, IUser<Long> user, Long parentOrganizationId) throws ClientProtocolException,
-			NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError;
+	Set<IGroup<Long>> getOrganizations(IGroup<Long> company, IUser<Long> user, Long parentOrganizationId)
+			throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError;
 
 }
