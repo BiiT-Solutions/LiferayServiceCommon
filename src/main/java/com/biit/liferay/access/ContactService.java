@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
+import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -19,7 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 
-public class ContactService extends ServiceAccess<Contact, Contact> {
+@Component
+public class ContactService extends ServiceAccess<Contact, Contact> implements IContactService {
 
 	private final ContactPool contactPool;
 
@@ -28,8 +30,7 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	}
 
 	@Override
-	public Set<Contact> decodeListFromJson(String json, Class<Contact> objectClass)
-			throws JsonParseException, JsonMappingException, IOException {
+	public Set<Contact> decodeListFromJson(String json, Class<Contact> objectClass) throws JsonParseException, JsonMappingException, IOException {
 		Set<Contact> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Contact>>() {
 		});
 		return myObjects;
@@ -46,8 +47,9 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Contact getContact(Long contactId) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError {
+	@Override
+	public Contact getContact(Long contactId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		if (contactId != null) {
 			// Look up user in the liferay.
 			Contact contact = contactPool.getElement(contactId);
@@ -71,6 +73,7 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 		return null;
 	}
 
+	@Override
 	public void reset() {
 		contactPool.reset();
 	}
@@ -86,8 +89,9 @@ public class ContactService extends ServiceAccess<Contact, Contact> {
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 */
-	public Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError {
+	@Override
+	public Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		if (user != null) {
 			return getContact(user.getContactId());
 		}
