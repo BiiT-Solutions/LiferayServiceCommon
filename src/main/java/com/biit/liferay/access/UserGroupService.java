@@ -6,10 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Named;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
@@ -29,7 +30,7 @@ import com.liferay.portal.model.UserGroup;
 /**
  * This class allows to manage group from Liferay portal.
  */
-@Component
+@Named
 public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> implements IUserGroupService {
 	private GroupPool<Long, Long> groupPool;
 

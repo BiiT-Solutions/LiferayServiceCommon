@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Named;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Group;
 
-@Component
+@Named
 public class GroupService extends ServiceAccess<IGroup<Long>, Group> implements IGroupService {
 
 	private GroupPool<Long, Long> groupPool;
@@ -31,16 +32,15 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> implements 
 	}
 
 	@Override
-	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Group> objectClass)
-			throws JsonParseException, JsonMappingException, IOException {
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Group> objectClass) throws JsonParseException, JsonMappingException, IOException {
 		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
 		});
 		return myObjects;
 	}
 
 	@Override
-	public IGroup<Long> getGroup(Long companyId, String groupName) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getGroup(Long companyId, String groupName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
 		if (companyId != null && groupName != null) {
 
 			Set<IGroup<Long>> groups = groupPool.getElementsByTag(groupName);

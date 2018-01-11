@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Named;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -25,7 +26,7 @@ import com.liferay.portal.model.Company;
 /**
  * This class allows to obtain a liferay portal instance.
  */
-@Component
+@Named
 public class CompanyService extends ServiceAccess<IGroup<Long>, Company> implements ICompanyService {
 
 	private GroupPool<Long, Long> groupPool;
@@ -35,8 +36,7 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 	}
 
 	@Override
-	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Company> objectClass)
-			throws JsonParseException, JsonMappingException, IOException {
+	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Company> objectClass) throws JsonParseException, JsonMappingException, IOException {
 		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Company>>() {
 		});
 
@@ -56,8 +56,8 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 	 * @throws WebServiceAccessError
 	 */
 	@Override
-	public IGroup<Long> getCompanyById(long companyId) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getCompanyById(long companyId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 
 		IGroup<Long> company = groupPool.getGroupById(companyId);
 		if (company != null) {
@@ -95,8 +95,8 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 	 * 
 	 */
 	@Override
-	public IGroup<Long> getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException,
-			JsonParseException, JsonMappingException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getCompanyByVirtualHost(String virtualHost) throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException,
+			IOException, AuthenticationRequired, WebServiceAccessError {
 
 		IGroup<Long> company = null;
 		// Look up user in the pool.
@@ -124,8 +124,8 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 	}
 
 	@Override
-	public IGroup<Long> getDefaultCompany() throws NotConnectedToWebServiceException, JsonParseException,
-			JsonMappingException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getDefaultCompany() throws NotConnectedToWebServiceException, JsonParseException, JsonMappingException, IOException,
+			AuthenticationRequired, WebServiceAccessError {
 		return getCompanyByVirtualHost(LiferayConfigurationReader.getInstance().getVirtualHost());
 	}
 
@@ -142,8 +142,8 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 	 * @throws WebServiceAccessError
 	 */
 	@Override
-	public IGroup<Long> getCompanyByWebId(String webId) throws NotConnectedToWebServiceException,
-			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public IGroup<Long> getCompanyByWebId(String webId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 
 		IGroup<Long> company = null;
 		// Look up user in the pool.

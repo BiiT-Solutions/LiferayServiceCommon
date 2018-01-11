@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.biit.liferay</groupId>
 	<artifactId>liferay-service-common</artifactId>
 	<packaging>jar</packaging>
-	<version>0.8.2-SNAPSHOT</version>
+	<version>0.8.1-SNAPSHOT</version>
 	<name>Liferay Client Common Utils</name>
 	<description>Basic functionality for any Liferay client</description>
 
@@ -42,7 +43,6 @@
 		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
 		<project.scm.id>git</project.scm.id>
 		<httpmime.version>4.5.3</httpmime.version>
-		<org.springframework.version>4.1.5.RELEASE</org.springframework.version>
 		<!-- BiiT dependencies -->
 		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 		<user-manager.version>[0.1,0.2)</user-manager.version>
@@ -61,9 +61,9 @@
 			<version>${apache-commons.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework.version}</version>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
 		</dependency>
 		<!-- File access -->
 		<dependency>

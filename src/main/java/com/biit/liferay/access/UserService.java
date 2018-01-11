@@ -8,10 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Named;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
@@ -35,7 +36,7 @@ import com.liferay.portal.model.User;
 /**
  * This class allows to manage users from Liferay portal.
  */
-@Component
+@Named
 public class UserService extends ServiceAccess<IUser<Long>, User> implements IUserService {
 	private ContactService contactService;
 	private OrganizationService organizationService;
