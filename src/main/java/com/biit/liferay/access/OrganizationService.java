@@ -9,6 +9,7 @@ import java.util.Set;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
+import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.InvalidParsedElement;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.User;
  * Manage all Organization Services. As some organization's properties are
  * defined as a group, also manage some group services.
  */
+@Component
 public class OrganizationService extends ServiceAccess<IGroup<Long>, Organization> implements IOrganizationService {
 	private final static long DEFAULT_PARENT_ORGANIZATION_ID = 0;
 	private final static long DEFAULT_REGION_ID = 0;

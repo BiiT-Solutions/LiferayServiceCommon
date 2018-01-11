@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
+import org.springframework.stereotype.Component;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -24,6 +25,7 @@ import com.liferay.portal.model.Company;
 /**
  * This class allows to obtain a liferay portal instance.
  */
+@Component
 public class CompanyService extends ServiceAccess<IGroup<Long>, Company> implements ICompanyService {
 
 	private GroupPool<Long, Long> groupPool;

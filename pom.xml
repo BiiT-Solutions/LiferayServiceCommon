@@ -43,6 +43,7 @@
 		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
 		<project.scm.id>git</project.scm.id>
 		<httpmime.version>4.5.3</httpmime.version>
+		<org.springframework.version>4.1.5.RELEASE</org.springframework.version>
 		<!-- BiiT dependencies -->
 		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 		<user-manager.version>[0.1,0.2)</user-manager.version>
@@ -59,6 +60,11 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>${apache-commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<!-- File access -->
 		<dependency>
