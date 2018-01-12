@@ -251,17 +251,12 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 				}
 			}
 		}
-		System.out.println("#### REMOVING USER " + user.getId());
+
 		for (Long companyId : new HashSet<Long>(suborganizationsByUser.keySet())) {
-			System.out.println("\tCompany " + companyId);
 			for (Long userId : new HashSet<Long>(suborganizationsByUser.get(companyId).keySet())) {
-				System.out.println("\tUser " + userId + " <-> " + user.getId());
 				if (userId.equals(user.getId())) {
-					System.out.println("Equals!!");
-					System.out.println(suborganizationsByUser.get(companyId).get(userId));
 					suborganizationsByUser.get(companyId).remove(userId);
 					suborganizationsByUserTime.get(companyId).remove(userId);
-					System.out.println(suborganizationsByUser.get(companyId).get(userId));
 				}
 			}
 		}
