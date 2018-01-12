@@ -495,7 +495,6 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			// Look up group in the pool.
 			organizations = organizationPool.getGroups(user.getId());
 			if (organizations != null) {
-				System.out.println("Cached organizations from the user (no parent) " + organizations);
 				return organizations;
 			}
 
@@ -527,7 +526,6 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			// Look up group in the pool.
 			organizations = organizationPool.getSuborganizations(company, user, parentOrganizationId);
 			if (organizations != null) {
-				System.out.println("Organizations retrieved from the pool! " + organizations);
 				return organizations;
 			}
 
@@ -542,9 +540,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				organizations = decodeListFromJson(result, Organization.class);
 				// Obtain organizations for the user.
 				Set<IGroup<Long>> userOrganizations = getUserOrganizations(user);
-				System.out.println("User organizations retrieved from liferay " + userOrganizations);
 				organizations.retainAll(userOrganizations);
-				System.out.println("Total user organizations retrieved from liferay " + organizations);
 
 				// Add to pool.
 				organizationPool.addOrganizations(company.getId(), user.getId(), parentOrganizationId, organizations);
