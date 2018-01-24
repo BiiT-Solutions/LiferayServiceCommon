@@ -147,8 +147,8 @@ public class AccessTest {
 	@Test(groups = { "userAccess" }, dependsOnGroups = { "companyAccess" }, expectedExceptions = NotConnectedToWebServiceException.class)
 	public void notConnectedToUserWebService() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError, DuplicatedLiferayElement {
-		userService.addUser(new Company(), "", TEST_USER, TEST_USER, 0, "", "", "", "", "", 0, 0, true, 1, 1, 1900, "Miner", new long[0], new long[0], new long[0],
-				new long[0], false);
+		userService.addUser(new Company(), "", TEST_USER, TEST_USER, 0, "", "", "", "", "", 0, 0, true, 1, 1, 1900, "Miner", new long[0], new long[0],
+				new long[0], new long[0], false);
 	}
 
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "notConnectedToUserWebService" })
@@ -162,8 +162,8 @@ public class AccessTest {
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "connectToUserWebService" })
 	public void userAdd() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
 			DuplicatedLiferayElement {
-		userService.addUser(company, TEST_USER_PASSWORD, TEST_USER, TEST_USER_MAIL, 0l, "", "es_ES", TEST_USER, TEST_USER, TEST_USER, 0, 0, true, TEST_USER_BIRTHDAY_DAY,
-				TEST_USER_BIRTHDAY_MONTH, TEST_USER_BIRTHDAY_YEAR, "Miner", new long[0], new long[0], new long[0], new long[0], false);
+		userService.addUser(company, TEST_USER_PASSWORD, TEST_USER, TEST_USER_MAIL, 0l, "", "es_ES", TEST_USER, TEST_USER, TEST_USER, 0, 0, true,
+				TEST_USER_BIRTHDAY_DAY, TEST_USER_BIRTHDAY_MONTH, TEST_USER_BIRTHDAY_YEAR, "Miner", new long[0], new long[0], new long[0], new long[0], false);
 	}
 
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAdd" }, dependsOnGroups = { "companyAccess" })
@@ -179,8 +179,27 @@ public class AccessTest {
 		}
 	}
 
+	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAdd" }, dependsOnGroups = { "companyAccess" }, expectedExceptions = { UserDoesNotExistException.class })
+	public void userNotExistsById() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, UserDoesNotExistException {
+		user = (User) userService.getUserById(1111);
+	}
+
+	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAdd" }, dependsOnGroups = { "companyAccess" }, expectedExceptions = { UserDoesNotExistException.class })
+	public void userNotExistsByEmail() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, UserDoesNotExistException {
+		user = (User) userService.getUserByEmailAddress(company, TEST_USER_MAIL + "_bad");
+	}
+
+	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAdd" }, dependsOnGroups = { "companyAccess" }, expectedExceptions = { UserDoesNotExistException.class })
+	public void userNotExistsByScreenName() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, UserDoesNotExistException {
+		user = (User) userService.getUserByScreenName(company, "badUser");
+	}
+
 	@Test(groups = { "userAccess" }, dependsOnMethods = { "userAccess" })
-	public void userEdit() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public void userEdit() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
+			UserDoesNotExistException {
 		// Change some fields.
 		String language = user.getLanguageId();
 
@@ -234,8 +253,8 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "groupAccess" }, dependsOnMethods = { "groupAdd" }, expectedExceptions = { DuplicatedLiferayElement.class })
-	public void groupDuplicated() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement {
+	public void groupDuplicated() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement {
 		group = (UserGroup) userGroupService.addUserGroup(TEST_GROUP, "");
 	}
 
@@ -253,8 +272,8 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnGroups = { "companyAccess" }, dependsOnMethods = { "connectToOrganizationWebService" })
-	public void addOrganization() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement, InvalidParsedElement {
+	public void addOrganization() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement, InvalidParsedElement {
 		// Check previous organization.
 		int previousOrganizations = organizationService.getOrganizations(company).size();
 		// Create two organizations.
@@ -271,13 +290,14 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "groupAccess" }, dependsOnMethods = { "addOrganization" }, expectedExceptions = { DuplicatedLiferayElement.class })
-	public void organizationDuplicated() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement {
+	public void organizationDuplicated() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement {
 		organization1 = (Organization) organizationService.addOrganization(company, TEST_ORGANIZATION_1);
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "addOrganization" })
-	public void getOrganizationById() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public void getOrganizationById() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		Organization organization = (Organization) organizationService.getOrganization(organization1.getOrganizationId());
 		Assert.assertEquals(organization1.getName(), organization.getName());
 	}
@@ -306,7 +326,8 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })
-	public void checkUsersOfOrganization() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public void checkUsersOfOrganization() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		Set<IUser<Long>> organization1Users = organizationService.getOrganizationUsers(organization1);
 
 		IUser<Long> organizationUser = null;
@@ -331,12 +352,14 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })
-	public void getOrganizationsWithParent() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
+	public void getOrganizationsWithParent() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError, DuplicatedLiferayElement {
 		Set<IGroup<Long>> organizations = organizationService.getOrganizations(company, user, organization1.getId());
 		Assert.assertEquals(0, organizations.size());
 
-		organization3 = (Organization) organizationService.addOrganization(company, organization1.getId(), TEST_ORGANIZATION_3, OrganizationType.REGULAR_ORGANIZATION,
-				organization1.getRegionId(), organization1.getCountryId(), organizationService.getOrganizationStatus(), "", false);
+		organization3 = (Organization) organizationService.addOrganization(company, organization1.getId(), TEST_ORGANIZATION_3,
+				OrganizationType.REGULAR_ORGANIZATION, organization1.getRegionId(), organization1.getCountryId(), organizationService.getOrganizationStatus(),
+				"", false);
 		Assert.assertNotNull(organization3);
 		organizationService.addUserToOrganization(user, organization3);
 		Assert.assertEquals(3, organizationService.getUserOrganizationGroups(user).size());
@@ -347,7 +370,8 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "organizationAccess" }, dependsOnMethods = { "assignUsersToOrganizations", "userAccess" })
-	public void checkOrganizationsOfUser() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public void checkOrganizationsOfUser() throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		Set<IGroup<Long>> organizationsOfUser = organizationService.getUserOrganizations(user);
 		Assert.assertEquals(2, organizationsOfUser.size());
 		Assert.assertTrue(organizationsOfUser.contains(organization1));
@@ -355,7 +379,8 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "pool" }, dependsOnGroups = { "userAccess" })
-	public void userAccessPool() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public void userAccessPool() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
+			UserDoesNotExistException {
 		// Make a connection to populate the pool.
 		user = (User) userService.getUserByEmailAddress(company, TEST_USER_MAIL);
 		// Checks the use of the pool. Disconnect the web service.
@@ -382,7 +407,8 @@ public class AccessTest {
 	}
 
 	@Test(groups = { "pool" }, dependsOnGroups = { "organizationAccess" })
-	public void organizationsAccessPool() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
+	public void organizationsAccessPool() throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError {
 		// Make a connection for populating the pool.
 		Set<IGroup<Long>> organizations = organizationService.getOrganizations(company);
 		// Checks the use of the pool. Disconnect the web service.
@@ -472,7 +498,7 @@ public class AccessTest {
 	}
 
 	@Test(alwaysRun = true, groups = { "clearData" }, dependsOnGroups = { "userAccess", "groupAccess", "organizationAccess", "contactAccess", "pool" }, dependsOnMethods = {
-			"userEdit", "userAccess", "groupDelete" }, expectedExceptions = WebServiceAccessError.class)
+			"userEdit", "userAccess", "groupDelete" }, expectedExceptions = UserDoesNotExistException.class)
 	public void userDelete() throws NotConnectedToWebServiceException, UserDoesNotExistException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		userService.deleteUser(user);

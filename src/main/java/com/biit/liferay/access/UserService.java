@@ -265,10 +265,11 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws UserDoesNotExistException
 	 */
 	@Override
 	public IUser<Long> getUserByEmailAddress(IGroup<Long> company, String emailAddress) throws NotConnectedToWebServiceException, ClientProtocolException,
-			IOException, AuthenticationRequired, WebServiceAccessError {
+			IOException, AuthenticationRequired, WebServiceAccessError, UserDoesNotExistException {
 		if (company != null && emailAddress != null) {
 			emailAddress = emailAddress.toLowerCase();
 			// Look up user in the pool.
@@ -287,7 +288,16 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			String result = getHttpResponse("user/get-user-by-email-address", params);
 			if (result != null) {
 				// A Simple JSON Response Read
-				user = decodeFromJson(result, User.class);
+				try {
+					user = decodeFromJson(result, User.class);
+				} catch (WebServiceAccessError wsae) {
+					if (wsae.getMessage().contains("No User exists")) {
+						// User does not exists.
+						throw new UserDoesNotExistException("No User exists with email '" + emailAddress + "'.");
+					} else {
+						throw wsae;
+					}
+				}
 				userPool.addUser(user);
 				updateContactInformation(user);
 				return user;
@@ -328,7 +338,16 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			String result = getHttpResponse("user/get-user-by-id", params);
 			if (result != null) {
 				// A Simple JSON Response Read
-				user = decodeFromJson(result, User.class);
+				try {
+					user = decodeFromJson(result, User.class);
+				} catch (WebServiceAccessError wsae) {
+					if (wsae.getMessage().contains("No User exists")) {
+						// User does not exists.
+						throw new UserDoesNotExistException("No User exists with id '" + userId + "'.");
+					} else {
+						throw wsae;
+					}
+				}
 				userPool.addUser(user);
 				updateContactInformation(user);
 				return user;
@@ -351,10 +370,11 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
+	 * @throws UserDoesNotExistException 
 	 */
 	@Override
 	public IUser<Long> getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
-			AuthenticationRequired, WebServiceAccessError {
+			AuthenticationRequired, WebServiceAccessError, UserDoesNotExistException {
 		screenName = screenName.toLowerCase();
 
 		// Look up user in the pool.
@@ -373,7 +393,16 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 		String result = getHttpResponse("user/get-user-by-screen-name", params);
 		if (result != null) {
 			// A Simple JSON Response Read
-			user = decodeFromJson(result, User.class);
+			try {
+				user = decodeFromJson(result, User.class);
+			} catch (WebServiceAccessError wsae) {
+				if (wsae.getMessage().contains("No User exists")) {
+					// User does not exists.
+					throw new UserDoesNotExistException("No User exists with screename '" + screenName + "'.");
+				} else {
+					throw wsae;
+				}
+			}
 			userPool.addUser(user);
 			updateContactInformation(user);
 			return user;
