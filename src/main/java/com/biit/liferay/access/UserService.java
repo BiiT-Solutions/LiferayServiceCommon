@@ -16,7 +16,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
-import com.biit.liferay.access.exceptions.UserDoesNotExistException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.entity.IGroup;
@@ -24,6 +23,7 @@ import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.entity.pool.GroupPool;
 import com.biit.usermanager.entity.pool.UserPool;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
+import com.biit.usermanager.security.exceptions.UserDoesNotExistException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
