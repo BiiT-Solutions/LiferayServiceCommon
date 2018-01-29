@@ -174,7 +174,10 @@ public class User implements java.io.Serializable, IUser<Long> {
 	 * 
 	 * @return
 	 */
-	public int getAge() {
+	public int getAgeInYears() {
+		if (birthday == null) {
+			return 0;
+		}
 		Calendar dob = Calendar.getInstance();
 		dob.setTime(birthday);
 		Calendar today = Calendar.getInstance();
