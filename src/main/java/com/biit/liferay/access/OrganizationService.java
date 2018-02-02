@@ -2,6 +2,7 @@ package com.biit.liferay.access;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -178,6 +179,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	public void addUsersToOrganization(List<IUser<Long>> users, IGroup<Long> organization) throws ClientProtocolException, IOException,
 			NotConnectedToWebServiceException, AuthenticationRequired {
 		if (users != null && organization != null && !users.isEmpty()) {
+			// Remove all nulls in list.
+			users.removeAll(Collections.singleton(null));
 			// Look up user in the liferay.
 			checkConnection();
 
