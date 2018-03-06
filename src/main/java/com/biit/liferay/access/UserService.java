@@ -102,7 +102,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			String firstName, String middleName, String lastName, int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth,
 			int birthdayYear, String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement, DuplicatedUserEmailAddressException {
+			DuplicatedLiferayElement {
 		checkConnection();
 		boolean autoPassword = false;
 		boolean autoScreenName = false;
@@ -149,9 +149,9 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			} catch (WebServiceAccessError wsa) {
 				if (wsa.getMessage().contains("DuplicateUserScreenNameException")) {
 					throw new DuplicatedLiferayElement("Already exists a user with screenName '" + screenName + "'.");
-				}else if (wsa.getMessage().contains("DuplicateUserScreenNameException")) {
+				} else if (wsa.getMessage().contains("DuplicateUserEmailAddressException")) {
 					throw new DuplicatedUserEmailAddressException("Already exists a user with eamil '" + emailAddress + "'.");
-			    }else {
+				} else {
 					throw wsa;
 				}
 			}
@@ -374,7 +374,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 	 * @throws ClientProtocolException
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
-	 * @throws UserDoesNotExistException 
+	 * @throws UserDoesNotExistException
 	 */
 	@Override
 	public IUser<Long> getUserByScreenName(Company company, String screenName) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,

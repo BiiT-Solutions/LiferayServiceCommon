@@ -37,7 +37,7 @@ public interface IUserService extends IServiceAccess {
 			String firstName, String middleName, String lastName, int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth,
 			int birthdayYear, String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement, DuplicatedUserEmailAddressException;
+			DuplicatedLiferayElement;
 
 	IUser<Long> addUser(IGroup<Long> company, User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement;
