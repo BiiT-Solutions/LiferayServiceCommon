@@ -15,6 +15,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
+import com.biit.liferay.access.exceptions.DuplicatedUserEmailAddressException;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.log.LiferayClientLogger;
@@ -94,13 +95,14 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 	 * @throws AuthenticationRequired
 	 * @throws WebServiceAccessError
 	 * @throws DuplicatedLiferayElement
+	 * @throws DuplicatedUserEmailAddressException
 	 */
 	@Override
 	public IUser<Long> addUser(IGroup<Long> company, String password, String screenName, String emailAddress, long facebookId, String openId, String locale,
 			String firstName, String middleName, String lastName, int prefixId, int suffixId, boolean male, int birthdayDay, int birthdayMonth,
 			int birthdayYear, String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError,
-			DuplicatedLiferayElement {
+			DuplicatedLiferayElement, DuplicatedUserEmailAddressException {
 		checkConnection();
 		boolean autoPassword = false;
 		boolean autoScreenName = false;
@@ -147,7 +149,9 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			} catch (WebServiceAccessError wsa) {
 				if (wsa.getMessage().contains("DuplicateUserScreenNameException")) {
 					throw new DuplicatedLiferayElement("Already exists a user with screenName '" + screenName + "'.");
-				} else {
+				}else if (wsa.getMessage().contains("DuplicateUserScreenNameException")) {
+					throw new DuplicatedUserEmailAddressException("Already exists a user with eamil '" + emailAddress + "'.");
+			    }else {
 					throw wsa;
 				}
 			}
