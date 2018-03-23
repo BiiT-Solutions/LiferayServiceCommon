@@ -31,7 +31,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	 */
 	public void addOrganizationsBySiteAndUser(IGroup<Long> site, IUser<Long> user, Set<IGroup<Long>> organizations) {
 		if (site != null && user != null) {
-			addOrganizationsBySiteAndUser(site.getId(), user.getId(), organizations);
+			addOrganizationsBySiteAndUser(site.getUniqueId(), user.getUniqueId(), organizations);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 	 */
 	public Set<IGroup<Long>> getOrganizationBySiteAndUser(IGroup<Long> site, IUser<Long> user) {
 		if (site != null && user != null) {
-			return getOrganizationBySiteAndUser(site.getId(), user.getId());
+			return getOrganizationBySiteAndUser(site.getUniqueId(), user.getUniqueId());
 		}
 		return null;
 	}
@@ -113,7 +113,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 			if (parentOrganizationId == null) {
 				parentOrganizationId = new Long(0);
 			}
-			return getSuborganizations(company.getId(), user.getId(), parentOrganizationId);
+			return getSuborganizations(company.getUniqueId(), user.getUniqueId(), parentOrganizationId);
 		}
 		return null;
 	}
@@ -246,7 +246,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 		super.removeUser(user);
 		for (Long siteId : new HashSet<Long>(organizationSiteAndUsers.keySet())) {
 			for (Long userId : new HashSet<Long>(organizationSiteAndUsers.get(siteId).keySet())) {
-				if (userId.equals(user.getId())) {
+				if (userId.equals(user.getUniqueId())) {
 					removeOrganizations(siteId, userId);
 				}
 			}
@@ -254,7 +254,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 
 		for (Long companyId : new HashSet<Long>(suborganizationsByUser.keySet())) {
 			for (Long userId : new HashSet<Long>(suborganizationsByUser.get(companyId).keySet())) {
-				if (userId.equals(user.getId())) {
+				if (userId.equals(user.getUniqueId())) {
 					suborganizationsByUser.get(companyId).remove(userId);
 					suborganizationsByUserTime.get(companyId).remove(userId);
 				}

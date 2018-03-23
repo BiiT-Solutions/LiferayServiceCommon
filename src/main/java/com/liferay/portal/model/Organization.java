@@ -132,7 +132,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 	}
 
 	@Override
-	public Long getId() {
+	public Long getUniqueId() {
 		return getOrganizationId();
 	}
 

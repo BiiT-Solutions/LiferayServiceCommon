@@ -343,7 +343,7 @@ public class Contact implements PoolElement<Long> {
 	}
 
 	@Override
-	public Long getId() {
+	public Long getUniqueId() {
 		return getContactId();
 	}
 

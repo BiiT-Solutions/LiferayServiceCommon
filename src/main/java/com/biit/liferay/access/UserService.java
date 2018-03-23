@@ -114,7 +114,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 		}
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("companyId", Long.toString(company.getId())));
+		params.add(new BasicNameValuePair("companyId", Long.toString(company.getUniqueId())));
 		params.add(new BasicNameValuePair("autoPassword", Boolean.toString(autoPassword)));
 		params.add(new BasicNameValuePair("password1", password));
 		params.add(new BasicNameValuePair("password2", password));
@@ -212,7 +212,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userId", user.getId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 
 			getHttpResponse("user/delete-user", params);
 
@@ -234,7 +234,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 		Set<IUser<Long>> users = new HashSet<IUser<Long>>();
 		if (company != null) {
 
-			Set<IUser<Long>> usersOfCompany = groupPool.getGroupUsers(company.getId());
+			Set<IUser<Long>> usersOfCompany = groupPool.getGroupUsers(company.getUniqueId());
 			if (usersOfCompany != null) {
 				return usersOfCompany;
 			}
@@ -242,14 +242,14 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
+			params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("start", 0 + ""));
 			params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
 			String result = getHttpResponse("user/get-company-users", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				users = decodeListFromJson(result, User.class);
-				groupPool.addGroupUsers(company.getId(), users);
+				groupPool.addGroupUsers(company.getUniqueId(), users);
 				return users;
 			}
 		}
@@ -286,7 +286,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
+			params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("emailAddress", emailAddress));
 
 			String result = getHttpResponse("user/get-user-by-email-address", params);
@@ -500,7 +500,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 		checkConnection();
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("userId", Long.toString(user.getId())));
+		params.add(new BasicNameValuePair("userId", Long.toString(user.getUniqueId())));
 		params.add(new BasicNameValuePair("status", Integer.toString(status)));
 
 		String result = getHttpResponse("user/update-status", params);

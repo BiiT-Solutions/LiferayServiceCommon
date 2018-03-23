@@ -21,7 +21,7 @@ public class ClassName implements java.io.Serializable, IElement<Long> {
 	}
 
 	@Override
-	public Long getId() {
+	public Long getUniqueId() {
 		return getClassNameId();
 	}
 

@@ -102,7 +102,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 				usersId = "[";
 			}
 			for (int i = 0; i < users.size(); i++) {
-				usersId += users.get(i).getId();
+				usersId += users.get(i).getUniqueId();
 				if (i < users.size() - 1) {
 					usersId += ",";
 				}
@@ -111,7 +111,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 				usersId += "]";
 			}
 			params.add(new BasicNameValuePair("userIds", usersId));
-			params.add(new BasicNameValuePair("userGroupId", group.getId() + ""));
+			params.add(new BasicNameValuePair("userGroupId", group.getUniqueId() + ""));
 
 			getHttpResponse("user/add-user-group-users", params);
 			LiferayClientLogger.info(this.getClass().getName(), "Users ids " + usersId + " added to group '" + group.getUniqueName() + "'");
@@ -155,11 +155,11 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getId())));
-			params.add(new BasicNameValuePair("userIds", Long.toString(user.getId())));
+			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUniqueId())));
+			params.add(new BasicNameValuePair("userIds", Long.toString(user.getUniqueId())));
 
 			getHttpResponse("user/unset-user-group-users", params);
-			groupPool.removeUserFromGroups(user.getId(), userGroup.getId());
+			groupPool.removeUserFromGroups(user.getUniqueId(), userGroup.getUniqueId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getUniqueName() + "' unset from '" + userGroup.getUniqueName() + "'.");
 
@@ -181,10 +181,10 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getId())));
+			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUniqueId())));
 
 			getHttpResponse("usergroup/delete-user-group", params);
-			groupPool.removeGroupsById(userGroup.getId());
+			groupPool.removeGroupsById(userGroup.getUniqueId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "Group '" + userGroup.getUniqueName() + "' deleted.");
 
@@ -317,14 +317,14 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 		// Look up UserSoap in the pool.
 		if (user != null) {
-			Set<IGroup<Long>> usergroups = groupPool.getGroups(user.getId());
+			Set<IGroup<Long>> usergroups = groupPool.getGroups(user.getUniqueId());
 			if (usergroups != null) {
 				return usergroups;
 			}
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userId", Long.toString(user.getId())));
+			params.add(new BasicNameValuePair("userId", Long.toString(user.getUniqueId())));
 
 			String result = getHttpResponse("usergroup/get-user-user-groups", params);
 

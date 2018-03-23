@@ -319,7 +319,7 @@ public class User implements java.io.Serializable, IUser<Long> {
 	 * @return userId
 	 */
 	@Override
-	public Long getId() {
+	public Long getUniqueId() {
 		return userId;
 	}
 

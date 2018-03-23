@@ -103,10 +103,10 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("groupId", Long.toString(site.getId())));
+			params.add(new BasicNameValuePair("groupId", Long.toString(site.getUniqueId())));
 
 			getHttpResponse("group/delete-group", params);
-			groupPool.removeGroupsById(site.getId());
+			groupPool.removeGroupsById(site.getUniqueId());
 			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' deleted.");
 			return true;
 		}
@@ -116,7 +116,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 	public IGroup<Long> getSite(IGroup<Long> company, String siteName) throws NotConnectedToWebServiceException,
 			ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError {
 		if (company != null) {
-			return getSite(company.getId(), siteName);
+			return getSite(company.getUniqueId(), siteName);
 		}
 		return null;
 	}
@@ -155,7 +155,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		if (company != null) {
-			return getSiteByFriendlyUrl(company.getId(), friendlyUrl);
+			return getSiteByFriendlyUrl(company.getUniqueId(), friendlyUrl);
 		}
 		return null;
 	}

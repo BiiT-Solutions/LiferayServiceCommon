@@ -85,7 +85,7 @@ public class UserGroup implements java.io.Serializable, IGroup<Long> {
 	}
 
 	@Override
-	public Long getId() {
+	public Long getUniqueId() {
 		return getUserGroupId();
 	}
 

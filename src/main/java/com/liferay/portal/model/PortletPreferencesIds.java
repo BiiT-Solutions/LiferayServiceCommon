@@ -38,6 +38,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 		this.portletId = portletId;
 	}
 
+	@Override
 	public synchronized boolean equals(java.lang.Object obj) {
 		if (obj == null)
 			return false;

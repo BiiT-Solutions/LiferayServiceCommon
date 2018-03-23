@@ -84,7 +84,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			organization = decodeFromJson(result, Organization.class);
 			organizationPool.addGroupByTag(organization, company.getUniqueName());
 			if (parentOrganizationId.intValue() != 0) {
-				organizationPool.removeSuborganizations(company.getId(), parentOrganizationId);
+				organizationPool.removeSuborganizations(company.getUniqueId(), parentOrganizationId);
 			}
 			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' added.");
 			return organization;
@@ -143,7 +143,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	@Override
 	public IGroup<Long> updateOrganization(IGroup<Long> company, Organization organization) throws ClientProtocolException, NotConnectedToWebServiceException,
 			IOException, AuthenticationRequired, WebServiceAccessError, DuplicatedLiferayElement {
-		return updateOrganization(company, organization.getId(), organization.getParentOrganizationId(), organization.getName(),
+		return updateOrganization(company, organization.getUniqueId(), organization.getParentOrganizationId(), organization.getName(),
 				OrganizationType.getOrganizationType(organization.getType()), organization.getRegionId(), organization.getCountryId(), getOrganizationStatus(),
 				organization.getComments(), DEFAULT_CREATE_SITE);
 	}
@@ -163,12 +163,12 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("siteId", site.getId() + ""));
-			params.add(new BasicNameValuePair("userId", user.getId() + ""));
-			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
+			params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
 
 			String result = getHttpResponse("liferay-service-common-portlet.site/add-organization", params);
-			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getId() + "' added.");
+			LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueId() + "' added.");
 
 			return Boolean.parseBoolean(result);
 		}
@@ -189,7 +189,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				usersIds = "[";
 			}
 			for (int i = 0; i < users.size(); i++) {
-				usersIds += users.get(i).getId();
+				usersIds += users.get(i).getUniqueId();
 				if (i < users.size() - 1) {
 					usersIds += ",";
 				}
@@ -199,7 +199,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			}
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("userIds", usersIds));
 
 			getHttpResponse("user/add-organization-users", params);
@@ -265,12 +265,12 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			IOException, AuthenticationRequired, OrganizationNotDeletedException {
 		if (company != null && organization != null) {
 			try {
-				if (deleteOrganization(company, organization.getId())) {
+				if (deleteOrganization(company, organization.getUniqueId())) {
 					LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueName() + "' deleted.");
 					return true;
 				}
 			} catch (OrganizationNotDeletedException ond) {
-				throw new OrganizationNotDeletedException("Organization '" + organization.getUniqueName() + "' (id '" + organization.getId()
+				throw new OrganizationNotDeletedException("Organization '" + organization.getUniqueName() + "' (id '" + organization.getUniqueId()
 						+ "') not deleted correctly. ");
 			}
 		}
@@ -350,7 +350,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
+			params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("parentOrganizationId", DEFAULT_PARENT_ORGANIZATION_ID + ""));
 
 			String result = getHttpResponse("organization/get-organizations", params);
@@ -379,8 +379,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("siteId", site.getId() + ""));
-			params.add(new BasicNameValuePair("userId", user.getId() + ""));
+			params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 
 			String result = getHttpResponse("liferay-service-common-portlet.site/get-organizations", params);
 			if (result != null) {
@@ -404,7 +404,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", Long.toString(company.getId())));
+			params.add(new BasicNameValuePair("companyId", Long.toString(company.getUniqueId())));
 			params.add(new BasicNameValuePair("name", name));
 
 			String result = getHttpResponse("organization/get-organization-id", params);
@@ -437,7 +437,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			AuthenticationRequired {
 		Set<IUser<Long>> users = new HashSet<IUser<Long>>();
 		// Look up users in the pool.
-		users = organizationPool.getGroupUsers(organization.getId());
+		users = organizationPool.getGroupUsers(organization.getUniqueId());
 		if (users != null) {
 			return users;
 		}
@@ -446,13 +446,13 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		checkConnection();
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
+		params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
 
 		String result = getHttpResponse("/user/get-organization-users", params);
 		if (result != null) {
 			// A Simple JSON Response Read
 			users = (new UserService()).decodeListFromJson(result, User.class);
-			organizationPool.addGroupUsers(organization.getId(), users);
+			organizationPool.addGroupUsers(organization.getUniqueId(), users);
 			return users;
 		}
 		return null;
@@ -464,7 +464,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		if (user != null) {
 			Set<IGroup<Long>> groups = new HashSet<IGroup<Long>>();
 			// Look up group in the pool.
-			groups = organizationPool.getGroups(user.getId());
+			groups = organizationPool.getGroups(user.getUniqueId());
 			if (groups != null) {
 				return groups;
 			}
@@ -473,7 +473,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userId", user.getId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("start", DEFAUL_START_GROUP + ""));
 			params.add(new BasicNameValuePair("end", DEFAUL_END_GROUP + ""));
 
@@ -496,7 +496,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		if (user != null) {
 
 			// Look up group in the pool.
-			organizations = organizationPool.getGroups(user.getId());
+			organizations = organizationPool.getGroups(user.getUniqueId());
 			if (organizations != null) {
 				return organizations;
 			}
@@ -504,7 +504,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("userId", user.getId() + ""));
+			params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 			String result = getHttpResponse("organization/get-user-organizations", params);
 			if (result != null) {
 				// A Simple JSON Response Read
@@ -535,7 +535,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("companyId", company.getId() + ""));
+			params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("parentOrganizationId", parentOrganizationId.intValue() + ""));
 			String result = getHttpResponse("organization/get-organizations", params);
 			if (result != null) {
@@ -546,7 +546,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				organizations.retainAll(userOrganizations);
 
 				// Add to pool.
-				organizationPool.addOrganizations(company.getId(), user.getId(), parentOrganizationId, organizations);
+				organizationPool.addOrganizations(company.getUniqueId(), user.getUniqueId(), parentOrganizationId, organizations);
 
 				return organizations;
 			}
@@ -598,7 +598,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 				usersIds = "[";
 			}
 			for (int i = 0; i < users.size(); i++) {
-				usersIds += users.get(i).getId();
+				usersIds += users.get(i).getUniqueId();
 				if (i < users.size() - 1) {
 					usersIds += ",";
 				}
@@ -608,7 +608,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			}
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("organizationId", organization.getId() + ""));
+			params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
 			params.add(new BasicNameValuePair("userIds", usersIds));
 
 			getHttpResponse("user/unset-organization-users", params);
