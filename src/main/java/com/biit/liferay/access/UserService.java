@@ -485,11 +485,13 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 		((User) user).setMale(contact.isMale());
 	}
 
+	@Override
 	public IUser<Long> updateUser(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError {
 		return updateUser(user, contactService.getContact((User) user));
 	}
 
+	@Override
 	public IUser<Long> updateStatus(IUser<Long> user, Status status) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
 			AuthenticationRequired, WebServiceAccessError {
 		return updateStatus(user, status.getValue());

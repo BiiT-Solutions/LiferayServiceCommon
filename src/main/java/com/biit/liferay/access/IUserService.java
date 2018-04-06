@@ -7,7 +7,6 @@ import java.util.Set;
 import org.apache.http.client.ClientProtocolException;
 
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
-import com.biit.liferay.access.exceptions.DuplicatedUserEmailAddressException;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.usermanager.entity.IGroup;
@@ -15,6 +14,7 @@ import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.biit.usermanager.security.exceptions.UserDoesNotExistException;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Status;
 import com.liferay.portal.model.User;
 
 public interface IUserService extends IServiceAccess {
@@ -44,5 +44,11 @@ public interface IUserService extends IServiceAccess {
 
 	Set<IUser<Long>> getCompanyUsers(IGroup<Long> company) throws ClientProtocolException, IOException, NotConnectedToWebServiceException,
 			AuthenticationRequired;
+
+	IUser<Long> updateUser(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
+			WebServiceAccessError;
+
+	IUser<Long> updateStatus(IUser<Long> user, Status status) throws NotConnectedToWebServiceException, ClientProtocolException, IOException,
+			AuthenticationRequired, WebServiceAccessError;
 
 }

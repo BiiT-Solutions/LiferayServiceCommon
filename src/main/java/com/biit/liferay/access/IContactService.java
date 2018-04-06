@@ -10,11 +10,13 @@ import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 
-public interface IContactService {
+public interface IContactService extends IServiceAccess {
 
 	Contact getContact(User user) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired, WebServiceAccessError;
 
 	Contact getContact(Long contactId) throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired,
 			WebServiceAccessError;
+
+	void reset();
 
 }
