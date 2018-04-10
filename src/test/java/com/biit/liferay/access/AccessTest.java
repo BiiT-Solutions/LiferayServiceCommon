@@ -35,7 +35,8 @@ public class AccessTest {
 
 	private final static String LIFERAY_PROTOCOL = "https";
 	private final static int PORT = 443;
-	private final static String WEBSERVICES_PATH = "api/jsonws/";
+	private final static String PROXY_PREFIX = "liferay/";
+	private final static String WEBSERVICES_PATH = PROXY_PREFIX + "api/jsonws/";
 	private final static String AUTHENTICATION_TOKEN = "11111111";
 	private final static String COMPANY_VIRTUALHOST = "testing.biit-solutions.com";
 
