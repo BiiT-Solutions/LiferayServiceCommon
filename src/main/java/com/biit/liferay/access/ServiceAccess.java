@@ -271,7 +271,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 					return getHttpResponse(proxyPrefix, webService, params, true);
 				} else {
 					LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port
-							+ "', path '" + webservicesPath + "', user '" + connectionUser + "', password '" + connectionPassword + "'.");
+							+ "', proxyPrefix '" + proxyPrefix +"', path '" + webservicesPath + "', user '" + connectionUser + "', password '" + connectionPassword + "'.");
 					throw new AuthenticationRequired("Authenticated access failed!");
 				}
 			}

@@ -35,7 +35,7 @@ public class AccessTest {
 
 	private final static String LIFERAY_PROTOCOL = "https";
 	private final static int PORT = 443;
-	private final static String WEBSERVICES_PATH = "liferay/api/jsonws/";
+	private final static String WEBSERVICES_PATH = "api/jsonws/";
 	private final static String AUTHENTICATION_TOKEN = "11111111";
 	private final static String COMPANY_VIRTUALHOST = "testing.biit-solutions.com";
 
@@ -51,7 +51,7 @@ public class AccessTest {
 	private final static String TEST_USER_EDIT_LANGUAGE = "nl_NL";
 
 	private final static String SITE_NAME = "testSite";
-	private final static String SITE_DESCRIPTION = "This site is created with the automated Shap testing.";
+	private final static String SITE_DESCRIPTION = "This site is created with the automated biit testing.";
 	private final static String SITE_URL = "/test-site";
 
 	private final static String TEST_GROUP = "TestGroup1";
