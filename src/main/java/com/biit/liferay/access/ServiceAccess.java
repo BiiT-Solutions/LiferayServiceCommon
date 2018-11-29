@@ -141,18 +141,21 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			ObjectMapper jsonMapper = new ObjectMapper();
 			jsonMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			if (json.contains("Authenticated access required")) {
+				LiferayClientLogger.error(this.getClass().getName(), "User not authorized: " + json);
 				throw new WebServiceAccessError("User not authorized: " + json);
 			}
 			if (json.startsWith(EXCEPTION_PREFIX)) {
 				// If @JsonIgnoreProperties(ignoreUnknown = true) is on
 				// entities, the JsonMappingException exception is
 				// never launch. We need to check it here.
+				LiferayClientLogger.error(this.getClass().getName(), "Invalid retrieved json '" + json + "'.");
 				throw new WebServiceAccessError("Invalid retrieved json '" + json + "'.");
 			}
 			LiferayType object = new ObjectMapper().readValue(json, objectClass);
 			return object;
 		} catch (UnrecognizedPropertyException e) {
 			if (e.getMessage().startsWith(UNRECOGNIZED_FIELD_ERROR)) {
+				LiferayClientLogger.errorMessage(this.getClass().getName(), e);
 				throw new WebServiceAccessError("Error accessing to the webservices:" + json);
 			} else {
 				throw e;
@@ -271,7 +274,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 					return getHttpResponse(proxyPrefix, webService, params, true);
 				} else {
 					LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port
-							+ "', proxyPrefix '" + proxyPrefix +"', path '" + webservicesPath + "', user '" + connectionUser + "', password '" + connectionPassword + "'.");
+							+ "', proxyPrefix '" + proxyPrefix + "', path '" + webservicesPath + "', user '" + connectionUser + "', password '"
+							+ connectionPassword + "'.");
 					throw new AuthenticationRequired("Authenticated access failed!");
 				}
 			}
