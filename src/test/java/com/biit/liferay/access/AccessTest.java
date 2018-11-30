@@ -29,8 +29,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 
 public class AccessTest {
-	private final static String LOGIN_USER = "devel@biit-solutions.com";
-	private final static String LOGIN_PASSWORD = "^KOEySk!fRJ45";
+	private final static String LOGIN_USER = "webservices@biit-solutions.com";
+	private final static String LOGIN_PASSWORD = "asd123";
 	private final static String HOST = "testing.biit-solutions.com";
 
 	private final static String LIFERAY_PROTOCOL = "https";
