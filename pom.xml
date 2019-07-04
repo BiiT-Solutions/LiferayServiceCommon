@@ -43,7 +43,6 @@
 		<project.scm.id>git</project.scm.id>
 		<httpmime.version>4.5.3</httpmime.version>
 		<!-- BiiT dependencies -->
-		<biit-common-utils.version>[0.4,0.5)</biit-common-utils.version>
 		<user-manager.version>[0.1,0.2)</user-manager.version>
 	</properties>
 
@@ -63,12 +62,6 @@
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
-		</dependency>
-		<!-- File access -->
-		<dependency>
-			<groupId>com.biit</groupId>
-			<artifactId>common-utils</artifactId>
-			<version>${biit-common-utils.version}</version>
 		</dependency>
 		<!-- JSON WS access -->
 		<dependency>
