@@ -32,7 +32,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.simple.JSONValue;
 
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -189,8 +188,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	}
 
 	@SuppressWarnings("rawtypes")
-	public String encodeMapToJson(Map map) {
-		return JSONValue.toJSONString(map);
+	public String encodeMapToJson(Map map) throws JsonProcessingException {
+		//Gson gson = new GsonBuilder().create();
+		//String json = gson.toJson(myMap);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(map);
 	}
 
 	private HttpClient getAuthorizedHttpClient() throws NotConnectedToWebServiceException {
