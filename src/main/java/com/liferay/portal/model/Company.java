@@ -39,8 +39,8 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	public Company() {
 	}
 
-	public Company(long accountId, boolean active, long companyId, String homeURL, String key,
-			long logoId, int maxUsers, String mx, long primaryKey, boolean system, String webId) {
+	public Company(long accountId, boolean active, long companyId, String homeURL, String key, long logoId,
+			int maxUsers, String mx, long primaryKey, boolean system, String webId) {
 		this.accountId = accountId;
 		this.active = active;
 		this.companyId = companyId;
@@ -260,6 +260,11 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 	 */
 	public void setWebId(String webId) {
 		this.webId = webId;
+	}
+
+	@Override
+	public String toString() {
+		return getUniqueName();
 	}
 
 }
