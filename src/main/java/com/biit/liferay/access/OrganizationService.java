@@ -338,12 +338,6 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 	@Override
 	public Set<IGroup<Long>> getOrganizations(IGroup<Long> company)
 			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
-		return getOrganizations(company, DEFAULT_PARENT_ORGANIZATION_ID);
-	}
-
-	@Override
-	public Set<IGroup<Long>> getOrganizations(IGroup<Long> company, Long parentId)
-			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
 		// Look up organization in the pool.
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
 		if (company != null) {
@@ -357,13 +351,37 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
-			params.add(new BasicNameValuePair("parentOrganizationId", parentId + ""));
+			params.add(new BasicNameValuePair("parentOrganizationId", DEFAULT_PARENT_ORGANIZATION_ID + ""));
 
 			String result = getHttpResponse("organization/get-organizations", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				organizations = decodeListFromJson(result, Organization.class);
 				organizationPool.addGroupByTag(organizations, company.getUniqueName());
+			}
+		}
+
+		return organizations;
+	}
+
+	@Override
+	public Set<IGroup<Long>> getOrganizations(IGroup<Long> company, Long parentId)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired {
+		// Look up organization in the pool.
+		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
+		if (company != null) {
+			// Look up organizations in the liferay.
+			// TODO missing pool here.
+			checkConnection();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
+			params.add(new BasicNameValuePair("parentOrganizationId", parentId + ""));
+
+			String result = getHttpResponse("organization/get-organizations", params);
+			if (result != null) {
+				// A Simple JSON Response Read
+				organizations = decodeListFromJson(result, Organization.class);
 			}
 		}
 
