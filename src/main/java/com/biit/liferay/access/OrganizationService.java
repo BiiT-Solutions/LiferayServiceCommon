@@ -371,7 +371,11 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 		Set<IGroup<Long>> organizations = new HashSet<IGroup<Long>>();
 		if (company != null) {
 			// Look up organizations in the liferay.
-			// TODO missing pool here.
+			organizations = organizationPool.getElementsByTag(company.getUniqueName() + "_" + parentId);
+			if (organizations != null) {
+				return organizations;
+			}
+
 			checkConnection();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -382,6 +386,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 			if (result != null) {
 				// A Simple JSON Response Read
 				organizations = decodeListFromJson(result, Organization.class);
+				organizationPool.addGroupByTag(organizations, company.getUniqueName() + "_" + parentId);
 			}
 		}
 
