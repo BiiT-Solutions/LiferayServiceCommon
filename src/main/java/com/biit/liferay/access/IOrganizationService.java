@@ -256,4 +256,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 			throws ClientProtocolException, NotConnectedToWebServiceException, IOException, AuthenticationRequired,
 			WebServiceAccessError;
 
+	Set<IGroup<Long>> getOrganizations(IGroup<Long> company, Long parentId)
+			throws NotConnectedToWebServiceException, ClientProtocolException, IOException, AuthenticationRequired;
+
 }

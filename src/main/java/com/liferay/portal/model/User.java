@@ -1013,4 +1013,33 @@ public class User implements java.io.Serializable, IUser<Long> {
 		return screenName;
 	}
 
+	@Override
+	public int compareTo(IUser<Long> user) {
+		// Compare by surname.
+		if (this.getLastName() == null) {
+			if (user.getLastName() != null) {
+				return -1;
+			}
+		} else {
+			if (user.getLastName() == null) {
+				return 1;
+			}
+		}
+		int lastNameComparator = getLastName().compareTo(user.getLastName());
+		if (lastNameComparator != 0) {
+			return lastNameComparator;
+		}
+		// Compare by name.
+		if (this.getFirstName() == null) {
+			if (user.getFirstName() != null) {
+				return -1;
+			}
+		} else {
+			if (user.getFirstName() == null) {
+				return 1;
+			}
+		}
+		return getFirstName().compareTo(user.getFirstName());
+	}
+
 }
