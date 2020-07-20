@@ -80,6 +80,8 @@ public class LiferayConfigurationReader extends ConfigurationReader {
 				readConfigurations();
 			}
 		});
+		
+		addPropertiesFromJar(CONFIG_FILE);
 
 		readConfigurations();
 	}
