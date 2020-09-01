@@ -68,14 +68,15 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	private int port;
 
 	@Override
-	public void authorizedServerConnection(String host, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
-			String password) {
+	public void authorizedServerConnection(String host, String protocol, int port, String webservicesPath,
+			String authenticationToken, String loginUser, String password) {
 		this.host = host;
 		this.protocol = protocol;
 		this.port = port;
 
-		LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port + "', path '"
-				+ webservicesPath + "', user '" + loginUser + "', password '" + password + "'.");
+		LiferayClientLogger.debug(this.getClass().getName(),
+				"Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port + "', path '"
+						+ webservicesPath + "', user '" + loginUser + "', password '" + password + "'.");
 
 		this.webservicesPath = webservicesPath;
 		// Host definition
@@ -83,25 +84,29 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
 		// Credentials
 		credentialsProvider = new BasicCredentialsProvider();
-		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()), new UsernamePasswordCredentials(loginUser, password));
+		credentialsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()),
+				new UsernamePasswordCredentials(loginUser, password));
 
 		createAuthCache(credentialsProvider);
 
 		// Client
 		SocketConfig defaultSocketConfig = SocketConfig.custom().setTcpNoDelay(true).build();
-		SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).setSoReuseAddress(true).build();
+		SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true)
+				.setSoReuseAddress(true).build();
 
 		// Creates a client with credentials.
 		PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
 		connManager.setDefaultSocketConfig(defaultSocketConfig);
 		connManager.setSocketConfig(new HttpHost(host, port), socketConfig);
 
-		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).setConnectionManager(connManager).build();
+		httpClientWithCredentials = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider)
+				.setConnectionManager(connManager).build();
 		// httpClientWithCredentials.getParams().setAuthenticationPreemptive(true);
 
 		// Creates a client without credentials.
 		SocketConfig defaultSocketConfig2 = SocketConfig.custom().setTcpNoDelay(true).build();
-		SocketConfig socketConfig2 = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).setSoReuseAddress(true).build();
+		SocketConfig socketConfig2 = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true)
+				.setSoReuseAddress(true).build();
 		PoolingHttpClientConnectionManager connManager2 = new PoolingHttpClientConnectionManager();
 		connManager2.setDefaultSocketConfig(defaultSocketConfig2);
 		connManager2.setSocketConfig(new HttpHost(host, port), socketConfig2);
@@ -129,12 +134,13 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	@Override
 	public void checkConnection() throws NotConnectedToWebServiceException {
 		if (isNotConnected()) {
-			throw new NotConnectedToWebServiceException("User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
+			throw new NotConnectedToWebServiceException(
+					"User credentials are needed to use Liferay webservice. Use the 'connectToWebService' method for this.");
 		}
 	}
 
-	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException, JsonMappingException, IOException,
-			NotConnectedToWebServiceException, WebServiceAccessError {
+	public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException,
+			JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError {
 		LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
 		try {
 			ObjectMapper jsonMapper = new ObjectMapper();
@@ -165,7 +171,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		}
 	}
 
-	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException, JsonMappingException, IOException;
+	public abstract Set<Type> decodeListFromJson(String json, Class<LiferayType> objectClass)
+			throws JsonParseException, JsonMappingException, IOException;
 
 	@Override
 	public void disconnect() {
@@ -189,8 +196,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
 	@SuppressWarnings("rawtypes")
 	public String encodeMapToJson(Map map) throws JsonProcessingException {
-		//Gson gson = new GsonBuilder().create();
-		//String json = gson.toJson(myMap);
+		// Gson gson = new GsonBuilder().create();
+		// String json = gson.toJson(myMap);
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(map);
 	}
@@ -213,8 +220,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		return httpClientWithoutCredentials;
 	}
 
-	public String getHttpResponse(String webService, List<NameValuePair> params) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public String getHttpResponse(String webService, List<NameValuePair> params)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		return getHttpResponse(LiferayConfigurationReader.getInstance().getProxyPrefix(), webService, params, true);
 	}
 
@@ -231,13 +238,14 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public String getHttpResponse(String proxyPrefix, String webService, List<NameValuePair> params) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public String getHttpResponse(String proxyPrefix, String webService, List<NameValuePair> params)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		return getHttpResponse(proxyPrefix, webService, params, true);
 	}
 
-	private String getHttpResponse(String proxyPrefix, String webService, List<NameValuePair> params, boolean useAuthorization) throws ClientProtocolException,
-			IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+	private String getHttpResponse(String proxyPrefix, String webService, List<NameValuePair> params,
+			boolean useAuthorization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		// Set authentication param if defined.
 		long startTime = System.currentTimeMillis();
 
@@ -245,19 +253,17 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 		List<NameValuePair> authParams = new ArrayList<NameValuePair>(params);
 		setAuthParam(authParams);
 
-		// Add URL separators.
-		if (proxyPrefix == null) {
-			proxyPrefix = "";
-		}
-		proxyPrefix = proxyPrefix + (proxyPrefix.endsWith("/") || proxyPrefix.length() == 0 ? "" : "/");
-		String webservicesPath = this.webservicesPath + (this.webservicesPath.endsWith("/") || this.webservicesPath.length() == 0 ? "" : "/");
+		proxyPrefix = parseProxyPrefix(proxyPrefix);
+		String webservicesPath = this.webservicesPath
+				+ (this.webservicesPath.endsWith("/") || this.webservicesPath.length() == 0 ? "" : "/");
 
 		HttpPost post = new HttpPost("/" + proxyPrefix + webservicesPath + webService);
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(authParams, "UTF-8");
 		post.setEntity(entity);
 		HttpResponse response;
 		if (useAuthorization) {
-			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing with credentials to '" + targetHost + "' service '" + post + "'!");
+			LiferayClientLogger.debug(ServiceAccess.class.getName(),
+					"Accessing with credentials to '" + targetHost + "' service '" + post + "'!");
 			response = getAuthorizedHttpClient().execute(targetHost, post, httpContext);
 		} else {
 			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing without credentials!");
@@ -267,24 +273,27 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			// A Simple JSON Response Read
 			String result = EntityUtils.toString(response.getEntity());
 
-			if (result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_621) || result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_625)) {
+			if (result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_621)
+					|| result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_625)) {
 				if (!useAuthorization) {
-					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService
-							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
+					LiferayClientLogger.debug(ServiceAccess.class.getName(),
+							"Accessing to '" + webService + "' without authorization. Retry with authorization ("
+									+ (System.currentTimeMillis() - startTime) + " ms).");
 					// Redo authorization cache for invalid or expired.
 					createAuthCache(credentialsProvider);
 					return getHttpResponse(proxyPrefix, webService, params, true);
 				} else {
-					LiferayClientLogger.debug(this.getClass().getName(), "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port
-							+ "', proxyPrefix '" + proxyPrefix + "', path '" + webservicesPath + "', user '" + connectionUser + "', password '"
-							+ connectionPassword + "'.");
+					LiferayClientLogger.debug(this.getClass().getName(),
+							"Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port
+									+ "', proxyPrefix '" + proxyPrefix + "', path '" + webservicesPath + "', user '"
+									+ connectionUser + "', password '" + connectionPassword + "'.");
 					throw new AuthenticationRequired("Authenticated access failed!");
 				}
 			}
 
 			// Measure response time.
-			LiferayClientLogger
-					.debug(ServiceAccess.class.getName(), "Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
+			LiferayClientLogger.debug(ServiceAccess.class.getName(),
+					"Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			if (LiferayClientLogger.isDebugEnabled()) {
 				String paramsText = "";
 				for (NameValuePair param : authParams) {
@@ -313,8 +322,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public String getHttpResponse(String webService, MultipartEntityBuilder builder) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public String getHttpResponse(String webService, MultipartEntityBuilder builder)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		return getHttpResponse(webService, builder, true);
 	}
 
@@ -330,8 +339,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 	 * @throws NotConnectedToWebServiceException
 	 * @throws AuthenticationRequired
 	 */
-	public String getHttpResponse(String webService, MultipartEntityBuilder builder, boolean useAuthorization) throws ClientProtocolException, IOException,
-			NotConnectedToWebServiceException, AuthenticationRequired {
+	public String getHttpResponse(String webService, MultipartEntityBuilder builder, boolean useAuthorization)
+			throws ClientProtocolException, IOException, NotConnectedToWebServiceException, AuthenticationRequired {
 		long startTime = System.currentTimeMillis();
 
 		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -342,7 +351,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
 		HttpResponse response;
 		if (useAuthorization) {
-			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing with credentials to '" + targetHost + "' service '" + httpPost + "'!");
+			LiferayClientLogger.debug(ServiceAccess.class.getName(),
+					"Accessing with credentials to '" + targetHost + "' service '" + httpPost + "'!");
 			response = getAuthorizedHttpClient().execute(targetHost, httpPost, httpContext);
 		} else {
 			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing without credentials!");
@@ -352,10 +362,12 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			// A Simple JSON Response Read
 			String result = EntityUtils.toString(response.getEntity());
 
-			if (result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_621) || result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_625)) {
+			if (result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_621)
+					|| result.contains(NOT_AUTHORIZED_ERROR_LIFERAY_625)) {
 				if (!useAuthorization) {
-					LiferayClientLogger.debug(ServiceAccess.class.getName(), "Accessing to '" + webService
-							+ "' without authorization. Retry with authorization (" + (System.currentTimeMillis() - startTime) + " ms).");
+					LiferayClientLogger.debug(ServiceAccess.class.getName(),
+							"Accessing to '" + webService + "' without authorization. Retry with authorization ("
+									+ (System.currentTimeMillis() - startTime) + " ms).");
 					// Redo authorization cache for invalid or expired.
 					createAuthCache(credentialsProvider);
 					return getHttpResponse(webService, builder, true);
@@ -365,8 +377,8 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 			}
 
 			// Measure response time.
-			LiferayClientLogger
-					.debug(ServiceAccess.class.getName(), "Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
+			LiferayClientLogger.debug(ServiceAccess.class.getName(),
+					"Accessing to '" + webService + "' (" + (System.currentTimeMillis() - startTime) + " ms).");
 			LiferayClientLogger.debug(ServiceAccess.class.getName(), "Obtained result: " + result);
 			return result;
 		}
@@ -375,6 +387,14 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
 	protected HttpHost getTargetHost() {
 		return targetHost;
+	}
+
+	protected String parseProxyPrefix(String proxyPrefix) {
+		// Add URL separators.
+		if (proxyPrefix == null) {
+			proxyPrefix = "";
+		}
+		return proxyPrefix + (proxyPrefix.endsWith("/") || proxyPrefix.length() == 0 ? "" : "/");
 	}
 
 	@Override
