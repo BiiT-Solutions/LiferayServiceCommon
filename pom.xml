@@ -44,9 +44,15 @@
 		<httpmime.version>4.5.3</httpmime.version>
 		<!-- BiiT dependencies -->
 		<user-manager.version>[0.1,0.2)</user-manager.version>
+		<liferay-configuration-reader.version>[1.0,2.0)</liferay-configuration-reader.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.biit.liferay</groupId>
+			<artifactId>liferay-configuration-reader</artifactId>
+			<version>${liferay-configuration-reader.version}</version>
+		</dependency>
 		<!-- User Management -->
 		<dependency>
 			<groupId>com.biit</groupId>
