@@ -5,7 +5,6 @@ import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -139,8 +138,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
         }
     }
 
-    public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws JsonParseException,
-            JsonMappingException, IOException, NotConnectedToWebServiceException, WebServiceAccessError {
+    public Type decodeFromJson(String json, Class<LiferayType> objectClass) throws IOException, WebServiceAccessError {
         LiferayClientLogger.debug(ServiceAccess.class.getName(), "Decoding JSON object: " + json);
         try {
             ObjectMapper jsonMapper = new ObjectMapper();
