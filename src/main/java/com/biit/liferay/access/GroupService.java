@@ -56,7 +56,7 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> implements 
 			params.add(new BasicNameValuePair("companyId", companyId + ""));
 			params.add(new BasicNameValuePair("name", groupName));
 
-			String result = getHttpResponse("group/get-group", params);
+			String result = getHttpPostResponse("group/get-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				IGroup<Long> group = decodeFromJson(result, Group.class);

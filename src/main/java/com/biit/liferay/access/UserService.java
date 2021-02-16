@@ -135,7 +135,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
         params.add(new BasicNameValuePair("userGroupIds", Arrays.toString(userGroupIds)));
         params.add(new BasicNameValuePair("sendEmail", Boolean.toString(sendEmail)));
 
-        String result = getHttpResponse("user/add-user", params);
+        String result = getHttpPostResponse("user/add-user", params);
         IUser<Long> user = null;
         if (result != null) {
             // A Simple JSON Response Read
@@ -216,7 +216,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 
-            getHttpResponse("user/delete-user", params);
+            getHttpPostResponse("user/delete-user", params);
 
             userPool.removeUser(user);
             LiferayClientLogger.info(this.getClass().getName(), "IUser<Long> '" + user.getUniqueName() + "' deleted.");
@@ -247,7 +247,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
             params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
             params.add(new BasicNameValuePair("start", 0 + ""));
             params.add(new BasicNameValuePair("end", Integer.MAX_VALUE + ""));
-            String result = getHttpResponse("user/get-company-users", params);
+            String result = getHttpPostResponse("user/get-company-users", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 users = decodeListFromJson(result, User.class);
@@ -290,7 +290,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
             params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
             params.add(new BasicNameValuePair("emailAddress", emailAddress));
 
-            String result = getHttpResponse("user/get-user-by-email-address", params);
+            String result = getHttpPostResponse("user/get-user-by-email-address", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 try {
@@ -339,7 +339,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("userId", Long.toString(userId)));
 
-            String result = getHttpResponse("user/get-user-by-id", params);
+            String result = getHttpPostResponse("user/get-user-by-id", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 try {
@@ -393,7 +393,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
         params.add(new BasicNameValuePair("companyId", company.getCompanyId() + ""));
         params.add(new BasicNameValuePair("screenName", screenName));
 
-        String result = getHttpResponse("user/get-user-by-screen-name", params);
+        String result = getHttpPostResponse("user/get-user-by-screen-name", params);
         if (result != null) {
             // A Simple JSON Response Read
             try {
@@ -438,7 +438,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("roleId", roleId + ""));
-        String result = getHttpResponse("user/get-role-user-ids", params);
+        String result = getHttpPostResponse("user/get-role-user-ids", params);
         if (result != null) {
             // A Simple JSON Response Read
             List<Long> usersIds = decodeLongListFromJson(result, Long.class);
@@ -504,7 +504,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
         params.add(new BasicNameValuePair("userId", Long.toString(user.getUniqueId())));
         params.add(new BasicNameValuePair("status", Integer.toString(status)));
 
-        String result = getHttpResponse("user/update-status", params);
+        String result = getHttpPostResponse("user/update-status", params);
         IUser<Long> returnedUser = null;
         if (result != null) {
             // A Simple JSON Response Read
@@ -568,7 +568,7 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
         params.add(new BasicNameValuePair("birthdayDay", Integer.toString(day)));
         params.add(new BasicNameValuePair("birthdayYear", Integer.toString(year)));
 
-        String result = getHttpResponse("user/update-incomplete-user", params);
+        String result = getHttpPostResponse("user/update-incomplete-user", params);
         User returnedUser = null;
         if (result != null) {
             // A Simple JSON Response Read

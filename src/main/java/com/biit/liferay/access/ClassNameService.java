@@ -53,7 +53,7 @@ public class ClassNameService extends ServiceAccess<IElement<Long>, ClassName> {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("value", value));
 
-		String result = getHttpResponse("classname/fetch-class-name", params);
+		String result = getHttpPostResponse("classname/fetch-class-name", params);
 		if (result != null) {
 			// A Simple JSON Response Read
 			className = decodeFromJson(result, ClassName.class);

@@ -66,7 +66,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			params.add(new BasicNameValuePair("active", "1"));
 			params.add(new BasicNameValuePair("-serviceContext", null));
 
-			String result = getHttpResponse("group/add-group", params);
+			String result = getHttpPostResponse("group/add-group", params);
 			IGroup<Long> site = null;
 			if (result != null) {
 				// A Simple JSON Response Read
@@ -105,7 +105,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("groupId", Long.toString(site.getUniqueId())));
 
-			getHttpResponse("group/delete-group", params);
+			getHttpPostResponse("group/delete-group", params);
 			groupPool.removeGroupsById(site.getUniqueId());
 			LiferayClientLogger.info(this.getClass().getName(), "Site '" + site.getUniqueName() + "' deleted.");
 			return true;
@@ -140,7 +140,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			params.add(new BasicNameValuePair("companyId", companyId + ""));
 			params.add(new BasicNameValuePair("name", siteName));
 
-			String result = getHttpResponse("group/get-group", params);
+			String result = getHttpPostResponse("group/get-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				site = decodeFromJson(result, Site.class);
@@ -180,7 +180,7 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 			params.add(new BasicNameValuePair("parentGroupId", "0"));
 			params.add(new BasicNameValuePair("site", "1"));
 
-			String result = getHttpResponse("group/get-groups", params);
+			String result = getHttpPostResponse("group/get-groups", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				Set<IGroup<Long>> sites = decodeListFromJson(result, Site.class);

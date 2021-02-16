@@ -69,7 +69,7 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("companyId", companyId + ""));
 
-		String result = getHttpResponse("company/get-company-by-id", params);
+		String result = getHttpPostResponse("company/get-company-by-id", params);
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
@@ -112,7 +112,7 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("virtualHost", virtualHost));
 
-		String result = getHttpResponse("company/get-company-by-virtual-host", params);
+		String result = getHttpPostResponse("company/get-company-by-virtual-host", params);
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);
@@ -159,7 +159,7 @@ public class CompanyService extends ServiceAccess<IGroup<Long>, Company> impleme
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("webId ", webId));
 
-		String result = getHttpResponse("company/get-company-by-web-id", params);
+		String result = getHttpPostResponse("company/get-company-by-web-id", params);
 		if (result != null) {
 			// A Simple JSON Response Read
 			company = decodeFromJson(result, Company.class);

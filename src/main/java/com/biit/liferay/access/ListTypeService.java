@@ -41,7 +41,7 @@ public class ListTypeService extends ServiceAccess<ListType, ListType> {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("type", FULL_MEMBER_TYPE));
 
-		String result = getHttpResponse("listtype/get-list-types", params);
+		String result = getHttpPostResponse("listtype/get-list-types", params);
 		if (result != null) {
 			// A Simple JSON Response Read
 			Set<ListType> listTypes = decodeListFromJson(result, ListType.class);

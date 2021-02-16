@@ -63,7 +63,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			params.add(new BasicNameValuePair("name", name));
 			params.add(new BasicNameValuePair("description", description));
 
-			String result = getHttpResponse("usergroup/add-user-group", params);
+			String result = getHttpPostResponse("usergroup/add-user-group", params);
 			IGroup<Long> userGroup = null;
 			if (result != null) {
 				// Check some errors
@@ -113,7 +113,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			params.add(new BasicNameValuePair("userIds", usersId));
 			params.add(new BasicNameValuePair("userGroupId", group.getUniqueId() + ""));
 
-			getHttpResponse("user/add-user-group-users", params);
+			getHttpPostResponse("user/add-user-group-users", params);
 			LiferayClientLogger.info(this.getClass().getName(), "Users ids " + usersId + " added to group '" + group.getUniqueName() + "'");
 
 			for (IUser<Long> user : users) {
@@ -158,7 +158,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUniqueId())));
 			params.add(new BasicNameValuePair("userIds", Long.toString(user.getUniqueId())));
 
-			getHttpResponse("user/unset-user-group-users", params);
+			getHttpPostResponse("user/unset-user-group-users", params);
 			groupPool.removeUserFromGroups(user.getUniqueId(), userGroup.getUniqueId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "User '" + user.getUniqueName() + "' unset from '" + userGroup.getUniqueName() + "'.");
@@ -183,7 +183,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroup.getUniqueId())));
 
-			getHttpResponse("usergroup/delete-user-group", params);
+			getHttpPostResponse("usergroup/delete-user-group", params);
 			groupPool.removeGroupsById(userGroup.getUniqueId());
 
 			LiferayClientLogger.info(this.getClass().getName(), "Group '" + userGroup.getUniqueName() + "' deleted.");
@@ -208,7 +208,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroupId)));
 
-			getHttpResponse("usergroup/delete-user-group", params);
+			getHttpPostResponse("usergroup/delete-user-group", params);
 			groupPool.removeGroupsById(userGroupId);
 
 			LiferayClientLogger.info(this.getClass().getName(), "Group with id '" + userGroupId + "' deleted.");
@@ -243,7 +243,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("userGroupId", Long.toString(userGroupId)));
 
-			String result = getHttpResponse("usergroup/get-user-group", params);
+			String result = getHttpPostResponse("usergroup/get-user-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				IGroup<Long> userGroup = decodeFromJson(result, UserGroup.class);
@@ -287,7 +287,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("name", name));
 
-			String result = getHttpResponse("usergroup/get-user-group", params);
+			String result = getHttpPostResponse("usergroup/get-user-group", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				IGroup<Long> userGroup = decodeFromJson(result, UserGroup.class);
@@ -326,7 +326,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("userId", Long.toString(user.getUniqueId())));
 
-			String result = getHttpResponse("usergroup/get-user-user-groups", params);
+			String result = getHttpPostResponse("usergroup/get-user-user-groups", params);
 
 			if (result != null) {
 				// A Simple JSON Response Read

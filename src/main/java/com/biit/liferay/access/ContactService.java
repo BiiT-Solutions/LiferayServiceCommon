@@ -63,7 +63,7 @@ public class ContactService extends ServiceAccess<Contact, Contact> implements I
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("contactId", contactId + ""));
 
-			String result = getHttpResponse("contact/get-contact", params);
+			String result = getHttpPostResponse("contact/get-contact", params);
 			if (result != null) {
 				// A Simple JSON Response Read
 				contact = decodeFromJson(result, Contact.class);

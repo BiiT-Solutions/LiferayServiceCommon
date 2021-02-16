@@ -60,7 +60,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
         params.add(new BasicNameValuePair("comments", comments));
         params.add(new BasicNameValuePair("site", Boolean.toString(site)));
 
-        String result = getHttpResponse("organization/add-organization", params);
+        String result = getHttpPostResponse("organization/add-organization", params);
         IGroup<Long> organization;
         if (result != null) {
             // Check some errors
@@ -109,7 +109,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
         params.add(new BasicNameValuePair("site", Boolean.toString(site)));
         params.add(new BasicNameValuePair("-serviceContext", null));
 
-        String result = getHttpResponse("organization/update-organization", params);
+        String result = getHttpPostResponse("organization/update-organization", params);
         IGroup<Long> organization;
         if (result != null) {
             // Check some errors
@@ -154,7 +154,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
             params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
 
-            String result = getHttpResponse("liferay-service-common-portlet.site/add-organization", params);
+            String result = getHttpPostResponse("liferay-service-common-portlet.site/add-organization", params);
             LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueId() + "' added.");
 
             return Boolean.parseBoolean(result);
@@ -189,7 +189,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
             params.add(new BasicNameValuePair("userIds", usersIds.toString()));
 
-            getHttpResponse("user/add-organization-users", params);
+            getHttpPostResponse("user/add-organization-users", params);
 
             // Reset the pool of groups to calculate again the user's
             // organization groups.
@@ -270,7 +270,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("organizationId", organizationId + ""));
 
-            String result = getHttpResponse("organization/delete-organization", params);
+            String result = getHttpPostResponse("organization/delete-organization", params);
 
             if (result == null || result.length() < 3) {
                 // Cannot remove by tag correctly. Remove everything from the
@@ -308,7 +308,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("organizationId", Long.toString(organizationId)));
 
-            String result = getHttpResponse("organization/get-organization", params);
+            String result = getHttpPostResponse("organization/get-organization", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 organization = decodeFromJson(result, Organization.class);
@@ -337,7 +337,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
             params.add(new BasicNameValuePair("parentOrganizationId", DEFAULT_PARENT_ORGANIZATION_ID + ""));
 
-            String result = getHttpResponse("organization/get-organizations", params);
+            String result = getHttpPostResponse("organization/get-organizations", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 organizations = decodeListFromJson(result, Organization.class);
@@ -366,7 +366,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
             params.add(new BasicNameValuePair("parentOrganizationId", parentId + ""));
 
-            String result = getHttpResponse("organization/get-organizations", params);
+            String result = getHttpPostResponse("organization/get-organizations", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 organizations = decodeListFromJson(result, Organization.class);
@@ -395,7 +395,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
             params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 
-            String result = getHttpResponse("liferay-service-common-portlet.site/get-organizations", params);
+            String result = getHttpPostResponse("liferay-service-common-portlet.site/get-organizations", params);
             if (result != null) {
                 // Check if Portlet not installed
                 if (result.contains("and method POST for")) {
@@ -420,7 +420,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("companyId", Long.toString(company.getUniqueId())));
             params.add(new BasicNameValuePair("name", name));
 
-            String result = getHttpResponse("organization/get-organization-id", params);
+            String result = getHttpPostResponse("organization/get-organization-id", params);
             if (result != null) {
                 try {
                     return Long.parseLong(result);
@@ -461,7 +461,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
 
-        String result = getHttpResponse("/user/get-organization-users", params);
+        String result = getHttpPostResponse("/user/get-organization-users", params);
         if (result != null) {
             // A Simple JSON Response Read
             users = (new UserService()).decodeListFromJson(result, User.class);
@@ -490,7 +490,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("start", DEFAULT_START_GROUP + ""));
             params.add(new BasicNameValuePair("end", DEFAULT_END_GROUP + ""));
 
-            String result = getHttpResponse("group/get-user-organizations-groups", params);
+            String result = getHttpPostResponse("group/get-user-organizations-groups", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 groups = decodeGroupListFromJson(result);
@@ -518,7 +518,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
-            String result = getHttpResponse("organization/get-user-organizations", params);
+            String result = getHttpPostResponse("organization/get-user-organizations", params);
             if (result != null) {
                 // A Simple JSON Response Read
                 organizations = decodeListFromJson(result, Organization.class);
@@ -550,7 +550,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("companyId", company.getUniqueId() + ""));
             params.add(new BasicNameValuePair("parentOrganizationId", parentOrganizationId.intValue() + ""));
-            String result = getHttpResponse("organization/get-organizations", params);
+            String result = getHttpPostResponse("organization/get-organizations", params);
             if (result != null) {
                 // Get organizations with selected parent.
                 organizations = decodeListFromJson(result, Organization.class);
@@ -624,7 +624,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
             params.add(new BasicNameValuePair("userIds", usersIds.toString()));
 
-            getHttpResponse("user/unset-organization-users", params);
+            getHttpPostResponse("user/unset-organization-users", params);
 
             // Reset the pool of groups to calculate again the user's
             // organization groups.
