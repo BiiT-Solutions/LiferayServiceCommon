@@ -1,6 +1,7 @@
 package com.biit.liferay.access;
 
 import com.biit.liferay.access.exceptions.*;
+import com.biit.liferay.configuration.LiferayConfigurationReader;
 import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.entity.IGroup;
 import com.biit.usermanager.entity.IUser;
@@ -150,11 +151,17 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             checkConnection();
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
-            params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
-            params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
-
-            String result = getHttpPostResponse("liferay-service-common-portlet.site/add-organization", params);
+            String result;
+            if (LiferayConfigurationReader.getInstance().getLiferayVersion().startsWith("7")) {
+                result = getHttpPostResponse(LiferayConfigurationReader.getInstance().getCustomWebServicesPath(),
+                        "service-common/organization/" + organization.getUniqueId() + "/site/" + site.getUniqueId() + "/user/" + user.getUniqueId(),
+                        params);
+            } else {
+                params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
+                params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
+                params.add(new BasicNameValuePair("organizationId", organization.getUniqueId() + ""));
+                result = getHttpPostResponse(LiferayConfigurationReader.getInstance().getCustomWebServicesPath(), "liferay-service-common-portlet.site/add-organization", params);
+            }
             LiferayClientLogger.info(this.getClass().getName(), "Organization '" + organization.getUniqueId() + "' added.");
 
             return Boolean.parseBoolean(result);
@@ -392,10 +399,16 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             checkConnection();
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
-            params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
 
-            String result = getHttpPostResponse("liferay-service-common-portlet.site/get-organizations", params);
+            String result;
+            if (LiferayConfigurationReader.getInstance().getLiferayVersion().startsWith("7")) {
+                result = getHttpGetResponse(LiferayConfigurationReader.getInstance().getCustomWebServicesPath(),
+                        "service-common/organization/site/" + site.getUniqueId() + "/user/" + user.getUniqueId(), params);
+            } else {
+                params.add(new BasicNameValuePair("siteId", site.getUniqueId() + ""));
+                params.add(new BasicNameValuePair("userId", user.getUniqueId() + ""));
+                result = getHttpPostResponse(LiferayConfigurationReader.getInstance().getCustomWebServicesPath(), "liferay-service-common-portlet.site/get-organizations", params);
+            }
             if (result != null) {
                 // Check if Portlet not installed
                 if (result.contains("and method POST for")) {

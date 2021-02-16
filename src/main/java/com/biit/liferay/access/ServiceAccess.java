@@ -219,11 +219,16 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
     public String getHttpGetResponse(String webService, List<NameValuePair> params)
             throws IOException, NotConnectedToWebServiceException, AuthenticationRequired {
-        return getHttpGetResponse(webService, params, true);
+        return getHttpGetResponse(webservicesPath, webService, params);
     }
 
-    private String getHttpGetResponse(String webService, List<NameValuePair> params,
-                                   boolean useAuthorization)
+    public String getHttpGetResponse(String webservicesPath, String webService, List<NameValuePair> params)
+            throws IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+        return getHttpGetResponse(webservicesPath, webService, params, true);
+    }
+
+    private String getHttpGetResponse(String webservicesPath, String webService, List<NameValuePair> params,
+                                      boolean useAuthorization)
             throws IOException, NotConnectedToWebServiceException, AuthenticationRequired {
         // Set authentication param if defined.
         long startTime = System.currentTimeMillis();
@@ -232,10 +237,10 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
         List<NameValuePair> authParams = new ArrayList<NameValuePair>(params);
         setAuthParam(authParams);
 
-        String webservicesPath = this.webservicesPath
-                + (this.webservicesPath.endsWith("/") || this.webservicesPath.length() == 0 ? "" : "/");
+        String filteredWebservicesPath = webservicesPath
+                + (webservicesPath.endsWith("/") || webservicesPath.length() == 0 ? "" : "/");
 
-        HttpGet get = new HttpGet("/" + proxyPrefix +  webservicesPath + webService);
+        HttpGet get = new HttpGet("/" + proxyPrefix + filteredWebservicesPath + webService);
         HttpResponse response;
         if (useAuthorization) {
             LiferayClientLogger.debug(ServiceAccess.class.getName(),
@@ -257,11 +262,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
                                     + (System.currentTimeMillis() - startTime) + " ms).");
                     // Redo authorization cache for invalid or expired.
                     createAuthCache(credentialsProvider);
-                    return getHttpPostResponse(webService, params, true);
+                    return getHttpPostResponse(webservicesPath, webService, params, true);
                 } else {
                     LiferayClientLogger.debug(this.getClass().getName(),
                             "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port
-                                    + "', proxyPrefix '" + proxyPrefix + "', path '" + webservicesPath + "', user '"
+                                    + "', proxyPrefix '" + proxyPrefix + "', path '" + filteredWebservicesPath + "', user '"
                                     + connectionUser + "', password '" + connectionPassword + "'.");
                     throw new AuthenticationRequired("Authenticated access failed!");
                 }
@@ -288,10 +293,15 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
 
     public String getHttpPostResponse(String webService, List<NameValuePair> params)
             throws IOException, NotConnectedToWebServiceException, AuthenticationRequired {
-        return getHttpPostResponse(webService, params, true);
+        return getHttpPostResponse(webservicesPath, webService, params);
     }
 
-    private String getHttpPostResponse(String webService, List<NameValuePair> params,
+    public String getHttpPostResponse(String webservicesPath, String webService, List<NameValuePair> params)
+            throws IOException, NotConnectedToWebServiceException, AuthenticationRequired {
+        return getHttpPostResponse(webservicesPath, webService, params, true);
+    }
+
+    private String getHttpPostResponse(String webservicesPath, String webService, List<NameValuePair> params,
                                        boolean useAuthorization)
             throws IOException, NotConnectedToWebServiceException, AuthenticationRequired {
         // Set authentication param if defined.
@@ -301,10 +311,10 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
         List<NameValuePair> authParams = new ArrayList<NameValuePair>(params);
         setAuthParam(authParams);
 
-        String webservicesPath = this.webservicesPath
-                + (this.webservicesPath.endsWith("/") || this.webservicesPath.length() == 0 ? "" : "/");
+        String filteredWebservicesPath = webservicesPath
+                + (webservicesPath.endsWith("/") || webservicesPath.length() == 0 ? "" : "/");
 
-        HttpPost post = new HttpPost("/" + proxyPrefix +  webservicesPath + webService);
+        HttpPost post = new HttpPost("/" + proxyPrefix + filteredWebservicesPath + webService);
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(authParams, "UTF-8");
         post.setEntity(entity);
         HttpResponse response;
@@ -328,11 +338,11 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
                                     + (System.currentTimeMillis() - startTime) + " ms).");
                     // Redo authorization cache for invalid or expired.
                     createAuthCache(credentialsProvider);
-                    return getHttpPostResponse(webService, params, true);
+                    return getHttpPostResponse(webservicesPath, webService, params, true);
                 } else {
                     LiferayClientLogger.debug(this.getClass().getName(),
                             "Accessing using protocol '" + protocol + "', host '" + host + "', port '" + port
-                                    + "', proxyPrefix '" + proxyPrefix + "', path '" + webservicesPath + "', user '"
+                                    + "', proxyPrefix '" + proxyPrefix + "', path '" + filteredWebservicesPath + "', user '"
                                     + connectionUser + "', password '" + connectionPassword + "'.");
                     throw new AuthenticationRequired("Authenticated access failed!");
                 }
