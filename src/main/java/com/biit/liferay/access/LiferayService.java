@@ -13,7 +13,7 @@ public interface LiferayService {
 	 * @param loginUser
 	 * @param password
 	 */
-	void authorizedServerConnection(String address, String protocol, int port, String webservicesPath,
+	void authorizedServerConnection(String address, String protocol, int port, String proxyPrefix, String webservicesPath,
 			String authenticationToken, String loginUser, String password);
 
 	/**

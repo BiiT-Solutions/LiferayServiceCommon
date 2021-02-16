@@ -210,10 +210,10 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
     }
 
     @Override
-    public void authorizedServerConnection(String address, String protocol, int port, String webservicesPath, String authenticationToken, String loginUser,
+    public void authorizedServerConnection(String address, String protocol, int port, String proxyPrefix, String webservicesPath, String authenticationToken, String loginUser,
                                            String password) {
         // Standard behavior.
-        super.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
+        super.authorizedServerConnection(address, protocol, port, proxyPrefix, webservicesPath, authenticationToken, loginUser, password);
         // Disconnect previous connection
         try {
             listTypeService.disconnect();
@@ -222,7 +222,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
         }
         // Some user information is in the contact object.
         listTypeService = new ListTypeService();
-        listTypeService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
+        listTypeService.authorizedServerConnection(address, protocol, port, proxyPrefix, webservicesPath, authenticationToken, loginUser, password);
 
         try {
             companyService.disconnect();
@@ -230,7 +230,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             //Do nothing.
         }
         companyService = new CompanyService();
-        companyService.authorizedServerConnection(address, protocol, port, webservicesPath, authenticationToken, loginUser, password);
+        companyService.authorizedServerConnection(address, protocol, port, proxyPrefix, webservicesPath, authenticationToken, loginUser, password);
     }
 
     public Set<IGroup<Long>> decodeGroupListFromJson(String json) throws IOException {
@@ -571,7 +571,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
     /**
      * Remove a list of users to an organization.
      *
-     * @param user  The user
+     * @param user         The user
      * @param organization An Organization
      * @throws ClientProtocolException
      * @throws IOException
@@ -592,7 +592,7 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
     /**
      * Remove a list of users to an organization.
      *
-     * @param users  The users
+     * @param users        The users
      * @param organization An Organization
      * @throws ClientProtocolException
      * @throws IOException
