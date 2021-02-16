@@ -234,7 +234,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
         String webservicesPath = this.webservicesPath
                 + (this.webservicesPath.endsWith("/") || this.webservicesPath.length() == 0 ? "" : "/");
 
-        HttpPost post = new HttpPost("/" + proxyPrefix + webservicesPath + webService);
+        HttpPost post = new HttpPost("/" + proxyPrefix +  webservicesPath + webService);
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(authParams, "UTF-8");
         post.setEntity(entity);
         HttpResponse response;
@@ -322,7 +322,7 @@ public abstract class ServiceAccess<Type, LiferayType extends Type> implements L
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         builder.setCharset(Charset.forName("UTF-8"));
 
-        HttpPost httpPost = new HttpPost("/" + webservicesPath + webService);
+        HttpPost httpPost = new HttpPost("/" + proxyPrefix + webservicesPath + webService);
         httpPost.setEntity(builder.build());
 
         HttpResponse response;
