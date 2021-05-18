@@ -23,7 +23,7 @@
 
 	<scm>
 		<connection>scm:git:git.biit-solutions.com:BiiT/LiferayServiceCommon.git</connection>
-		<connection>scm:git:git.biit-solutions.com:BiiT/LiferayServiceCommon.git</developerConnection>
+		<developerConnection>scm:git:git.biit-solutions.com:BiiT/LiferayServiceCommon.git</developerConnection>
 		<tag>liferay-service-common-0.8.1</tag>
 	</scm>
 
