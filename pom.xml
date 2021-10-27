@@ -4,7 +4,7 @@
 	<groupId>com.biit.liferay</groupId>
 	<artifactId>liferay-service-common</artifactId>
 	<packaging>jar</packaging>
-	<version>0.8.57-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>Liferay Client Common Utils</name>
 	<description>Basic functionality for any Liferay client</description>
 
@@ -43,8 +43,8 @@
 		<project.scm.id>git</project.scm.id>
 		<httpmime.version>4.5.3</httpmime.version>
 		<!-- BiiT dependencies -->
-		<user-manager.version>[0.1,0.2)</user-manager.version>
-		<liferay-configuration-reader.version>[1.0,2.0)</liferay-configuration-reader.version>
+		<user-manager.version>[0.2,0.3)</user-manager.version>
+		<liferay-configuration-reader.version>[1.1,1.2)</liferay-configuration-reader.version>
 	</properties>
 
 	<dependencies>
