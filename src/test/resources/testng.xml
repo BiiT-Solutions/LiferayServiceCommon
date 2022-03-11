@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" verbose="1" name="WebServiceSuite">
+	<test name="AppfoundationTest" enabled="true" preserve-order="true">
+		<groups>
+			<run>
+				<include name="connection" />
+				<include name="companyAccess" />
+				<include name="siteAccess" />
+				<include name="userAccess" />
+				<include name="basicSecurityMethodTest" />
+				<include name="roleAccess" />
+				<include name="groupAccess" />
+				<include name="contactAccess" />
+				<include name="organizationAccess" />
+				<include name="pool" />
+				<include name="clearData" />
+				<include name="className" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.biit.liferay.access.AccessTest" />
+		</classes>
+	</test>
+</suite>
+
