@@ -1,14 +1,5 @@
 package com.biit.liferay.access;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.message.BasicNameValuePair;
-
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
@@ -16,11 +7,18 @@ import com.biit.liferay.log.LiferayClientLogger;
 import com.biit.usermanager.entity.IGroup;
 import com.biit.usermanager.entity.pool.GroupPool;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Site;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Site service is almost the same that Group Service. Liferay stores Sites as
@@ -90,11 +88,10 @@ public class SiteService extends ServiceAccess<IGroup<Long>, Site> {
 
 	@Override
 	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Site> objectClass)
-			throws JsonParseException, JsonMappingException, IOException {
-		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Site>>() {
+			throws IOException {
+		Set<Site> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Site>>() {
 		});
-
-		return myObjects;
+		return new HashSet<>(myObjects);
 	}
 
 	public boolean deleteSite(IGroup<Long> site)

@@ -1,16 +1,5 @@
 package com.biit.liferay.access;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.inject.Named;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.message.BasicNameValuePair;
-
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.usermanager.entity.IGroup;
@@ -21,6 +10,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.Group;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.message.BasicNameValuePair;
+
+import javax.inject.Named;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Named
 public class GroupService extends ServiceAccess<IGroup<Long>, Group> implements IGroupService {
@@ -33,9 +32,9 @@ public class GroupService extends ServiceAccess<IGroup<Long>, Group> implements 
 
 	@Override
 	public Set<IGroup<Long>> decodeListFromJson(String json, Class<Group> objectClass) throws JsonParseException, JsonMappingException, IOException {
-		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
+		Set<Group> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
 		});
-		return myObjects;
+		return new HashSet<>(myObjects);
 	}
 
 	@Override

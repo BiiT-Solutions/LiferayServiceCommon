@@ -1,17 +1,5 @@
 package com.biit.liferay.access;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.inject.Named;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.message.BasicNameValuePair;
-
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.UserGroupDoesNotExistException;
@@ -26,6 +14,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.UserGroup;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.message.BasicNameValuePair;
+
+import javax.inject.Named;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class allows to manage group from Liferay portal.
@@ -125,7 +123,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 	/**
 	 * Add a user to a group. For testing use only.
 	 * 
-	 * @param users
+	 * @param user
 	 * @param group
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
@@ -142,10 +140,9 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	@Override
 	public Set<IGroup<Long>> decodeListFromJson(String json, Class<UserGroup> objectClass) throws JsonParseException, JsonMappingException, IOException {
-		Set<IGroup<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<UserGroup>>() {
+		Set<UserGroup> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<UserGroup>>() {
 		});
-
-		return myObjects;
+		return new HashSet<>(myObjects);
 	}
 
 	@Override

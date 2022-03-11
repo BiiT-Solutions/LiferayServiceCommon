@@ -39,8 +39,8 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
     private final GroupPool<Long, Long> groupPool;
 
     public UserService() {
-        userPool = new UserPool<Long, Long>();
-        groupPool = new GroupPool<Long, Long>();
+        userPool = new UserPool<>();
+        groupPool = new GroupPool<>();
     }
 
     /**
@@ -184,10 +184,9 @@ public class UserService extends ServiceAccess<IUser<Long>, User> implements IUs
     @Override
     public Set<IUser<Long>> decodeListFromJson(String json, Class<User> objectClass) throws JsonParseException,
             JsonMappingException, IOException {
-        Set<IUser<Long>> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<User>>() {
+        Set<User> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<User>>() {
         });
-
-        return myObjects;
+        return new HashSet<>(myObjects);
     }
 
     public List<Long> decodeLongListFromJson(String json, Class<Long> objectClass) throws JsonParseException,

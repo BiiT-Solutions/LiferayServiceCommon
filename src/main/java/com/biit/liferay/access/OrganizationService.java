@@ -241,14 +241,16 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
     }
 
     public Set<IGroup<Long>> decodeGroupListFromJson(String json) throws IOException {
-        return new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
+        Set<Group> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Group>>() {
         });
+        return new HashSet<>(myObjects);
     }
 
     @Override
     public Set<IGroup<Long>> decodeListFromJson(String json, Class<Organization> objectClass) throws IOException {
-        return new ObjectMapper().readValue(json, new TypeReference<Set<Organization>>() {
+        Set<Organization> myObjects = new ObjectMapper().readValue(json, new TypeReference<Set<Organization>>() {
         });
+        return new HashSet<>(myObjects);
     }
 
     @Override

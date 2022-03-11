@@ -1,25 +1,34 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.biit.liferay</groupId>
-	<artifactId>liferay-service-common</artifactId>
-	<packaging>jar</packaging>
-	<version>0.8.57-SNAPSHOT</version>
-	<name>Liferay Client Common Utils</name>
-	<description>Basic functionality for any Liferay client</description>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.biit.liferay</groupId>
+    <artifactId>liferay-service-common</artifactId>
+    <packaging>jar</packaging>
+    <version>0.8.56-SNAPSHOT</version>
+    <name>Liferay Client Common Utils</name>
+    <description>Basic functionality for any Liferay client</description>
 
-	<distributionManagement>
-		<repository>
-			<id>central</id>
-			<name>libs-releases</name>
-			<url>https://artifactory.biit-solutions.com/artifactory/libs-release</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>libs-snapshot</name>
-			<url>https://artifactory.biit-solutions.com/artifactory/libs-snapshot</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <parent>
+        <groupId>com.biit</groupId>
+        <artifactId>versions</artifactId>
+        <version>[0.1,0.2)</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>libs-releases</name>
+            <url>https://artifactory.biit-solutions.com/artifactory/libs-release</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>libs-snapshot</name>
+            <url>https://artifactory.biit-solutions.com/artifactory/libs-snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 	<scm>
 		<connection>scm:git:git.biit-solutions.com:BiiT/LiferayServiceCommon.git</connection>
@@ -27,80 +36,79 @@
 		<tag>liferay-service-common-0.8.1</tag>
 	</scm>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.jdk.version>1.6</java.jdk.version>
-		<plugin.compiler.version>2.3.2</plugin.compiler.version>
-		<plugin.exec.version>1.2.1</plugin.exec.version>
-		<org.testng.version>6.8</org.testng.version>
-		<jackson.version>2.5.0</jackson.version>
-		<surefire.version>2.16</surefire.version>
-		<apache-commons.version>1.9</apache-commons.version>
-		<apache-httpclient.version>4.5.3</apache-httpclient.version>
-		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
-		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
-		<maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
-		<project.scm.id>git</project.scm.id>
-		<httpmime.version>4.5.3</httpmime.version>
-		<!-- BiiT dependencies -->
-		<user-manager.version>[0.1,0.2)</user-manager.version>
-		<liferay-configuration-reader.version>[1.0,2.0)</liferay-configuration-reader.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.jdk.version>1.8</java.jdk.version>
+        <plugin.compiler.version>2.3.2</plugin.compiler.version>
+        <plugin.exec.version>1.2.1</plugin.exec.version>
+        <org.testng.version>6.8</org.testng.version>
+        <jackson.version>2.5.0</jackson.version>
+        <surefire.version>2.16</surefire.version>
+        <apache-commons.version>1.9</apache-commons.version>
+        <apache-httpclient.version>4.5.3</apache-httpclient.version>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
+        <maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
+        <project.scm.id>git</project.scm.id>
+        <httpmime.version>4.5.3</httpmime.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.biit.liferay</groupId>
-			<artifactId>liferay-configuration-reader</artifactId>
-			<version>${liferay-configuration-reader.version}</version>
-		</dependency>
-		<!-- User Management -->
-		<dependency>
-			<groupId>com.biit</groupId>
-			<artifactId>user-manager</artifactId>
-			<version>${user-manager.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>${apache-commons.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-		<!-- JSON WS access -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>${apache-httpclient.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-codec</groupId>
-					<artifactId>commons-codec</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- JSON translation -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<!-- Testing -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${org.testng.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- Multipart http clients (sending files) -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>${httpmime.version}</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.biit.liferay</groupId>
+            <artifactId>liferay-configuration-reader</artifactId>
+        </dependency>
+        <!-- User Management -->
+        <dependency>
+            <groupId>com.biit</groupId>
+            <artifactId>user-manager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${apache-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <!-- JSON WS access -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${apache-httpclient.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- JSON translation -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Multipart http clients (sending files) -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${httpmime.version}</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
