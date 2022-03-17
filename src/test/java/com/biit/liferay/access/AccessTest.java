@@ -7,7 +7,7 @@ import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.biit.usermanager.security.exceptions.UserDoesNotExistException;
 import com.liferay.portal.model.*;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 

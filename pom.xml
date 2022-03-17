@@ -35,28 +35,10 @@
 		<tag>liferay-service-common-0.8.1</tag>
 	</scm>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.jdk.version>1.8</java.jdk.version>
-        <plugin.compiler.version>2.3.2</plugin.compiler.version>
-        <plugin.exec.version>1.2.1</plugin.exec.version>
-        <org.testng.version>6.8</org.testng.version>
-        <jackson.version>2.5.0</jackson.version>
-        <surefire.version>2.16</surefire.version>
-        <apache-commons.version>1.9</apache-commons.version>
-        <apache-httpclient.version>4.5.3</apache-httpclient.version>
-        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
-        <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
-        <maven-scm-provider-gitexe.version>1.9.2</maven-scm-provider-gitexe.version>
-        <project.scm.id>git</project.scm.id>
-        <httpmime.version>4.5.3</httpmime.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
         </dependency>
         <dependency>
             <groupId>com.biit.liferay</groupId>
@@ -70,7 +52,6 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>${apache-commons.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -81,7 +62,6 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>${apache-httpclient.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>
@@ -93,7 +73,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <!-- Testing -->
         <dependency>
@@ -105,7 +84,6 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>${httpmime.version}</version>
         </dependency>
     </dependencies>
 
@@ -114,7 +92,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${plugin.compiler.version}</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>${java.jdk.version}</source>
 					<target>${java.jdk.version}</target>
@@ -123,7 +101,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${surefire.version}</version>
+				<version>${maven-surefire.version}</version>
 				<configuration>
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
