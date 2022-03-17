@@ -152,7 +152,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             String result;
-            if (LiferayConfigurationReader.getInstance().getLiferayVersion().startsWith("7")) {
+            if (LiferayConfigurationReader.getInstance().getLiferayVersion() != null &&
+                    LiferayConfigurationReader.getInstance().getLiferayVersion().startsWith("7")) {
                 result = getHttpPostResponse(LiferayConfigurationReader.getInstance().getCustomWebServicesPath(),
                         "service-common/organization/" + organization.getUniqueId() + "/site/" + site.getUniqueId() + "/user/" + user.getUniqueId(),
                         params);
@@ -403,7 +404,8 @@ public class OrganizationService extends ServiceAccess<IGroup<Long>, Organizatio
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
             String result;
-            if (LiferayConfigurationReader.getInstance().getLiferayVersion().startsWith("7")) {
+            if (LiferayConfigurationReader.getInstance().getLiferayVersion() != null &&
+                    LiferayConfigurationReader.getInstance().getLiferayVersion().startsWith("7")) {
                 result = getHttpGetResponse(LiferayConfigurationReader.getInstance().getCustomWebServicesPath(),
                         "service-common/organization/site/" + site.getUniqueId() + "/user/" + user.getUniqueId(), params);
             } else {
