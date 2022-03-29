@@ -8,7 +8,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 /**
- * Defines basic log behavior. Uses log4j.properties.
+ * Defines basic log behavior.
  */
 public class TestLogging {
 
