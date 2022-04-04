@@ -226,8 +226,7 @@ public class AccessTest {
 
     @Test(groups = {"groupAccess"})
     public void connectToGroupWebService() {
-        // userGroupService.connectToWebService(LOGIN_USER,
-        // LOGIN_PASSWORD);
+        // userGroupService.connectToWebService(LOGIN_USER, LOGIN_PASSWORD);
         userGroupService.authorizedServerConnection(HOST, LIFERAY_PROTOCOL, PORT, PROXY_PREFIX, WEBSERVICES_PATH, AUTHENTICATION_TOKEN, LOGIN_USER, LOGIN_PASSWORD);
         Assert.assertFalse(userGroupService.isNotConnected());
     }
