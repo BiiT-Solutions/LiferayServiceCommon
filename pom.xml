@@ -70,6 +70,10 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
         <!-- JSON translation -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
