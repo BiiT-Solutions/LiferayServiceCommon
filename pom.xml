@@ -30,8 +30,8 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git.biit-solutions.com:BiiT/LiferayServiceCommon.git</connection>
-        <developerConnection>scm:git:git.biit-solutions.com:BiiT/LiferayServiceCommon.git</developerConnection>
+        <connection>scm:git:git.biit-solutions.com:Java/LiferayServiceCommon.git</connection>
+        <developerConnection>scm:git:git.biit-solutions.com:Java/LiferayServiceCommon.git</developerConnection>
         <tag>liferay-service-common-0.8.1</tag>
     </scm>
 
