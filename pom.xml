@@ -7,6 +7,7 @@
     <version>1.0.74-SNAPSHOT</version>
     <name>Liferay Client Common Utils</name>
     <description>Basic functionality for any Liferay client</description>
+    <url>https://github.com/BiiT-Solutions</url>
 
     <parent>
         <groupId>com.biit-solutions</groupId>
@@ -27,6 +28,18 @@
         <name>BiiT Sourcing Solutions S.L.</name>
         <url>https://www.biit-solutions.com/</url>
     </organization>
+
+    <developers>
+        <developer>
+            <id>jhortelano</id>
+            <name>Jorge Hortelano</name>
+            <email>jhortelano@biit-solutions.com</email>
+            <roles>
+                <role>Project-Administrator</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
 
     <distributionManagement>
@@ -53,15 +66,18 @@
         <dependency>
             <groupId>com.biit-solutions.liferay</groupId>
             <artifactId>liferay-configuration-reader</artifactId>
+            <version>[1.0,2.0)</version>
         </dependency>
         <!-- User Management -->
         <dependency>
             <groupId>com.biit-solutions</groupId>
             <artifactId>user-manager</artifactId>
+            <version>[1.1,1.2)</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
+            <version>1.19.0</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -82,20 +98,24 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
         </dependency>
         <!-- JSON translation -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.15.2</version>
         </dependency>
         <!-- Testing -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <version>7.8.0</version>
             <scope>test</scope>
         </dependency>
         <!-- Multipart http clients (sending files) -->
