@@ -21,13 +21,23 @@ package com.biit.liferay.access;
  * #L%
  */
 
-import com.biit.liferay.access.exceptions.*;
+import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
+import com.biit.liferay.access.exceptions.InvalidParsedElement;
+import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
+import com.biit.liferay.access.exceptions.OrganizationNotDeletedException;
+import com.biit.liferay.access.exceptions.PortletNotInstalledException;
+import com.biit.liferay.access.exceptions.WebServiceAccessError;
 import com.biit.usermanager.entity.IElement;
 import com.biit.usermanager.entity.IGroup;
 import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
 import com.biit.usermanager.security.exceptions.UserDoesNotExistException;
-import com.liferay.portal.model.*;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.Site;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
@@ -220,7 +230,7 @@ public class AccessTest {
         IUser<Long> updatedUser = userService.getUserByEmailAddress(company, TEST_USER_MAIL);
         Assert.assertEquals(TEST_USER_EDIT_NAME, updatedUser.getFirstName());
         Assert.assertEquals(TEST_USER_EDIT_SURNAME, updatedUser.getLastName());
-        Assert.assertEquals(TEST_USER_EDIT_LANGUAGE, updatedUser.getLanguageId());
+        Assert.assertEquals(TEST_USER_EDIT_LANGUAGE, ((User) updatedUser).getLanguageId());
 
         // Let data as it is at the start.
         user.setFirstName(TEST_USER);

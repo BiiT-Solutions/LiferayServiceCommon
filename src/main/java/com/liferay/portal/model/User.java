@@ -791,6 +791,10 @@ public class User implements java.io.Serializable, IUser<Long> {
         this.languageId = languageId;
     }
 
+    public String getLanguageId() {
+        return this.languageId;
+    }
+
     /**
      * Sets the lastFailedLoginDate value for this user.
      *
