@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -61,7 +82,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Gets the companyId value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -70,7 +91,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Gets the ownerId value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @return ownerId
 	 */
 	public long getOwnerId() {
@@ -79,7 +100,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Gets the ownerType value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @return ownerType
 	 */
 	public int getOwnerType() {
@@ -88,7 +109,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Gets the plid value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @return plid
 	 */
 	public long getPlid() {
@@ -97,7 +118,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Gets the portletId value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @return portletId
 	 */
 	public java.lang.String getPortletId() {
@@ -123,7 +144,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Sets the companyId value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -132,7 +153,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Sets the ownerId value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @param ownerId
 	 */
 	public void setOwnerId(long ownerId) {
@@ -141,7 +162,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Sets the ownerType value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @param ownerType
 	 */
 	public void setOwnerType(int ownerType) {
@@ -150,7 +171,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Sets the plid value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @param plid
 	 */
 	public void setPlid(long plid) {
@@ -159,7 +180,7 @@ public class PortletPreferencesIds implements java.io.Serializable {
 
 	/**
 	 * Sets the portletId value for this PortletPreferencesIds.
-	 * 
+	 *
 	 * @param portletId
 	 */
 	public void setPortletId(java.lang.String portletId) {

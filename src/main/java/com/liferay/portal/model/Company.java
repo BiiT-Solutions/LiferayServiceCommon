@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.biit.usermanager.entity.IGroup;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -56,7 +77,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the accountId value for this CompanySoap.
-	 * 
+	 *
 	 * @return accountId
 	 */
 	public long getAccountId() {
@@ -65,7 +86,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the companyId value for this CompanySoap.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -74,7 +95,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the homeURL value for this CompanySoap.
-	 * 
+	 *
 	 * @return homeURL
 	 */
 	public String getHomeURL() {
@@ -88,7 +109,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the key value for this CompanySoap.
-	 * 
+	 *
 	 * @return key
 	 */
 	public String getKey() {
@@ -97,7 +118,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the logoId value for this CompanySoap.
-	 * 
+	 *
 	 * @return logoId
 	 */
 	public long getLogoId() {
@@ -106,7 +127,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the maxUsers value for this CompanySoap.
-	 * 
+	 *
 	 * @return maxUsers
 	 */
 	public int getMaxUsers() {
@@ -115,7 +136,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the mx value for this CompanySoap.
-	 * 
+	 *
 	 * @return mx
 	 */
 	public String getMx() {
@@ -124,7 +145,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the primaryKey value for this CompanySoap.
-	 * 
+	 *
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
@@ -138,7 +159,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the webId value for this CompanySoap.
-	 * 
+	 *
 	 * @return webId
 	 */
 	public String getWebId() {
@@ -147,7 +168,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the active value for this CompanySoap.
-	 * 
+	 *
 	 * @return active
 	 */
 	public boolean isActive() {
@@ -156,7 +177,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the system value for this CompanySoap.
-	 * 
+	 *
 	 * @return system
 	 */
 	public boolean isSystem() {
@@ -165,7 +186,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the accountId value for this CompanySoap.
-	 * 
+	 *
 	 * @param accountId
 	 */
 	public void setAccountId(long accountId) {
@@ -174,7 +195,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the active value for this CompanySoap.
-	 * 
+	 *
 	 * @param active
 	 */
 	public void setActive(boolean active) {
@@ -183,7 +204,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the companyId value for this CompanySoap.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -192,7 +213,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the homeURL value for this CompanySoap.
-	 * 
+	 *
 	 * @param homeURL
 	 */
 	public void setHomeURL(String homeURL) {
@@ -201,7 +222,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the key value for this CompanySoap.
-	 * 
+	 *
 	 * @param key
 	 */
 	public void setKey(String key) {
@@ -210,7 +231,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the logoId value for this CompanySoap.
-	 * 
+	 *
 	 * @param logoId
 	 */
 	public void setLogoId(long logoId) {
@@ -219,7 +240,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the maxUsers value for this CompanySoap.
-	 * 
+	 *
 	 * @param maxUsers
 	 */
 	public void setMaxUsers(int maxUsers) {
@@ -228,7 +249,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the mx value for this CompanySoap.
-	 * 
+	 *
 	 * @param mx
 	 */
 	public void setMx(String mx) {
@@ -237,7 +258,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the primaryKey value for this CompanySoap.
-	 * 
+	 *
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
@@ -246,7 +267,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the system value for this CompanySoap.
-	 * 
+	 *
 	 * @param system
 	 */
 	public void setSystem(boolean system) {
@@ -255,7 +276,7 @@ public class Company implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the webId value for this CompanySoap.
-	 * 
+	 *
 	 * @param webId
 	 */
 	public void setWebId(String webId) {

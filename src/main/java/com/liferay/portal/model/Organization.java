@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.biit.usermanager.entity.IGroup;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -97,7 +118,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the comments value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return comments
 	 */
 	public java.lang.String getComments() {
@@ -106,7 +127,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the companyId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -115,7 +136,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the countryId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return countryId
 	 */
 	public long getCountryId() {
@@ -124,7 +145,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the createDate value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return createDate
 	 */
 	public java.util.Calendar getCreateDate() {
@@ -138,7 +159,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the modifiedDate value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return modifiedDate
 	 */
 	public java.util.Calendar getModifiedDate() {
@@ -147,7 +168,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the name value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return name
 	 */
 	public java.lang.String getName() {
@@ -156,7 +177,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the organizationId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return organizationId
 	 */
 	public long getOrganizationId() {
@@ -165,7 +186,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the parentOrganizationId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return parentOrganizationId
 	 */
 	public long getParentOrganizationId() {
@@ -174,7 +195,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the primaryKey value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
@@ -183,7 +204,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the regionId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return regionId
 	 */
 	public long getRegionId() {
@@ -192,7 +213,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the statusId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return statusId
 	 */
 	public int getStatusId() {
@@ -201,7 +222,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the treePath value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return treePath
 	 */
 	public java.lang.String getTreePath() {
@@ -210,7 +231,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the type value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return type
 	 */
 	public java.lang.String getType() {
@@ -224,7 +245,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the userId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return userId
 	 */
 	public long getUserId() {
@@ -233,7 +254,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the userName value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return userName
 	 */
 	public java.lang.String getUserName() {
@@ -242,7 +263,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the uuid value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
@@ -251,7 +272,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the recursable value for this OrganizationSoap.
-	 * 
+	 *
 	 * @return recursable
 	 */
 	public boolean isRecursable() {
@@ -260,7 +281,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the comments value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param comments
 	 */
 	public void setComments(java.lang.String comments) {
@@ -269,7 +290,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the companyId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -278,7 +299,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the countryId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param countryId
 	 */
 	public void setCountryId(long countryId) {
@@ -287,7 +308,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the createDate value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param createDate
 	 */
 	public void setCreateDate(java.util.Calendar createDate) {
@@ -296,7 +317,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the modifiedDate value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param modifiedDate
 	 */
 	public void setModifiedDate(java.util.Calendar modifiedDate) {
@@ -305,7 +326,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the name value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param name
 	 */
 	public void setName(java.lang.String name) {
@@ -314,7 +335,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the organizationId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param organizationId
 	 */
 	public void setOrganizationId(long organizationId) {
@@ -323,7 +344,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the parentOrganizationId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param parentOrganizationId
 	 */
 	public void setParentOrganizationId(long parentOrganizationId) {
@@ -332,7 +353,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the primaryKey value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
@@ -341,7 +362,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the recursable value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param recursable
 	 */
 	public void setRecursable(boolean recursable) {
@@ -350,7 +371,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the regionId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param regionId
 	 */
 	public void setRegionId(long regionId) {
@@ -359,7 +380,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the statusId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param statusId
 	 */
 	public void setStatusId(int statusId) {
@@ -368,7 +389,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the treePath value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param treePath
 	 */
 	public void setTreePath(java.lang.String treePath) {
@@ -377,7 +398,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the type value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param type
 	 */
 	public void setType(java.lang.String type) {
@@ -386,7 +407,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the userId value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param userId
 	 */
 	public void setUserId(long userId) {
@@ -395,7 +416,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the userName value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param userName
 	 */
 	public void setUserName(java.lang.String userName) {
@@ -404,7 +425,7 @@ public class Organization implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the uuid value for this OrganizationSoap.
-	 * 
+	 *
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {

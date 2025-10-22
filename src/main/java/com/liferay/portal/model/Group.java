@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.biit.usermanager.entity.IGroup;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -86,7 +107,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the classNameId value for this GroupSoap.
-	 * 
+	 *
 	 * @return classNameId
 	 */
 	public long getClassNameId() {
@@ -95,7 +116,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the classPK value for this GroupSoap.
-	 * 
+	 *
 	 * @return classPK
 	 */
 	public long getClassPK() {
@@ -104,7 +125,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the companyId value for this GroupSoap.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -113,7 +134,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the creatorUserId value for this GroupSoap.
-	 * 
+	 *
 	 * @return creatorUserId
 	 */
 	public long getCreatorUserId() {
@@ -122,7 +143,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the description value for this GroupSoap.
-	 * 
+	 *
 	 * @return description
 	 */
 	public java.lang.String getDescription() {
@@ -131,7 +152,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the friendlyURL value for this GroupSoap.
-	 * 
+	 *
 	 * @return friendlyURL
 	 */
 	public java.lang.String getFriendlyURL() {
@@ -140,7 +161,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the groupId value for this GroupSoap.
-	 * 
+	 *
 	 * @return groupId
 	 */
 	public Long getGroupId() {
@@ -154,7 +175,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the liveGroupId value for this GroupSoap.
-	 * 
+	 *
 	 * @return liveGroupId
 	 */
 	public long getLiveGroupId() {
@@ -163,7 +184,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the membershipRestriction value for this GroupSoap.
-	 * 
+	 *
 	 * @return membershipRestriction
 	 */
 	public int getMembershipRestriction() {
@@ -172,7 +193,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the name value for this GroupSoap.
-	 * 
+	 *
 	 * @return name
 	 */
 	public java.lang.String getName() {
@@ -181,7 +202,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the parentGroupId value for this GroupSoap.
-	 * 
+	 *
 	 * @return parentGroupId
 	 */
 	public long getParentGroupId() {
@@ -190,7 +211,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the primaryKey value for this GroupSoap.
-	 * 
+	 *
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
@@ -199,7 +220,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the remoteStagingGroupCount value for this GroupSoap.
-	 * 
+	 *
 	 * @return remoteStagingGroupCount
 	 */
 	public int getRemoteStagingGroupCount() {
@@ -208,7 +229,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the treePath value for this GroupSoap.
-	 * 
+	 *
 	 * @return treePath
 	 */
 	public java.lang.String getTreePath() {
@@ -217,7 +238,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the type value for this GroupSoap.
-	 * 
+	 *
 	 * @return type
 	 */
 	public int getType() {
@@ -226,7 +247,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the typeSettings value for this GroupSoap.
-	 * 
+	 *
 	 * @return typeSettings
 	 */
 	public java.lang.String getTypeSettings() {
@@ -240,7 +261,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the uuid value for this GroupSoap.
-	 * 
+	 *
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
@@ -249,7 +270,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the active value for this GroupSoap.
-	 * 
+	 *
 	 * @return active
 	 */
 	public boolean isActive() {
@@ -258,7 +279,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the manualMembership value for this GroupSoap.
-	 * 
+	 *
 	 * @return manualMembership
 	 */
 	public boolean isManualMembership() {
@@ -267,7 +288,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Gets the site value for this GroupSoap.
-	 * 
+	 *
 	 * @return site
 	 */
 	public boolean isSite() {
@@ -276,7 +297,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the active value for this GroupSoap.
-	 * 
+	 *
 	 * @param active
 	 */
 	public void setActive(boolean active) {
@@ -285,7 +306,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the classNameId value for this GroupSoap.
-	 * 
+	 *
 	 * @param classNameId
 	 */
 	public void setClassNameId(long classNameId) {
@@ -294,7 +315,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the classPK value for this GroupSoap.
-	 * 
+	 *
 	 * @param classPK
 	 */
 	public void setClassPK(long classPK) {
@@ -303,7 +324,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the companyId value for this GroupSoap.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -312,7 +333,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the creatorUserId value for this GroupSoap.
-	 * 
+	 *
 	 * @param creatorUserId
 	 */
 	public void setCreatorUserId(long creatorUserId) {
@@ -321,7 +342,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the description value for this GroupSoap.
-	 * 
+	 *
 	 * @param description
 	 */
 	public void setDescription(java.lang.String description) {
@@ -330,7 +351,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the friendlyURL value for this GroupSoap.
-	 * 
+	 *
 	 * @param friendlyURL
 	 */
 	public void setFriendlyURL(java.lang.String friendlyURL) {
@@ -339,7 +360,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the groupId value for this GroupSoap.
-	 * 
+	 *
 	 * @param groupId
 	 */
 	public void setGroupId(long groupId) {
@@ -348,7 +369,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the liveGroupId value for this GroupSoap.
-	 * 
+	 *
 	 * @param liveGroupId
 	 */
 	public void setLiveGroupId(long liveGroupId) {
@@ -357,7 +378,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the manualMembership value for this GroupSoap.
-	 * 
+	 *
 	 * @param manualMembership
 	 */
 	public void setManualMembership(boolean manualMembership) {
@@ -366,7 +387,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the membershipRestriction value for this GroupSoap.
-	 * 
+	 *
 	 * @param membershipRestriction
 	 */
 	public void setMembershipRestriction(int membershipRestriction) {
@@ -375,7 +396,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the name value for this GroupSoap.
-	 * 
+	 *
 	 * @param name
 	 */
 	public void setName(java.lang.String name) {
@@ -384,7 +405,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the parentGroupId value for this GroupSoap.
-	 * 
+	 *
 	 * @param parentGroupId
 	 */
 	public void setParentGroupId(long parentGroupId) {
@@ -393,7 +414,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the primaryKey value for this GroupSoap.
-	 * 
+	 *
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
@@ -402,7 +423,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the remoteStagingGroupCount value for this GroupSoap.
-	 * 
+	 *
 	 * @param remoteStagingGroupCount
 	 */
 	public void setRemoteStagingGroupCount(int remoteStagingGroupCount) {
@@ -411,7 +432,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the site value for this GroupSoap.
-	 * 
+	 *
 	 * @param site
 	 */
 	public void setSite(boolean site) {
@@ -420,7 +441,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the treePath value for this GroupSoap.
-	 * 
+	 *
 	 * @param treePath
 	 */
 	public void setTreePath(java.lang.String treePath) {
@@ -429,7 +450,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the type value for this GroupSoap.
-	 * 
+	 *
 	 * @param type
 	 */
 	public void setType(int type) {
@@ -438,7 +459,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the typeSettings value for this GroupSoap.
-	 * 
+	 *
 	 * @param typeSettings
 	 */
 	public void setTypeSettings(java.lang.String typeSettings) {
@@ -447,7 +468,7 @@ public class Group implements java.io.Serializable, IGroup<Long> {
 
 	/**
 	 * Sets the uuid value for this GroupSoap.
-	 * 
+	 *
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {

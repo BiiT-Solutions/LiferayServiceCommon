@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -62,7 +83,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the address value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return address
 	 */
 	public java.lang.String getAddress() {
@@ -71,7 +92,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the classNameId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return classNameId
 	 */
 	public long getClassNameId() {
@@ -80,7 +101,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the classPK value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return classPK
 	 */
 	public long getClassPK() {
@@ -89,7 +110,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the companyId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -98,7 +119,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the createDate value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return createDate
 	 */
 	public java.util.Calendar getCreateDate() {
@@ -107,7 +128,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the emailAddressId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return emailAddressId
 	 */
 	public long getEmailAddressId() {
@@ -116,7 +137,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the modifiedDate value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return modifiedDate
 	 */
 	public java.util.Calendar getModifiedDate() {
@@ -125,7 +146,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the primaryKey value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
@@ -134,7 +155,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the typeId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return typeId
 	 */
 	public int getTypeId() {
@@ -143,7 +164,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the userId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return userId
 	 */
 	public long getUserId() {
@@ -152,7 +173,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the userName value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return userName
 	 */
 	public java.lang.String getUserName() {
@@ -161,7 +182,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the uuid value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
@@ -170,7 +191,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Gets the primary value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @return primary
 	 */
 	public boolean isPrimary() {
@@ -179,7 +200,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the address value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param address
 	 */
 	public void setAddress(java.lang.String address) {
@@ -188,7 +209,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the classNameId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param classNameId
 	 */
 	public void setClassNameId(long classNameId) {
@@ -197,7 +218,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the classPK value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param classPK
 	 */
 	public void setClassPK(long classPK) {
@@ -206,7 +227,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the companyId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -215,7 +236,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the createDate value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param createDate
 	 */
 	public void setCreateDate(java.util.Calendar createDate) {
@@ -224,7 +245,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the emailAddressId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param emailAddressId
 	 */
 	public void setEmailAddressId(long emailAddressId) {
@@ -233,7 +254,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the modifiedDate value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param modifiedDate
 	 */
 	public void setModifiedDate(java.util.Calendar modifiedDate) {
@@ -242,7 +263,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the primary value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param primary
 	 */
 	public void setPrimary(boolean primary) {
@@ -251,7 +272,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the primaryKey value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
@@ -260,7 +281,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the typeId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param typeId
 	 */
 	public void setTypeId(int typeId) {
@@ -269,7 +290,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the userId value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param userId
 	 */
 	public void setUserId(long userId) {
@@ -278,7 +299,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the userName value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param userName
 	 */
 	public void setUserName(java.lang.String userName) {
@@ -287,7 +308,7 @@ public class EmailAddress implements java.io.Serializable {
 
 	/**
 	 * Sets the uuid value for this EmailAddressSoap.
-	 * 
+	 *
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {

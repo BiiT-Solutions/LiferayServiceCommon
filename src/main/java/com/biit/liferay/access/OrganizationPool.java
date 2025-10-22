@@ -1,5 +1,30 @@
 package com.biit.liferay.access;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
+import com.biit.usermanager.entity.IGroup;
+import com.biit.usermanager.entity.IUser;
+import com.biit.usermanager.entity.pool.GroupPool;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -7,10 +32,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import com.biit.usermanager.entity.IGroup;
-import com.biit.usermanager.entity.IUser;
-import com.biit.usermanager.entity.pool.GroupPool;
 
 public class OrganizationPool extends GroupPool<Long, Long> {
 	// group id -> time.
@@ -24,7 +45,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 
 	/**
 	 * Adds organizations for a user in a site to the pool.
-	 * 
+	 *
 	 * @param site
 	 * @param user
 	 * @param organizations
@@ -37,7 +58,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 
 	/**
 	 * Adds organizations for a user in a site to the pool.
-	 * 
+	 *
 	 * @param siteId
 	 * @param userId
 	 * @param organizations
@@ -96,9 +117,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 
 	/**
 	 * Gets all previously stored organizations of a user in a site.
-	 * 
-	 * @param siteId
-	 * @param userId
+	 *
 	 * @return
 	 */
 	public Set<IGroup<Long>> getOrganizationBySiteAndUser(IGroup<Long> site, IUser<Long> user) {
@@ -192,9 +211,7 @@ public class OrganizationPool extends GroupPool<Long, Long> {
 
 	/**
 	 * Remove organizations for a user in a site from the pool.
-	 * 
-	 * @param site
-	 * @param user
+	 *
 	 */
 	public void removeOrganizations(long siteId, long userId) {
 		Map<Long, Set<IGroup<Long>>> organizationsByUser = organizationSiteAndUsers.get(siteId);

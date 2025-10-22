@@ -7,6 +7,27 @@
 
 package com.liferay.portal.service;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -262,7 +283,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the assetCategoryIds value for this ServiceContext.
-	 * 
+	 *
 	 * @return assetCategoryIds
 	 */
 	public long[] getAssetCategoryIds() {
@@ -271,7 +292,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the assetLinkEntryIds value for this ServiceContext.
-	 * 
+	 *
 	 * @return assetLinkEntryIds
 	 */
 	public long[] getAssetLinkEntryIds() {
@@ -280,7 +301,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the assetTagNames value for this ServiceContext.
-	 * 
+	 *
 	 * @return assetTagNames
 	 */
 	public java.lang.String[] getAssetTagNames() {
@@ -289,7 +310,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the attributes value for this ServiceContext.
-	 * 
+	 *
 	 * @return attributes
 	 */
 	public java.util.HashMap getAttributes() {
@@ -298,7 +319,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the command value for this ServiceContext.
-	 * 
+	 *
 	 * @return command
 	 */
 	public java.lang.String getCommand() {
@@ -307,7 +328,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the communityPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return communityPermissions
 	 */
 	public java.lang.String[] getCommunityPermissions() {
@@ -316,7 +337,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the companyId value for this ServiceContext.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -325,7 +346,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the createDate value for this ServiceContext.
-	 * 
+	 *
 	 * @return createDate
 	 */
 	public java.util.Calendar getCreateDate() {
@@ -334,7 +355,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the currentURL value for this ServiceContext.
-	 * 
+	 *
 	 * @return currentURL
 	 */
 	public java.lang.String getCurrentURL() {
@@ -343,7 +364,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the expandoBridgeAttributes value for this ServiceContext.
-	 * 
+	 *
 	 * @return expandoBridgeAttributes
 	 */
 	public java.util.HashMap getExpandoBridgeAttributes() {
@@ -352,7 +373,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the formDate value for this ServiceContext.
-	 * 
+	 *
 	 * @return formDate
 	 */
 	public java.util.Calendar getFormDate() {
@@ -361,7 +382,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the groupPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return groupPermissions
 	 */
 	public java.lang.String[] getGroupPermissions() {
@@ -370,7 +391,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the guestOrUserId value for this ServiceContext.
-	 * 
+	 *
 	 * @return guestOrUserId
 	 */
 	public long getGuestOrUserId() {
@@ -379,7 +400,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the guestPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return guestPermissions
 	 */
 	public java.lang.String[] getGuestPermissions() {
@@ -388,7 +409,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the headers value for this ServiceContext.
-	 * 
+	 *
 	 * @return headers
 	 */
 	public java.util.HashMap getHeaders() {
@@ -397,7 +418,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the languageId value for this ServiceContext.
-	 * 
+	 *
 	 * @return languageId
 	 */
 	public java.lang.String getLanguageId() {
@@ -406,7 +427,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the layoutFullURL value for this ServiceContext.
-	 * 
+	 *
 	 * @return layoutFullURL
 	 */
 	public java.lang.String getLayoutFullURL() {
@@ -415,7 +436,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the layoutURL value for this ServiceContext.
-	 * 
+	 *
 	 * @return layoutURL
 	 */
 	public java.lang.String getLayoutURL() {
@@ -424,7 +445,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the locale value for this ServiceContext.
-	 * 
+	 *
 	 * @return locale
 	 */
 	public java.lang.Object getLocale() {
@@ -433,7 +454,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the modifiedDate value for this ServiceContext.
-	 * 
+	 *
 	 * @return modifiedDate
 	 */
 	public java.util.Calendar getModifiedDate() {
@@ -442,7 +463,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the pathMain value for this ServiceContext.
-	 * 
+	 *
 	 * @return pathMain
 	 */
 	public java.lang.String getPathMain() {
@@ -451,7 +472,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the plid value for this ServiceContext.
-	 * 
+	 *
 	 * @return plid
 	 */
 	public long getPlid() {
@@ -460,7 +481,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the portalURL value for this ServiceContext.
-	 * 
+	 *
 	 * @return portalURL
 	 */
 	public java.lang.String getPortalURL() {
@@ -469,7 +490,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the portletId value for this ServiceContext.
-	 * 
+	 *
 	 * @return portletId
 	 */
 	public java.lang.String getPortletId() {
@@ -478,7 +499,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the portletPreferencesIds value for this ServiceContext.
-	 * 
+	 *
 	 * @return portletPreferencesIds
 	 */
 	public PortletPreferencesIds getPortletPreferencesIds() {
@@ -487,7 +508,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the remoteAddr value for this ServiceContext.
-	 * 
+	 *
 	 * @return remoteAddr
 	 */
 	public java.lang.String getRemoteAddr() {
@@ -496,7 +517,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the remoteHost value for this ServiceContext.
-	 * 
+	 *
 	 * @return remoteHost
 	 */
 	public java.lang.String getRemoteHost() {
@@ -505,7 +526,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the request value for this ServiceContext.
-	 * 
+	 *
 	 * @return request
 	 */
 	public java.lang.Object getRequest() {
@@ -514,7 +535,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the rootPortletId value for this ServiceContext.
-	 * 
+	 *
 	 * @return rootPortletId
 	 */
 	public java.lang.String getRootPortletId() {
@@ -523,7 +544,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the scopeGroupId value for this ServiceContext.
-	 * 
+	 *
 	 * @return scopeGroupId
 	 */
 	public long getScopeGroupId() {
@@ -532,7 +553,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the userAgent value for this ServiceContext.
-	 * 
+	 *
 	 * @return userAgent
 	 */
 	public java.lang.String getUserAgent() {
@@ -541,7 +562,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the userDisplayURL value for this ServiceContext.
-	 * 
+	 *
 	 * @return userDisplayURL
 	 */
 	public java.lang.String getUserDisplayURL() {
@@ -550,7 +571,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the userId value for this ServiceContext.
-	 * 
+	 *
 	 * @return userId
 	 */
 	public long getUserId() {
@@ -559,7 +580,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the uuid value for this ServiceContext.
-	 * 
+	 *
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
@@ -568,7 +589,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the workflowAction value for this ServiceContext.
-	 * 
+	 *
 	 * @return workflowAction
 	 */
 	public int getWorkflowAction() {
@@ -719,7 +740,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the addCommunityPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return addCommunityPermissions
 	 */
 	public boolean isAddCommunityPermissions() {
@@ -728,7 +749,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the addGroupPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return addGroupPermissions
 	 */
 	public boolean isAddGroupPermissions() {
@@ -737,7 +758,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the addGuestPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return addGuestPermissions
 	 */
 	public boolean isAddGuestPermissions() {
@@ -746,7 +767,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the assetEntryVisible value for this ServiceContext.
-	 * 
+	 *
 	 * @return assetEntryVisible
 	 */
 	public boolean isAssetEntryVisible() {
@@ -755,7 +776,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the commandAdd value for this ServiceContext.
-	 * 
+	 *
 	 * @return commandAdd
 	 */
 	public boolean isCommandAdd() {
@@ -764,7 +785,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the commandUpdate value for this ServiceContext.
-	 * 
+	 *
 	 * @return commandUpdate
 	 */
 	public boolean isCommandUpdate() {
@@ -773,7 +794,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the deriveDefaultPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @return deriveDefaultPermissions
 	 */
 	public boolean isDeriveDefaultPermissions() {
@@ -782,7 +803,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the indexingEnabled value for this ServiceContext.
-	 * 
+	 *
 	 * @return indexingEnabled
 	 */
 	public boolean isIndexingEnabled() {
@@ -791,7 +812,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Gets the signedIn value for this ServiceContext.
-	 * 
+	 *
 	 * @return signedIn
 	 */
 	public boolean isSignedIn() {
@@ -800,7 +821,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the addCommunityPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param addCommunityPermissions
 	 */
 	public void setAddCommunityPermissions(boolean addCommunityPermissions) {
@@ -809,7 +830,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the addGroupPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param addGroupPermissions
 	 */
 	public void setAddGroupPermissions(boolean addGroupPermissions) {
@@ -818,7 +839,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the addGuestPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param addGuestPermissions
 	 */
 	public void setAddGuestPermissions(boolean addGuestPermissions) {
@@ -827,7 +848,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the assetCategoryIds value for this ServiceContext.
-	 * 
+	 *
 	 * @param assetCategoryIds
 	 */
 	public void setAssetCategoryIds(long[] assetCategoryIds) {
@@ -836,7 +857,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the assetEntryVisible value for this ServiceContext.
-	 * 
+	 *
 	 * @param assetEntryVisible
 	 */
 	public void setAssetEntryVisible(boolean assetEntryVisible) {
@@ -845,7 +866,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the assetLinkEntryIds value for this ServiceContext.
-	 * 
+	 *
 	 * @param assetLinkEntryIds
 	 */
 	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
@@ -854,7 +875,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the assetTagNames value for this ServiceContext.
-	 * 
+	 *
 	 * @param assetTagNames
 	 */
 	public void setAssetTagNames(java.lang.String[] assetTagNames) {
@@ -863,7 +884,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the attributes value for this ServiceContext.
-	 * 
+	 *
 	 * @param attributes
 	 */
 	public void setAttributes(java.util.HashMap attributes) {
@@ -872,7 +893,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the command value for this ServiceContext.
-	 * 
+	 *
 	 * @param command
 	 */
 	public void setCommand(java.lang.String command) {
@@ -881,7 +902,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the commandAdd value for this ServiceContext.
-	 * 
+	 *
 	 * @param commandAdd
 	 */
 	public void setCommandAdd(boolean commandAdd) {
@@ -890,7 +911,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the commandUpdate value for this ServiceContext.
-	 * 
+	 *
 	 * @param commandUpdate
 	 */
 	public void setCommandUpdate(boolean commandUpdate) {
@@ -899,7 +920,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the communityPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param communityPermissions
 	 */
 	public void setCommunityPermissions(java.lang.String[] communityPermissions) {
@@ -908,7 +929,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the companyId value for this ServiceContext.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -917,7 +938,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the createDate value for this ServiceContext.
-	 * 
+	 *
 	 * @param createDate
 	 */
 	public void setCreateDate(java.util.Calendar createDate) {
@@ -926,7 +947,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the currentURL value for this ServiceContext.
-	 * 
+	 *
 	 * @param currentURL
 	 */
 	public void setCurrentURL(java.lang.String currentURL) {
@@ -935,7 +956,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the deriveDefaultPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param deriveDefaultPermissions
 	 */
 	public void setDeriveDefaultPermissions(boolean deriveDefaultPermissions) {
@@ -944,7 +965,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the expandoBridgeAttributes value for this ServiceContext.
-	 * 
+	 *
 	 * @param expandoBridgeAttributes
 	 */
 	public void setExpandoBridgeAttributes(java.util.HashMap expandoBridgeAttributes) {
@@ -953,7 +974,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the formDate value for this ServiceContext.
-	 * 
+	 *
 	 * @param formDate
 	 */
 	public void setFormDate(java.util.Calendar formDate) {
@@ -962,7 +983,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the groupPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param groupPermissions
 	 */
 	public void setGroupPermissions(java.lang.String[] groupPermissions) {
@@ -971,7 +992,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the guestOrUserId value for this ServiceContext.
-	 * 
+	 *
 	 * @param guestOrUserId
 	 */
 	public void setGuestOrUserId(long guestOrUserId) {
@@ -980,7 +1001,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the guestPermissions value for this ServiceContext.
-	 * 
+	 *
 	 * @param guestPermissions
 	 */
 	public void setGuestPermissions(java.lang.String[] guestPermissions) {
@@ -989,7 +1010,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the headers value for this ServiceContext.
-	 * 
+	 *
 	 * @param headers
 	 */
 	public void setHeaders(java.util.HashMap headers) {
@@ -998,7 +1019,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the indexingEnabled value for this ServiceContext.
-	 * 
+	 *
 	 * @param indexingEnabled
 	 */
 	public void setIndexingEnabled(boolean indexingEnabled) {
@@ -1007,7 +1028,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the languageId value for this ServiceContext.
-	 * 
+	 *
 	 * @param languageId
 	 */
 	public void setLanguageId(java.lang.String languageId) {
@@ -1016,7 +1037,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the layoutFullURL value for this ServiceContext.
-	 * 
+	 *
 	 * @param layoutFullURL
 	 */
 	public void setLayoutFullURL(java.lang.String layoutFullURL) {
@@ -1025,7 +1046,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the layoutURL value for this ServiceContext.
-	 * 
+	 *
 	 * @param layoutURL
 	 */
 	public void setLayoutURL(java.lang.String layoutURL) {
@@ -1034,7 +1055,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the locale value for this ServiceContext.
-	 * 
+	 *
 	 * @param locale
 	 */
 	public void setLocale(java.lang.Object locale) {
@@ -1043,7 +1064,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the modifiedDate value for this ServiceContext.
-	 * 
+	 *
 	 * @param modifiedDate
 	 */
 	public void setModifiedDate(java.util.Calendar modifiedDate) {
@@ -1052,7 +1073,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the pathMain value for this ServiceContext.
-	 * 
+	 *
 	 * @param pathMain
 	 */
 	public void setPathMain(java.lang.String pathMain) {
@@ -1061,7 +1082,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the plid value for this ServiceContext.
-	 * 
+	 *
 	 * @param plid
 	 */
 	public void setPlid(long plid) {
@@ -1070,7 +1091,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the portalURL value for this ServiceContext.
-	 * 
+	 *
 	 * @param portalURL
 	 */
 	public void setPortalURL(java.lang.String portalURL) {
@@ -1079,7 +1100,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the portletId value for this ServiceContext.
-	 * 
+	 *
 	 * @param portletId
 	 */
 	public void setPortletId(java.lang.String portletId) {
@@ -1088,7 +1109,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the portletPreferencesIds value for this ServiceContext.
-	 * 
+	 *
 	 * @param portletPreferencesIds
 	 */
 	public void setPortletPreferencesIds(PortletPreferencesIds portletPreferencesIds) {
@@ -1097,7 +1118,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the remoteAddr value for this ServiceContext.
-	 * 
+	 *
 	 * @param remoteAddr
 	 */
 	public void setRemoteAddr(java.lang.String remoteAddr) {
@@ -1106,7 +1127,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the remoteHost value for this ServiceContext.
-	 * 
+	 *
 	 * @param remoteHost
 	 */
 	public void setRemoteHost(java.lang.String remoteHost) {
@@ -1115,7 +1136,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the request value for this ServiceContext.
-	 * 
+	 *
 	 * @param request
 	 */
 	public void setRequest(java.lang.Object request) {
@@ -1124,7 +1145,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the rootPortletId value for this ServiceContext.
-	 * 
+	 *
 	 * @param rootPortletId
 	 */
 	public void setRootPortletId(java.lang.String rootPortletId) {
@@ -1133,7 +1154,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the scopeGroupId value for this ServiceContext.
-	 * 
+	 *
 	 * @param scopeGroupId
 	 */
 	public void setScopeGroupId(long scopeGroupId) {
@@ -1142,7 +1163,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the signedIn value for this ServiceContext.
-	 * 
+	 *
 	 * @param signedIn
 	 */
 	public void setSignedIn(boolean signedIn) {
@@ -1151,7 +1172,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the userAgent value for this ServiceContext.
-	 * 
+	 *
 	 * @param userAgent
 	 */
 	public void setUserAgent(java.lang.String userAgent) {
@@ -1160,7 +1181,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the userDisplayURL value for this ServiceContext.
-	 * 
+	 *
 	 * @param userDisplayURL
 	 */
 	public void setUserDisplayURL(java.lang.String userDisplayURL) {
@@ -1169,7 +1190,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the userId value for this ServiceContext.
-	 * 
+	 *
 	 * @param userId
 	 */
 	public void setUserId(long userId) {
@@ -1178,7 +1199,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the uuid value for this ServiceContext.
-	 * 
+	 *
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {
@@ -1187,7 +1208,7 @@ public class ServiceContext implements java.io.Serializable {
 
 	/**
 	 * Sets the workflowAction value for this ServiceContext.
-	 * 
+	 *
 	 * @param workflowAction
 	 */
 	public void setWorkflowAction(int workflowAction) {

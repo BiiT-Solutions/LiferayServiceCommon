@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -65,7 +86,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the classNameId value for this PhoneSoap.
-	 * 
+	 *
 	 * @return classNameId
 	 */
 	public long getClassNameId() {
@@ -74,7 +95,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the classPK value for this PhoneSoap.
-	 * 
+	 *
 	 * @return classPK
 	 */
 	public long getClassPK() {
@@ -83,7 +104,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the companyId value for this PhoneSoap.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -92,7 +113,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the createDate value for this PhoneSoap.
-	 * 
+	 *
 	 * @return createDate
 	 */
 	public java.util.Calendar getCreateDate() {
@@ -101,7 +122,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the extension value for this PhoneSoap.
-	 * 
+	 *
 	 * @return extension
 	 */
 	public java.lang.String getExtension() {
@@ -110,7 +131,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the modifiedDate value for this PhoneSoap.
-	 * 
+	 *
 	 * @return modifiedDate
 	 */
 	public java.util.Calendar getModifiedDate() {
@@ -119,7 +140,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the number value for this PhoneSoap.
-	 * 
+	 *
 	 * @return number
 	 */
 	public java.lang.String getNumber() {
@@ -128,7 +149,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the phoneId value for this PhoneSoap.
-	 * 
+	 *
 	 * @return phoneId
 	 */
 	public long getPhoneId() {
@@ -137,7 +158,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the primaryKey value for this PhoneSoap.
-	 * 
+	 *
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
@@ -146,7 +167,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the typeId value for this PhoneSoap.
-	 * 
+	 *
 	 * @return typeId
 	 */
 	public int getTypeId() {
@@ -155,7 +176,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the userId value for this PhoneSoap.
-	 * 
+	 *
 	 * @return userId
 	 */
 	public long getUserId() {
@@ -164,7 +185,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the userName value for this PhoneSoap.
-	 * 
+	 *
 	 * @return userName
 	 */
 	public java.lang.String getUserName() {
@@ -173,7 +194,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the uuid value for this PhoneSoap.
-	 * 
+	 *
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
@@ -182,7 +203,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Gets the primary value for this PhoneSoap.
-	 * 
+	 *
 	 * @return primary
 	 */
 	public boolean isPrimary() {
@@ -191,7 +212,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the classNameId value for this PhoneSoap.
-	 * 
+	 *
 	 * @param classNameId
 	 */
 	public void setClassNameId(long classNameId) {
@@ -200,7 +221,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the classPK value for this PhoneSoap.
-	 * 
+	 *
 	 * @param classPK
 	 */
 	public void setClassPK(long classPK) {
@@ -209,7 +230,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the companyId value for this PhoneSoap.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -218,7 +239,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the createDate value for this PhoneSoap.
-	 * 
+	 *
 	 * @param createDate
 	 */
 	public void setCreateDate(java.util.Calendar createDate) {
@@ -227,7 +248,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the extension value for this PhoneSoap.
-	 * 
+	 *
 	 * @param extension
 	 */
 	public void setExtension(java.lang.String extension) {
@@ -236,7 +257,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the modifiedDate value for this PhoneSoap.
-	 * 
+	 *
 	 * @param modifiedDate
 	 */
 	public void setModifiedDate(java.util.Calendar modifiedDate) {
@@ -245,7 +266,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the number value for this PhoneSoap.
-	 * 
+	 *
 	 * @param number
 	 */
 	public void setNumber(java.lang.String number) {
@@ -254,7 +275,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the phoneId value for this PhoneSoap.
-	 * 
+	 *
 	 * @param phoneId
 	 */
 	public void setPhoneId(long phoneId) {
@@ -263,7 +284,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the primary value for this PhoneSoap.
-	 * 
+	 *
 	 * @param primary
 	 */
 	public void setPrimary(boolean primary) {
@@ -272,7 +293,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the primaryKey value for this PhoneSoap.
-	 * 
+	 *
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
@@ -281,7 +302,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the typeId value for this PhoneSoap.
-	 * 
+	 *
 	 * @param typeId
 	 */
 	public void setTypeId(int typeId) {
@@ -290,7 +311,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the userId value for this PhoneSoap.
-	 * 
+	 *
 	 * @param userId
 	 */
 	public void setUserId(long userId) {
@@ -299,7 +320,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the userName value for this PhoneSoap.
-	 * 
+	 *
 	 * @param userName
 	 */
 	public void setUserName(java.lang.String userName) {
@@ -308,7 +329,7 @@ public class Phone implements java.io.Serializable {
 
 	/**
 	 * Sets the uuid value for this PhoneSoap.
-	 * 
+	 *
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {

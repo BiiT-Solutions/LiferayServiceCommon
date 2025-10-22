@@ -1,5 +1,26 @@
 package com.biit.liferay.access;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.biit.liferay.access.exceptions.DuplicatedLiferayElement;
 import com.biit.liferay.access.exceptions.NotConnectedToWebServiceException;
 import com.biit.liferay.access.exceptions.UserGroupDoesNotExistException;
@@ -38,7 +59,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Creates a new group on Liferay. For testing use only.
-	 * 
+	 *
 	 * @param name
 	 *            name of the new group.
 	 * @param description
@@ -80,7 +101,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Add a list of users to a group. For testing use only.
-	 * 
+	 *
 	 * @param users
 	 * @param group
 	 * @throws NotConnectedToWebServiceException
@@ -122,7 +143,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Add a user to a group. For testing use only.
-	 * 
+	 *
 	 * @param user
 	 * @param group
 	 * @throws NotConnectedToWebServiceException
@@ -165,7 +186,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Removes a group from Liferay portal. For testing use only.
-	 * 
+	 *
 	 * @param userGroup
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
@@ -190,7 +211,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Removes a group from Liferay portal. For testing use only.
-	 * 
+	 *
 	 * @param userGroupId
 	 * @throws NotConnectedToWebServiceException
 	 * @throws IOException
@@ -215,7 +236,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Get group information using the group's primary key.
-	 * 
+	 *
 	 * @param userGroupId
 	 *            group's primary key.
 	 * @return a group.
@@ -255,7 +276,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Get group information using the group's name.
-	 * 
+	 *
 	 * @param name
 	 *            name of the group
 	 * @return group information
@@ -299,7 +320,7 @@ public class UserGroupService extends ServiceAccess<IGroup<Long>, UserGroup> imp
 
 	/**
 	 * Get a list of groups where the User belongs to.
-	 * 
+	 *
 	 * @param user
 	 * @return group information
 	 * @throws NotConnectedToWebServiceException

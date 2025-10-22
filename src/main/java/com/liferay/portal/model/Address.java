@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -83,7 +104,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the addressId value for this AddressSoap.
-	 * 
+	 *
 	 * @return addressId
 	 */
 	public long getAddressId() {
@@ -92,7 +113,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the city value for this AddressSoap.
-	 * 
+	 *
 	 * @return city
 	 */
 	public java.lang.String getCity() {
@@ -101,7 +122,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the classNameId value for this AddressSoap.
-	 * 
+	 *
 	 * @return classNameId
 	 */
 	public long getClassNameId() {
@@ -110,7 +131,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the classPK value for this AddressSoap.
-	 * 
+	 *
 	 * @return classPK
 	 */
 	public long getClassPK() {
@@ -119,7 +140,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the companyId value for this AddressSoap.
-	 * 
+	 *
 	 * @return companyId
 	 */
 	public long getCompanyId() {
@@ -128,7 +149,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the countryId value for this AddressSoap.
-	 * 
+	 *
 	 * @return countryId
 	 */
 	public long getCountryId() {
@@ -137,7 +158,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the createDate value for this AddressSoap.
-	 * 
+	 *
 	 * @return createDate
 	 */
 	public java.util.Calendar getCreateDate() {
@@ -146,7 +167,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the modifiedDate value for this AddressSoap.
-	 * 
+	 *
 	 * @return modifiedDate
 	 */
 	public java.util.Calendar getModifiedDate() {
@@ -155,7 +176,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the primaryKey value for this AddressSoap.
-	 * 
+	 *
 	 * @return primaryKey
 	 */
 	public long getPrimaryKey() {
@@ -164,7 +185,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the regionId value for this AddressSoap.
-	 * 
+	 *
 	 * @return regionId
 	 */
 	public long getRegionId() {
@@ -173,7 +194,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the street1 value for this AddressSoap.
-	 * 
+	 *
 	 * @return street1
 	 */
 	public java.lang.String getStreet1() {
@@ -182,7 +203,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the street2 value for this AddressSoap.
-	 * 
+	 *
 	 * @return street2
 	 */
 	public java.lang.String getStreet2() {
@@ -191,7 +212,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the street3 value for this AddressSoap.
-	 * 
+	 *
 	 * @return street3
 	 */
 	public java.lang.String getStreet3() {
@@ -200,7 +221,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the typeId value for this AddressSoap.
-	 * 
+	 *
 	 * @return typeId
 	 */
 	public int getTypeId() {
@@ -209,7 +230,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the userId value for this AddressSoap.
-	 * 
+	 *
 	 * @return userId
 	 */
 	public long getUserId() {
@@ -218,7 +239,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the userName value for this AddressSoap.
-	 * 
+	 *
 	 * @return userName
 	 */
 	public java.lang.String getUserName() {
@@ -227,7 +248,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the uuid value for this AddressSoap.
-	 * 
+	 *
 	 * @return uuid
 	 */
 	public java.lang.String getUuid() {
@@ -236,7 +257,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the zip value for this AddressSoap.
-	 * 
+	 *
 	 * @return zip
 	 */
 	public java.lang.String getZip() {
@@ -245,7 +266,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the mailing value for this AddressSoap.
-	 * 
+	 *
 	 * @return mailing
 	 */
 	public boolean isMailing() {
@@ -254,7 +275,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Gets the primary value for this AddressSoap.
-	 * 
+	 *
 	 * @return primary
 	 */
 	public boolean isPrimary() {
@@ -263,7 +284,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the addressId value for this AddressSoap.
-	 * 
+	 *
 	 * @param addressId
 	 */
 	public void setAddressId(long addressId) {
@@ -272,7 +293,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the city value for this AddressSoap.
-	 * 
+	 *
 	 * @param city
 	 */
 	public void setCity(java.lang.String city) {
@@ -281,7 +302,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the classNameId value for this AddressSoap.
-	 * 
+	 *
 	 * @param classNameId
 	 */
 	public void setClassNameId(long classNameId) {
@@ -290,7 +311,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the classPK value for this AddressSoap.
-	 * 
+	 *
 	 * @param classPK
 	 */
 	public void setClassPK(long classPK) {
@@ -299,7 +320,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the companyId value for this AddressSoap.
-	 * 
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId) {
@@ -308,7 +329,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the countryId value for this AddressSoap.
-	 * 
+	 *
 	 * @param countryId
 	 */
 	public void setCountryId(long countryId) {
@@ -317,7 +338,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the createDate value for this AddressSoap.
-	 * 
+	 *
 	 * @param createDate
 	 */
 	public void setCreateDate(java.util.Calendar createDate) {
@@ -326,7 +347,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the mailing value for this AddressSoap.
-	 * 
+	 *
 	 * @param mailing
 	 */
 	public void setMailing(boolean mailing) {
@@ -335,7 +356,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the modifiedDate value for this AddressSoap.
-	 * 
+	 *
 	 * @param modifiedDate
 	 */
 	public void setModifiedDate(java.util.Calendar modifiedDate) {
@@ -344,7 +365,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the primary value for this AddressSoap.
-	 * 
+	 *
 	 * @param primary
 	 */
 	public void setPrimary(boolean primary) {
@@ -353,7 +374,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the primaryKey value for this AddressSoap.
-	 * 
+	 *
 	 * @param primaryKey
 	 */
 	public void setPrimaryKey(long primaryKey) {
@@ -362,7 +383,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the regionId value for this AddressSoap.
-	 * 
+	 *
 	 * @param regionId
 	 */
 	public void setRegionId(long regionId) {
@@ -371,7 +392,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the street1 value for this AddressSoap.
-	 * 
+	 *
 	 * @param street1
 	 */
 	public void setStreet1(java.lang.String street1) {
@@ -380,7 +401,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the street2 value for this AddressSoap.
-	 * 
+	 *
 	 * @param street2
 	 */
 	public void setStreet2(java.lang.String street2) {
@@ -389,7 +410,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the street3 value for this AddressSoap.
-	 * 
+	 *
 	 * @param street3
 	 */
 	public void setStreet3(java.lang.String street3) {
@@ -398,7 +419,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the typeId value for this AddressSoap.
-	 * 
+	 *
 	 * @param typeId
 	 */
 	public void setTypeId(int typeId) {
@@ -407,7 +428,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the userId value for this AddressSoap.
-	 * 
+	 *
 	 * @param userId
 	 */
 	public void setUserId(long userId) {
@@ -416,7 +437,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the userName value for this AddressSoap.
-	 * 
+	 *
 	 * @param userName
 	 */
 	public void setUserName(java.lang.String userName) {
@@ -425,7 +446,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the uuid value for this AddressSoap.
-	 * 
+	 *
 	 * @param uuid
 	 */
 	public void setUuid(java.lang.String uuid) {
@@ -434,7 +455,7 @@ public class Address implements java.io.Serializable {
 
 	/**
 	 * Sets the zip value for this AddressSoap.
-	 * 
+	 *
 	 * @param zip
 	 */
 	public void setZip(java.lang.String zip) {

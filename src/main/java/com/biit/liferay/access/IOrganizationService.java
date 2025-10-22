@@ -1,5 +1,26 @@
 package com.biit.liferay.access;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +44,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Creates a new organization.
-	 * 
+	 *
 	 * @param company
 	 *            the company where add the organization.
 	 * @param parentOrganizationId
@@ -57,7 +78,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Creates a new organization.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the new organization.
 	 * @return
@@ -76,7 +97,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Assign a list of users to an organization.
-	 * 
+	 *
 	 * @param users
 	 *            the users to assign
 	 * @param organization
@@ -91,7 +112,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Assign a user to an organization.
-	 * 
+	 *
 	 * @param user
 	 *            the user to be assigned.
 	 * @param organization
@@ -106,7 +127,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Deletes an organization in Liferay database.
-	 * 
+	 *
 	 * @param company
 	 *            the company where the organization belongs to.
 	 * @param organization
@@ -124,7 +145,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Gets an organization by its id.
-	 * 
+	 *
 	 * @param organizationId
 	 *            the id of the organization.
 	 * @return an organization or null value if does not exists.
@@ -140,7 +161,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Gets all organizations of a company.
-	 * 
+	 *
 	 * @param company
 	 *            the company where searach.
 	 * @return a set of organizations.
@@ -154,7 +175,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Gets the organizations of a user in a site.
-	 * 
+	 *
 	 * @param site
 	 *            the site where organizations belong to.
 	 * @param user
@@ -173,7 +194,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Gets all organizations of a user.
-	 * 
+	 *
 	 * @param user
 	 *            the user for selecting
 	 * @return a set of organizations
@@ -187,7 +208,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Gets all organizations where the user pertains to.
-	 * 
+	 *
 	 * @param user
 	 *            user that belongs to the organizations to search.
 	 * @return a set of ogranizations.
@@ -208,7 +229,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 
 	/**
 	 * Obtains the default status from the database using a webservice.
-	 * 
+	 *
 	 * @return an integer representing the status.
 	 * @throws ClientProtocolException
 	 * @throws NotConnectedToWebServiceException
@@ -237,7 +258,7 @@ public interface IOrganizationService extends LiferayService, IServiceAccess {
 	/**
 	 * Gets the suborganizations/organizations for a user depending on the value of
 	 * {@code parentOrganizationId}
-	 * 
+	 *
 	 * @param company
 	 *            Company where search the organizations
 	 * @param user

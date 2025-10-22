@@ -7,6 +7,27 @@
 
 package com.liferay.portal.model;
 
+/*-
+ * #%L
+ * Liferay Client Common Utils
+ * %%
+ * Copyright (C) 2013 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,7 +51,7 @@ public class UserGroupRole implements java.io.Serializable {
 
 	/**
 	 * Gets the groupId value for this UserGroupRoleSoap.
-	 * 
+	 *
 	 * @return groupId
 	 */
 	public long getGroupId() {
@@ -39,7 +60,7 @@ public class UserGroupRole implements java.io.Serializable {
 
 	/**
 	 * Gets the roleId value for this UserGroupRoleSoap.
-	 * 
+	 *
 	 * @return roleId
 	 */
 	public long getRoleId() {
@@ -48,7 +69,7 @@ public class UserGroupRole implements java.io.Serializable {
 
 	/**
 	 * Gets the userId value for this UserGroupRoleSoap.
-	 * 
+	 *
 	 * @return userId
 	 */
 	public long getUserId() {
@@ -57,7 +78,7 @@ public class UserGroupRole implements java.io.Serializable {
 
 	/**
 	 * Sets the groupId value for this UserGroupRoleSoap.
-	 * 
+	 *
 	 * @param groupId
 	 */
 	public void setGroupId(long groupId) {
@@ -66,7 +87,7 @@ public class UserGroupRole implements java.io.Serializable {
 
 	/**
 	 * Sets the roleId value for this UserGroupRoleSoap.
-	 * 
+	 *
 	 * @param roleId
 	 */
 	public void setRoleId(long roleId) {
@@ -75,7 +96,7 @@ public class UserGroupRole implements java.io.Serializable {
 
 	/**
 	 * Sets the userId value for this UserGroupRoleSoap.
-	 * 
+	 *
 	 * @param userId
 	 */
 	public void setUserId(long userId) {
