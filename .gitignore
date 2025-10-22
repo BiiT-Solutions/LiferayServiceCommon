@@ -7,5 +7,12 @@ bin
 project.properties
 output.log
 tmp
-.idea/*
+*.zip
+*.xls#
+.idea
 *.iml
+pom.xml.releaseBackup
+release.properties
+/dhszw-form-zrm/src/test/resources/META-INF
+/dhszw-form-zrm/src/test/resources/tables
+/dhszw-form-zrm/src/test/resources/rules
